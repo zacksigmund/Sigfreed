@@ -1,0 +1,7 @@
+#solitaire {
+    image-rendering: pixelated;
+    height: 480px;
+    width: 640px;
+    background-color: var(--c-success);
+    margin: -8px;
+}

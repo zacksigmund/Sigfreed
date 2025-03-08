@@ -1,0 +1,27 @@
+.sf-button {
+    padding: 12px 24px;
+    background: none;
+    border-image: url(images/border.png) 4 fill / 16px;
+    position: relative;
+    color: var(--c-foreground);
+    div {
+        color: var(--c-foreground);
+    }
+
+    &:active {
+        border-image-source: url(images/border-pressed.png);
+
+        div {
+            transform: translate(2px, 2px);
+        }
+    }
+
+    &:focus-visible {
+        outline: none;
+        border-image: url(images/border-outline.png) 4 fill / 16px;
+
+        &:active {
+            border-image-source: url(images/border-outline-pressed.png);
+        }
+    }
+}

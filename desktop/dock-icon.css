@@ -1,0 +1,10 @@
+.sf-dockicon {
+    background: none;
+    border: none;
+    transition: transform .15s ease;
+    cursor: pointer;
+
+    &:hover, &:focus {
+        transform: translateY(-6px);
+    }
+}

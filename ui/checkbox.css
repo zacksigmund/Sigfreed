@@ -1,0 +1,64 @@
+label.sf-checkbox {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+
+    input[type="checkbox"] {
+        appearance: none;
+        background-image: url(images/checkbox.png);
+        inline-size: 40px;
+        block-size: 40px;
+        margin: 0;
+
+        +span {
+            position: relative;
+        }
+
+        +span:after {
+            content: "";
+            display: block;
+            block-size: 4px;
+            inline-size: 0;
+            background-color: var(--c-foreground);
+            position: absolute;
+            margin-block: auto;
+            inset-block: 0;
+            inset-inline: -2px;
+            transition: all ease-out 0.2s;
+        }
+
+        &:active {
+            background-image: url(images/checkbox-pressed.png);
+        }
+
+        &:checked {
+            background-image: url(images/checkbox-checked.png);
+
+            &:active {
+                background-image: url(images/checkbox-checked-pressed.png);
+            }
+
+            +span:after {
+                inline-size: 104%;
+            }
+
+        }
+
+        &:focus-visible {
+            outline: none;
+            background-image: url(images/checkbox-outline.png);
+
+            &:active {
+                background-image: url(images/checkbox-outline-pressed.png);
+            }
+
+            &:checked {
+                background-image: url(images/checkbox-outline-checked.png);
+
+                &:active {
+                    background-image: url(images/checkbox-outline-checked-pressed.png);
+                }
+            }
+        }
+    }
+}

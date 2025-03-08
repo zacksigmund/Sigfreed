@@ -1,0 +1,9 @@
+.sf-todo {
+    ul.todo-list {
+        max-block-size: 320px;
+        min-block-size: 240px;
+        list-style-type: none;
+        padding: 0;
+        overflow-y: auto;
+    }
+}

@@ -1,0 +1,24 @@
+.sf-desktop {
+    inline-size: 100%;
+    block-size: 100%;
+    position: relative;
+    background-color: var(--c-success);
+    background:
+        linear-gradient(115deg, transparent 75%, var(--c-teal) 75%) 0 0,
+        linear-gradient(245deg, transparent 75%, var(--c-teal) 75%) 0 0,
+        linear-gradient(115deg, transparent 75%, var(--c-teal) 75%) 4px -8px,
+        linear-gradient(245deg, transparent 75%, var(--c-teal) 75%) 4px -8px,
+        var(--c-success);
+    background-size: 8px 16px;
+}
+
+.sf-dock {
+    position: absolute;
+    inset-block-end: 0;
+    inline-size: 100%;
+
+    >div {
+        margin-inline: auto;
+        inline-size: fit-content;
+    }
+}

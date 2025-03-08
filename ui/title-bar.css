@@ -1,0 +1,82 @@
+.sf-titlebar {
+    background-color: var(--c-surface);
+    border-block-end: 4px solid var(--c-foreground);
+    color: var(--c-foreground);
+    padding-inline: 8px;
+    block-size: 40px;
+    user-select: none;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    .menu-button {
+        block-size: 100%;
+        inline-size: 16px;
+        padding-block: 10px;
+        padding-inline: 0;
+        background: none;
+        border: none;
+
+        >div {
+            block-size: 100%;
+            background: repeating-linear-gradient(var(--c-foreground), var(--c-foreground) 3px, transparent 3px, transparent 6px);
+        }
+    }
+
+    .dragger {
+        flex: 1 1 auto;
+        block-size: 100%;
+        cursor: grab;
+        padding-block: 8px;
+
+        &.dragging {
+            cursor: grabbing;
+        }
+
+        >div {
+            block-size: 100%;
+            background: repeating-linear-gradient(var(--c-shadow), var(--c-shadow) 4px, transparent 4px, transparent 8px);
+        }
+    }
+
+    .close-button {
+        background: none;
+        border: none;
+        padding: 0;
+
+        &:active img {
+            transform: rotate(180deg);
+        }
+    }
+
+    .menu {
+        position: absolute;
+        top: 12px;
+        left: -4px;
+        border: 4px solid var(--c-foreground);
+        background-color: var(--c-surface);
+        list-style-type: none;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        padding: 0;
+        z-index: 1;
+
+        li {
+            inline-size: 100%;
+
+            button {
+                background: none;
+                border: none;
+                padding: 4px 12px;
+                inline-size: 100%;
+                text-align: start;
+                color: var(--c-foreground);
+                
+                &:hover, &:focus {
+                    background: var(--c-shadow);
+                }
+            }
+        }
+    }
+}
