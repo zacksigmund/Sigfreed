@@ -13,6 +13,11 @@
     justify-content: space-between;
     align-items: center;
 
+    &:focus-visible {
+        outline: 4px solid var(--c-outline);
+        outline-offset: -4px;
+    }
+
     .dropdown {
         display: none;
         position: absolute;
