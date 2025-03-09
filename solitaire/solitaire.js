@@ -14,6 +14,10 @@ export class Solitaire {
         this.ctx = this.canvas.getContext("2d");
         this.canvas.addEventListener("click", this.click);
         requestAnimationFrame(this.draw);
+        addEventListener("contextmenu", (e) => {
+            this.click(e, true);
+            e.preventDefault();
+        });
     }
 
     render = () => {
@@ -111,7 +115,7 @@ export class Solitaire {
         requestAnimationFrame(this.draw);
     };
 
-    click = (e) => {
+    click = (e, altClick) => {
         const x = Math.floor(e.offsetX / 2),
             y = Math.floor(e.offsetY / 2);
         console.log(x, y);
@@ -172,7 +176,16 @@ export class Solitaire {
                 return;
             }
 
-            for (let i = 0; i < column.length; i++) {
+            let i = 0;
+            let cond = () => i < column.length;
+            let inc = () => i++;
+            if (altClick) {
+                i = column.length - 1;
+                cond = () => i >= 0;
+                inc = () => i--;
+            }
+
+            for (; cond(); inc()) {
                 if (!column[i].faceUp) continue;
                 moved = this.tryMove(column.slice(i));
                 if (moved) {
