@@ -17,9 +17,14 @@
         background: none;
         border: none;
 
-        >div {
+        > div {
             block-size: 100%;
-            background: repeating-linear-gradient(var(--c-foreground), var(--c-foreground) 3px, transparent 3px, transparent 6px);
+            background: repeating-linear-gradient(
+                var(--c-foreground),
+                var(--c-foreground) 3px,
+                transparent 3px,
+                transparent 6px
+            );
         }
     }
 
@@ -33,9 +38,14 @@
             cursor: grabbing;
         }
 
-        >div {
+        > div {
             block-size: 100%;
-            background: repeating-linear-gradient(var(--c-shadow), var(--c-shadow) 4px, transparent 4px, transparent 8px);
+            background: repeating-linear-gradient(
+                var(--c-shadow),
+                var(--c-shadow) 4px,
+                transparent 4px,
+                transparent 8px
+            );
         }
     }
 
@@ -72,8 +82,9 @@
                 inline-size: 100%;
                 text-align: start;
                 color: var(--c-foreground);
-                
-                &:hover, &:focus {
+
+                &:hover,
+                &:focus {
                     background: var(--c-shadow);
                 }
             }

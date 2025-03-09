@@ -1,2 +1,11 @@
+@import "./ui/button.css";
+@import "./ui/checkbox.css";
+@import "./ui/select.css";
+@import "./ui/textbox.css";
+@import "./ui/title-bar.css";
 @import "./ui/ui.css";
+@import "./ui/window.css";
+@import "./desktop/desktop.css";
+@import "./desktop/dock-icon.css";
+@import "./solitaire/solitaire.css";
 @import "./todo/todo.css";

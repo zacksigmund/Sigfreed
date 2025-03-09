@@ -4,7 +4,9 @@ export const Element = (name, attrs, ...children) => {
         Object.entries(attrs).map(([key, val]) => element.setAttribute(key, val));
     }
     if (children) {
-        children.map(child => element.appendChild(typeof child === "string" ? document.createTextNode(child) : child));
+        children.map((child) =>
+            element.appendChild(typeof child === "string" ? document.createTextNode(child) : child)
+        );
     }
     return element;
-}
+};

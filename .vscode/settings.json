@@ -1,3 +1,8 @@
 {
-    "liveServer.settings.NoBrowser": true
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "liveServer.settings.NoBrowser": true,
+    "editor.codeActionsOnSave": {
+        "source.sortImports": "always"
+    }
 }

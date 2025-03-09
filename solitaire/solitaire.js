@@ -1,10 +1,8 @@
-import { Window } from "../ui/window.js";
 import { Element } from "../ui/element.js";
+import { Window } from "../ui/window.js";
 import { Card } from "./card.js";
-import styles from "./solitaire.css" with { type: "css" };
-document.adoptedStyleSheets.push(styles);
 
-const noop = () => { };
+const noop = () => {};
 
 export class Solitaire {
     constructor() {
@@ -13,16 +11,18 @@ export class Solitaire {
         document.body.appendChild(ui);
         this.newGame();
         this.canvas = document.getElementById("solitaire");
-        this.ctx = this.canvas.getContext('2d');
-        this.canvas.addEventListener("click", this.click)
+        this.ctx = this.canvas.getContext("2d");
+        this.canvas.addEventListener("click", this.click);
         requestAnimationFrame(this.draw);
     }
 
     render = () => {
-        return Window("Solitaire", { "New Game": this.newGame, "New Game 2": this.newGame },
-            Element("canvas", { id: "solitaire", width: 320, height: 240 }),
+        return Window(
+            "Solitaire",
+            { "New Game": this.newGame, "New Game 2": this.newGame },
+            Element("canvas", { id: "solitaire", width: 320, height: 240 })
         );
-    }
+    };
 
     newGame = () => {
         this.discard = [];
@@ -31,15 +31,16 @@ export class Solitaire {
         this.undoStack = [];
         this.shuffle();
         this.deal();
-    }
+    };
 
     shuffle = () => {
         const cards = Card.allCards();
-        let m = cards.length, t, i;
+        let m = cards.length,
+            t,
+            i;
 
         // While there remain elements to shuffle…
         while (m) {
-
             // Pick a remaining element…
             i = Math.floor(Math.random() * m--);
 
@@ -49,14 +50,14 @@ export class Solitaire {
             cards[i] = t;
         }
         this.deck = cards;
-    }
+    };
 
     deal = () => {
         for (let i = 0; i < this.columns.length; i++) {
             this.columns[i] = this.deck.splice(0, i + 1);
             this.columns[i][this.columns[i].length - 1].faceUp = true;
         }
-    }
+    };
 
     draw = () => {
         this.ctx.clearRect(0, 0, 320, 240);
@@ -97,17 +98,22 @@ export class Solitaire {
                 for (let j = 0; j < column.length; j++) {
                     const card = column[j];
                     card.draw(this.ctx, x, y);
-                    y += card.faceUp ? (column.filter(card => card.faceUp).length < 7 ? 16 : 10) : 4;
+                    y += card.faceUp
+                        ? column.filter((card) => card.faceUp).length < 7
+                            ? 16
+                            : 10
+                        : 4;
                 }
             } else {
                 Card.drawFrame(this.ctx, x, y);
             }
         }
         requestAnimationFrame(this.draw);
-    }
+    };
 
     click = (e) => {
-        const x = Math.floor(e.offsetX / 2), y = Math.floor(e.offsetY / 2);
+        const x = Math.floor(e.offsetX / 2),
+            y = Math.floor(e.offsetY / 2);
         console.log(x, y);
         if (7 < x && x < 47 && 7 < y && y < 71) {
             // deck
@@ -121,16 +127,15 @@ export class Solitaire {
                     this.deck.unshift(drawn);
                 }, noop);
             } else {
-                this.discard.forEach(card => card.faceUp = false);
+                this.discard.forEach((card) => (card.faceUp = false));
                 this.deck = this.discard.reverse();
                 this.discard = [];
                 this.undoStack.push(() => {
-                    this.deck.forEach(card => card.faceUp = true);
+                    this.deck.forEach((card) => (card.faceUp = true));
                     this.discard = this.deck.reverse();
                     this.deck = [];
                 }, noop);
             }
-
         } else if (51 < x && x < 91 && 7 < y && y < 71) {
             // discard
             if (!this.discard.length) return;
@@ -150,7 +155,7 @@ export class Solitaire {
             const colNum = Math.floor((x - 8) / 42);
             const column = this.columns[colNum];
             if (!column.length) return;
-            let moved = this.tryGoal(column[column.length - 1])
+            let moved = this.tryGoal(column[column.length - 1]);
             if (moved) {
                 const card = column.pop();
                 let flipped = false;
@@ -187,20 +192,23 @@ export class Solitaire {
                 }
             }
         }
-    }
+    };
 
     tryGoal = (card) => {
         for (const goal of this.goals) {
-            if ((goal.length === 0 && card.rank === 1) || (goal.length && goal[0].suit === card.suit && goal[0].rank + 1 === card.rank)) {
+            if (
+                (goal.length === 0 && card.rank === 1) ||
+                (goal.length && goal[0].suit === card.suit && goal[0].rank + 1 === card.rank)
+            ) {
                 goal.unshift(card);
                 this.undoStack.push(() => goal.shift());
                 return true;
             }
         }
-    }
+    };
 
     tryMove = (cards) => {
-        const card = cards[0]
+        const card = cards[0];
 
         for (const column of this.columns) {
             if (!column.length) continue;
@@ -222,6 +230,5 @@ export class Solitaire {
         }
 
         return false;
-
-    }
+    };
 }

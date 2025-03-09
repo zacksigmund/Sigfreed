@@ -11,39 +11,54 @@ let container;
 
 export const initTodo = () => {
     const todos = JSON.parse(localStorage.getItem("todos"));
-    listName = todos && Object.keys(todos)?.[0] || 'Todo';
-    listNames = todos && Object.keys(todos)?.length ? Object.keys(todos) : ['Todo'];
+    listName = (todos && Object.keys(todos)?.[0]) || "Todo";
+    listNames = todos && Object.keys(todos)?.length ? Object.keys(todos) : ["Todo"];
     const ui = render(listNames);
     if (!ui) return;
-    container = Element("div", { "class": "sf-todo" }, ...ui);
-    document.body.appendChild(Window("Todo", { "Clear checked": clearChecked, "Uncheck all": uncheckAll, "Delete List": deleteList },
-        container
-    ));
-    document.querySelectorAll("input[type='checkbox']").forEach(checkbox => {
+    container = Element("div", { class: "sf-todo" }, ...ui);
+    document.body.appendChild(
+        Window(
+            "Todo",
+            {
+                "Clear checked": clearChecked,
+                "Uncheck all": uncheckAll,
+                "Delete List": deleteList,
+            },
+            container
+        )
+    );
+    document.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
         checkbox.addEventListener("change", saveList);
-    })
+    });
     document.querySelector("#addForm").addEventListener("submit", addTodoItem);
-    todos?.[listName]?.forEach(todo => {
+    todos?.[listName]?.forEach((todo) => {
         addListItem(todo.text, todo.checked);
     });
-}
+};
 
 const render = (listNames) => {
     return [
-        Select(listName,
+        Select(
+            listName,
             {
                 ...listNames.reduce((acc, curr) => ({ ...acc, [curr]: curr }), {}),
                 "+add": "+ Add new list",
             },
             changeList
         ),
-        Element("form", { id: "addForm" },
-            Textbox({ name: "add", "aria-label": "New todo item", autocomplete: "off" }),
+        Element(
+            "form",
+            { id: "addForm" },
+            Textbox({
+                name: "add",
+                "aria-label": "New todo item",
+                autocomplete: "off",
+            }),
             Button({ type: "submit" }, "Add")
         ),
-        Element("ul", { "class": "todo-list" })
-    ]
-}
+        Element("ul", { class: "todo-list" }),
+    ];
+};
 
 const changeList = (value) => {
     if (value === "+add") {
@@ -51,18 +66,18 @@ const changeList = (value) => {
         if (!newList) return;
         listName = newList;
         listNames.push(listName);
-        container.innerHTML = '';
-        render(listNames).map(child => container.appendChild(child));
+        container.innerHTML = "";
+        render(listNames).map((child) => container.appendChild(child));
         saveList();
     } else {
         listName = value;
     }
-    document.querySelector('.todo-list').innerHTML = '';
+    document.querySelector(".todo-list").innerHTML = "";
     const todos = JSON.parse(localStorage.getItem("todos"));
-    todos?.[listName]?.forEach(todo => {
+    todos?.[listName]?.forEach((todo) => {
         addListItem(todo.text, todo.checked);
     });
-}
+};
 
 const deleteList = () => {
     if (!confirm(`Are you sure you want to delete "${listName}"?`)) return;
@@ -71,9 +86,9 @@ const deleteList = () => {
     localStorage.setItem("todos", JSON.stringify(allTodos));
     listNames.splice(listNames.indexOf(listName), 1);
     listName = listNames[0];
-    container.innerHTML = '';
-    render(listNames).map(child => container.appendChild(child));
-}
+    container.innerHTML = "";
+    render(listNames).map((child) => container.appendChild(child));
+};
 
 const addTodoItem = (formEvent) => {
     formEvent.preventDefault();
@@ -82,37 +97,37 @@ const addTodoItem = (formEvent) => {
     addListItem(todoText);
     formEvent.target.reset();
     saveList();
-}
+};
 
 const addListItem = (todoText, checked = false) => {
     const todoList = document.querySelector(".todo-list");
-    const li = Element("li", {},
-        Checkbox({ name: todoText, checked }, todoText)
-    );
+    const li = Element("li", {}, Checkbox({ name: todoText, checked }, todoText));
     todoList.appendChild(li);
     li.firstElementChild.firstElementChild.addEventListener("change", saveList);
-}
+};
 
 const clearChecked = () => {
-    document.querySelectorAll("input[type='checkbox']").forEach(checkbox => {
+    document.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
         if (checkbox.checked) {
             const li = checkbox.parentElement.parentElement;
             li.parentElement.removeChild(li);
         }
-    })
+    });
     saveList();
-}
+};
 
 const uncheckAll = () => {
-    document.querySelectorAll("input[type='checkbox']").forEach(checkbox => {
+    document.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
         checkbox.checked = false;
-    })
+    });
     saveList();
-}
+};
 
 const saveList = () => {
     let allTodos = JSON.parse(localStorage.getItem("todos"));
-    const todos = Array.from(document.querySelectorAll("input[type='checkbox']")).map(todoItem => ({ text: todoItem.name, checked: todoItem.checked }));
+    const todos = Array.from(document.querySelectorAll("input[type='checkbox']")).map(
+        (todoItem) => ({ text: todoItem.name, checked: todoItem.checked })
+    );
     allTodos = { ...allTodos, [listName]: todos };
     localStorage.setItem("todos", JSON.stringify(allTodos));
-}
+};

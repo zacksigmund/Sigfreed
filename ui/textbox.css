@@ -1,13 +1,13 @@
 @keyframes blink {
     50% {
-        opacity: 0.0;
+        opacity: 0;
     }
 }
 
 label.sf-textbox {
     display: inline-flex;
     position: relative;
-    
+
     input[type="text"] {
         border-image: url(images/input-border.png) 12 fill / 12px;
         margin-block-start: -4px;
@@ -15,36 +15,36 @@ label.sf-textbox {
         padding-block: 12px;
         color: var(--c-foreground);
         background: none;
-        
+
         &::selection {
             color: var(--c-foreground);
             background-color: transparent;
         }
-        
-        +span {
+
+        + span {
             position: absolute;
             visibility: hidden;
             inset-block-start: 10px;
             inset-inline-start: 22px;
         }
-        
+
         &:focus {
             border-image-source: url(images/input-border-selected.png);
             caret-color: transparent;
-            
-            +span span:last-child {
+
+            + span span:last-child {
                 visibility: visible;
                 background-color: var(--c-foreground);
                 color: var(--c-background);
                 display: inline-block;
                 block-size: 24px;
-                
+
                 &.blink {
                     animation: blink 1s step-start 0s infinite;
                 }
             }
         }
-        
+
         &:focus-visible {
             outline: none;
         }

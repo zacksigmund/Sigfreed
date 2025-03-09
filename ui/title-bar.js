@@ -1,28 +1,23 @@
 import { Element } from "./element.js";
-import styles from "./title-bar.css" with { type: "css" };
-document.adoptedStyleSheets.push(styles);
 
 export const TitleBar = (menuItems, title, onClose) => {
     let moving = false;
     let menuOpen = false;
-    const menuBtn = Element("button", { "class": "menu-button" },
-        Element("div")
-    );
-    const dragger = Element("div", { "class": "dragger" }, Element("div"));
-    const closeBtn = Element("button", { "class": "close-button", "aria-label": "Close window" },
+    const menuBtn = Element("button", { class: "menu-button" }, Element("div"));
+    const dragger = Element("div", { class: "dragger" }, Element("div"));
+    const closeBtn = Element(
+        "button",
+        { class: "close-button", "aria-label": "Close window" },
         Element("img", { src: "/ui/images/close-window.png" })
-    )
-    const titlebar = Element("div", { "class": "sf-titlebar" },
-        menuBtn,
-        title,
-        dragger,
-        closeBtn
     );
+    const titlebar = Element("div", { class: "sf-titlebar" }, menuBtn, title, dragger, closeBtn);
     const toggleMenu = (e) => {
         if (!menuOpen) {
             e.stopPropagation();
             menuOpen = true;
-            const menu = Element("ul", { "class": "menu", role: "menu" },
+            const menu = Element(
+                "ul",
+                { class: "menu", role: "menu" },
                 ...Object.entries(menuItems).map(([name, callback]) => {
                     const menuItem = Element("button", {}, name);
                     menuItem.addEventListener("click", (e) => {
@@ -31,7 +26,7 @@ export const TitleBar = (menuItems, title, onClose) => {
                         titlebar.removeChild(menu);
                         menuOpen = false;
                     });
-                    return Element("li", {role: "menuitem"}, menuItem);
+                    return Element("li", { role: "menuitem" }, menuItem);
                 })
             );
             const offClick = () => {
@@ -39,14 +34,14 @@ export const TitleBar = (menuItems, title, onClose) => {
                     try {
                         titlebar.removeChild(menu);
                     } catch {}
-                        document.body.removeEventListener("click", offClick);
-                        menuOpen = false;
+                    document.body.removeEventListener("click", offClick);
+                    menuOpen = false;
                 }
-            }
-            document.body.addEventListener("click", offClick)
+            };
+            document.body.addEventListener("click", offClick);
             titlebar.appendChild(menu);
         }
-    }
+    };
     menuBtn.addEventListener("click", toggleMenu);
     dragger.addEventListener("mousedown", () => {
         moving = true;
@@ -81,8 +76,8 @@ export const TitleBar = (menuItems, title, onClose) => {
         saveLocation(title, windowEl.offsetTop, windowEl.offsetLeft);
     });
     return titlebar;
-}
+};
 
 export const saveLocation = (title, top, left) => {
     localStorage.setItem(`window.${title}`, JSON.stringify({ top, left }));
-}
+};
