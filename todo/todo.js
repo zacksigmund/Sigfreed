@@ -14,19 +14,18 @@ export const initTodo = () => {
     listName = (todos && Object.keys(todos)?.[0]) || "Todo";
     listNames = todos && Object.keys(todos)?.length ? Object.keys(todos) : ["Todo"];
     const ui = render(listNames);
-    if (!ui) return;
     container = Element("div", { class: "sf-todo" }, ...ui);
-    document.body.appendChild(
-        Window(
-            "Todo",
-            {
-                "Clear checked": clearChecked,
-                "Uncheck all": uncheckAll,
-                "Delete List": deleteList,
-            },
-            container
-        )
+    const windowEl = Window(
+        "Todo",
+        {
+            "Clear checked": clearChecked,
+            "Uncheck all": uncheckAll,
+            "Delete List": deleteList,
+        },
+        container
     );
+    if (!windowEl) return;
+    document.body.appendChild(windowEl);
     todos?.[listName]?.forEach((todo) => {
         addListItem(todo.text, todo.checked);
     });
