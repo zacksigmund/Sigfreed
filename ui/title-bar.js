@@ -10,36 +10,42 @@ export const TitleBar = (menuItems, title, onClose) => {
         { class: "close-button", "aria-label": "Close window" },
         Element("img", { src: "/ui/images/close-window.png" })
     );
-    const titlebar = Element("div", { class: "sf-titlebar" }, menuBtn, title, dragger, closeBtn);
+    const menu = Element(
+        "ul",
+        { class: "menu", role: "menu" },
+        ...Object.entries(menuItems).map(([name, callback]) => {
+            const menuItem = Element("button", {}, name);
+            menuItem.addEventListener("click", (e) => {
+                callback();
+                e.stopPropagation();
+                menu.style.display = "none";
+                menuOpen = false;
+            });
+            return Element("li", { role: "menuitem" }, menuItem);
+        })
+    );
+    const titlebar = Element(
+        "div",
+        { class: "sf-titlebar" },
+        menuBtn,
+        title,
+        dragger,
+        closeBtn,
+        menu
+    );
     const toggleMenu = (e) => {
         if (!menuOpen) {
             e.stopPropagation();
+            menu.style.display = "flex";
             menuOpen = true;
-            const menu = Element(
-                "ul",
-                { class: "menu", role: "menu" },
-                ...Object.entries(menuItems).map(([name, callback]) => {
-                    const menuItem = Element("button", {}, name);
-                    menuItem.addEventListener("click", (e) => {
-                        callback();
-                        e.stopPropagation();
-                        titlebar.removeChild(menu);
-                        menuOpen = false;
-                    });
-                    return Element("li", { role: "menuitem" }, menuItem);
-                })
-            );
             const offClick = () => {
                 if (menuOpen) {
-                    try {
-                        titlebar.removeChild(menu);
-                    } catch {}
+                    menu.style.display = "none";
                     document.body.removeEventListener("click", offClick);
                     menuOpen = false;
                 }
             };
             document.body.addEventListener("click", offClick);
-            titlebar.appendChild(menu);
         }
     };
     menuBtn.addEventListener("click", toggleMenu);

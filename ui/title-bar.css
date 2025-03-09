@@ -60,13 +60,13 @@
     }
 
     .menu {
+        display: none;
         position: absolute;
         top: 12px;
         left: -4px;
         border: 4px solid var(--c-foreground);
         background-color: var(--c-surface);
         list-style-type: none;
-        display: flex;
         flex-direction: column;
         align-items: start;
         padding: 0;
