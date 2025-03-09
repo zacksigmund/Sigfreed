@@ -26,6 +26,15 @@
                 transparent 6px
             );
         }
+
+        &:focus-visible {
+            outline: none;
+
+            > div {
+                outline: 4px solid var(--c-outline);
+                outline-offset: 2px;
+            }
+        }
     }
 
     .dragger {
