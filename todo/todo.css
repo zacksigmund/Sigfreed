@@ -1,4 +1,8 @@
 .sf-todo {
+    form {
+        display: flex;
+    }
+
     ul.todo-list {
         max-block-size: 320px;
         min-block-size: 240px;
