@@ -9,9 +9,6 @@ export const Select = (selected, options, onSelect) => {
         ...Object.entries(options).map(([value, text]) => {
             const menuButton = Element("button", {}, text);
             menuButton.addEventListener("click", (e) => {
-                e.stopPropagation();
-                menu.style.display = "none";
-                menuOpen = false;
                 onSelect(value);
                 selected = value;
                 name.innerText = options[value];
@@ -23,7 +20,6 @@ export const Select = (selected, options, onSelect) => {
     const toggleMenu = (e) => {
         if (!menuOpen) {
             menu.style.display = "block";
-            e.stopPropagation();
             menuOpen = true;
             const offClick = () => {
                 if (menuOpen) {
@@ -32,7 +28,10 @@ export const Select = (selected, options, onSelect) => {
                     menuOpen = false;
                 }
             };
-            document.body.addEventListener("click", offClick);
+            // was propagating to the offClick listener on the same frame otherwise
+            requestAnimationFrame(() => {
+                document.body.addEventListener("click", offClick);
+            });
         }
     };
     button.addEventListener("click", toggleMenu);

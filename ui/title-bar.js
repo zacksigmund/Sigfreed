@@ -17,9 +17,6 @@ export const TitleBar = (menuItems, title, onClose) => {
             const menuItem = Element("button", {}, name);
             menuItem.addEventListener("click", (e) => {
                 callback();
-                e.stopPropagation();
-                menu.style.display = "none";
-                menuOpen = false;
             });
             return Element("li", { role: "menuitem" }, menuItem);
         })
@@ -35,7 +32,6 @@ export const TitleBar = (menuItems, title, onClose) => {
     );
     const toggleMenu = (e) => {
         if (!menuOpen) {
-            e.stopPropagation();
             menu.style.display = "flex";
             menuOpen = true;
             const offClick = () => {
@@ -45,7 +41,10 @@ export const TitleBar = (menuItems, title, onClose) => {
                     menuOpen = false;
                 }
             };
-            document.body.addEventListener("click", offClick);
+            // was propagating to the offClick listener on the same frame otherwise
+            requestAnimationFrame(() => {
+                document.body.addEventListener("click", offClick);
+            });
         }
     };
     menuBtn.addEventListener("click", toggleMenu);
