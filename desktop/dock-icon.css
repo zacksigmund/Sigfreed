@@ -1,11 +1,22 @@
 .sf-dockicon {
     background: none;
     border: none;
+    padding: 0;
     transition: transform 0.15s ease;
     cursor: pointer;
 
     &:hover,
     &:focus {
         transform: translateY(-6px);
+    }
+
+    &:active {
+        transform: translate(-2px, -4px);
+    }
+
+    &:focus-visible {
+        outline: 8px solid var(--c-outline);
+        background: var(--c-outline);
+        outline-offset: -8px;
     }
 }
