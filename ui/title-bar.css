@@ -60,11 +60,20 @@
 
     .close-button {
         background: none;
+        background-image: url(images/close-window.png);
+        block-size: 30px;
+        inline-size: 30px;
+        margin-inline: -3px;
         border: none;
         padding: 0;
 
-        &:active img {
+        &:active {
             transform: rotate(180deg);
+        }
+
+        &:focus-visible {
+            outline: none;
+            background-image: url(images/close-window-outline.png);
         }
     }
 

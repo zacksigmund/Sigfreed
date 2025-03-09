@@ -5,11 +5,7 @@ export const TitleBar = (menuItems, title, onClose) => {
     let menuOpen = false;
     const menuBtn = Element("button", { class: "menu-button" }, Element("div"));
     const dragger = Element("div", { class: "dragger" }, Element("div"));
-    const closeBtn = Element(
-        "button",
-        { class: "close-button", "aria-label": "Close window" },
-        Element("img", { src: "/ui/images/close-window.png" })
-    );
+    const closeBtn = Element("button", { class: "close-button", "aria-label": "Close window" });
     const menu = Element(
         "ul",
         { class: "menu", role: "menu" },
