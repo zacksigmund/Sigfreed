@@ -27,16 +27,24 @@ export const initTodo = () => {
             container
         )
     );
-    document.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
-        checkbox.addEventListener("change", saveList);
-    });
-    document.querySelector("#addForm").addEventListener("submit", addTodoItem);
     todos?.[listName]?.forEach((todo) => {
         addListItem(todo.text, todo.checked);
     });
 };
 
 const render = (listNames) => {
+    const form = Element(
+        "form",
+        {},
+        Textbox({
+            name: "add",
+            "aria-label": "New todo item",
+            autocomplete: "off",
+        }),
+        Button({ type: "submit" }, "Add")
+    );
+    form.addEventListener("submit", addTodoItem);
+
     return [
         Select(
             listName,
@@ -46,16 +54,7 @@ const render = (listNames) => {
             },
             changeList
         ),
-        Element(
-            "form",
-            { id: "addForm" },
-            Textbox({
-                name: "add",
-                "aria-label": "New todo item",
-                autocomplete: "off",
-            }),
-            Button({ type: "submit" }, "Add")
-        ),
+        form,
         Element("ul", { class: "todo-list" }),
     ];
 };
@@ -102,8 +101,8 @@ const addTodoItem = (formEvent) => {
 const addListItem = (todoText, checked = false) => {
     const todoList = document.querySelector(".todo-list");
     const li = Element("li", {}, Checkbox({ name: todoText, checked }, todoText));
-    todoList.appendChild(li);
     li.firstElementChild.firstElementChild.addEventListener("change", saveList);
+    todoList.appendChild(li);
 };
 
 const clearChecked = () => {
