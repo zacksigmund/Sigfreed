@@ -33,30 +33,11 @@ export class Solitaire {
         this.goals = [[], [], [], []];
         this.columns = [[], [], [], [], [], [], []];
         this.undoStack = [];
-        this.shuffle();
         this.deal();
     };
 
-    shuffle = () => {
-        const cards = Card.allCards();
-        let m = cards.length,
-            t,
-            i;
-
-        // While there remain elements to shuffle…
-        while (m) {
-            // Pick a remaining element…
-            i = Math.floor(Math.random() * m--);
-
-            // And swap it with the current element.
-            t = cards[m];
-            cards[m] = cards[i];
-            cards[i] = t;
-        }
-        this.deck = cards;
-    };
-
     deal = () => {
+        this.deck = Card.shuffle(Card.allCards());
         for (let i = 0; i < this.columns.length; i++) {
             this.columns[i] = this.deck.splice(0, i + 1);
             this.columns[i][this.columns[i].length - 1].faceUp = true;
