@@ -23,7 +23,7 @@ export class Solitaire {
     render = () => {
         return Window(
             "Solitaire",
-            { "New Game": this.newGame, "New Game 2": this.newGame },
+            { "New Game": this.newGame },
             Element("canvas", { id: "solitaire", width: 320, height: 240 })
         );
     };
@@ -99,7 +99,6 @@ export class Solitaire {
     click = (e, altClick) => {
         const x = Math.floor(e.offsetX / 2),
             y = Math.floor(e.offsetY / 2);
-        console.log(x, y);
         if (7 < x && x < 47 && 7 < y && y < 71) {
             this.clickDeck();
         } else if (51 < x && x < 91 && 7 < y && y < 71) {
