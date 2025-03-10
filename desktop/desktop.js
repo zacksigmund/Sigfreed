@@ -1,3 +1,4 @@
+import { FreeCell } from "../freecell/freecell.js";
 import { Solitaire } from "../solitaire/solitaire.js";
 import { Todo } from "../todo/todo.js";
 import { Element } from "../ui/element.js";
@@ -14,7 +15,8 @@ export const Desktop = () => {
                 "div",
                 {},
                 DockIcon("/todo/images/todo.app.png", () => new Todo()),
-                DockIcon("/solitaire/images/solitaire.app.png", () => new Solitaire())
+                DockIcon("/solitaire/images/solitaire.app.png", () => new Solitaire()),
+                DockIcon("/freecell/images/freecell.app.png", () => new FreeCell())
             )
         )
     );

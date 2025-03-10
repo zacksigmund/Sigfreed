@@ -1,0 +1,7 @@
+#freecell {
+    image-rendering: pixelated;
+    height: 640px;
+    width: 816px;
+    background-color: var(--c-success);
+    margin: -8px;
+}
