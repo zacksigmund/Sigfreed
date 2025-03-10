@@ -1,5 +1,5 @@
 import { Solitaire } from "../solitaire/solitaire.js";
-import { initTodo } from "../todo/todo.js";
+import { Todo } from "../todo/todo.js";
 import { Element } from "../ui/element.js";
 import { DockIcon } from "./dock-icon.js";
 
@@ -13,7 +13,7 @@ export const Desktop = () => {
             Element(
                 "div",
                 {},
-                DockIcon("/todo/images/todo.app.png", initTodo),
+                DockIcon("/todo/images/todo.app.png", () => new Todo()),
                 DockIcon("/solitaire/images/solitaire.app.png", () => new Solitaire())
             )
         )
