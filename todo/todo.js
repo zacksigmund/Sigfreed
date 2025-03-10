@@ -74,7 +74,11 @@ export class Todo {
     };
 
     deleteList = () => {
-        if (!confirm(`Are you sure you want to delete "${listName}"?`)) return;
+        if (this.listNames.length === 1) {
+            alert("You can't delete your final list.");
+            return;
+        }
+        if (!confirm(`Are you sure you want to delete "${this.listName}"?`)) return;
         const allTodos = JSON.parse(localStorage.getItem("todos"));
         delete allTodos[this.listName];
         localStorage.setItem("todos", JSON.stringify(allTodos));
