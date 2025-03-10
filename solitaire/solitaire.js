@@ -120,48 +120,89 @@ export class Solitaire {
             y = Math.floor(e.offsetY / 2);
         console.log(x, y);
         if (7 < x && x < 47 && 7 < y && y < 71) {
-            // deck
-            if (this.deck.length) {
-                const drawn = this.deck.shift();
-                drawn.faceUp = true;
-                this.discard.unshift(drawn);
-                this.undoStack.push(() => {
-                    this.discard.shift();
-                    drawn.faceUp = false;
-                    this.deck.unshift(drawn);
-                }, noop);
-            } else {
-                this.discard.forEach((card) => (card.faceUp = false));
-                this.deck = this.discard.reverse();
-                this.discard = [];
-                this.undoStack.push(() => {
-                    this.deck.forEach((card) => (card.faceUp = true));
-                    this.discard = this.deck.reverse();
-                    this.deck = [];
-                }, noop);
-            }
+            this.clickDeck();
         } else if (51 < x && x < 91 && 7 < y && y < 71) {
-            // discard
-            if (!this.discard.length) return;
-            const moved = this.tryGoal(this.discard[0]) || this.tryMove([this.discard[0]]);
-            if (moved) {
-                const card = this.discard.shift();
-                this.undoStack.push(() => this.discard.unshift(card));
-                return;
-            }
+            this.clickDiscard();
         } else if (109 < x && x < 124 && 31 < y && y < 46) {
-            if (this.undoStack.length) {
-                this.undoStack.pop()();
-                this.undoStack.pop()();
-            }
+            this.clickUndo();
         } else if (y > 83) {
-            // columns
             const colNum = Math.floor((x - 8) / 42);
             const column = this.columns[colNum];
-            if (!column.length) return;
-            let moved = this.tryGoal(column[column.length - 1]);
+            this.clickColumns(column, altClick);
+        }
+    };
+
+    clickDeck = () => {
+        if (this.deck.length) {
+            const drawn = this.deck.shift();
+            drawn.faceUp = true;
+            this.discard.unshift(drawn);
+            this.undoStack.push(() => {
+                this.discard.shift();
+                drawn.faceUp = false;
+                this.deck.unshift(drawn);
+            }, noop);
+        } else {
+            this.discard.forEach((card) => (card.faceUp = false));
+            this.deck = this.discard.reverse();
+            this.discard = [];
+            this.undoStack.push(() => {
+                this.deck.forEach((card) => (card.faceUp = true));
+                this.discard = this.deck.reverse();
+                this.deck = [];
+            }, noop);
+        }
+    };
+
+    clickDiscard = () => {
+        if (!this.discard.length) return;
+        const moved = this.tryGoal(this.discard[0]) || this.tryMove([this.discard[0]]);
+        if (moved) {
+            const card = this.discard.shift();
+            this.undoStack.push(() => this.discard.unshift(card));
+        }
+    };
+
+    clickUndo = () => {
+        if (this.undoStack.length) {
+            this.undoStack.pop()();
+            this.undoStack.pop()();
+        }
+    };
+
+    clickColumns = (column, altClick) => {
+        if (!column.length) return;
+        let moved = this.tryGoal(column[column.length - 1]);
+        if (moved) {
+            const card = column.pop();
+            let flipped = false;
+            if (column.length && !column[column.length - 1].faceUp) {
+                flipped = true;
+                column[column.length - 1].faceUp = true;
+            }
+            this.undoStack.push(() => {
+                if (flipped) {
+                    column[column.length - 1].faceUp = false;
+                }
+                column.push(card);
+            });
+            return;
+        }
+
+        let i = 0;
+        let cond = () => i < column.length;
+        let inc = () => i++;
+        if (altClick) {
+            i = column.length - 1;
+            cond = () => i >= 0;
+            inc = () => i--;
+        }
+
+        for (; cond(); inc()) {
+            if (!column[i].faceUp) continue;
+            moved = this.tryMove(column.slice(i));
             if (moved) {
-                const card = column.pop();
+                const cards = column.splice(i);
                 let flipped = false;
                 if (column.length && !column[column.length - 1].faceUp) {
                     flipped = true;
@@ -171,38 +212,9 @@ export class Solitaire {
                     if (flipped) {
                         column[column.length - 1].faceUp = false;
                     }
-                    column.push(card);
+                    column.push(...cards);
                 });
                 return;
-            }
-
-            let i = 0;
-            let cond = () => i < column.length;
-            let inc = () => i++;
-            if (altClick) {
-                i = column.length - 1;
-                cond = () => i >= 0;
-                inc = () => i--;
-            }
-
-            for (; cond(); inc()) {
-                if (!column[i].faceUp) continue;
-                moved = this.tryMove(column.slice(i));
-                if (moved) {
-                    const cards = column.splice(i);
-                    let flipped = false;
-                    if (column.length && !column[column.length - 1].faceUp) {
-                        flipped = true;
-                        column[column.length - 1].faceUp = true;
-                    }
-                    this.undoStack.push(() => {
-                        if (flipped) {
-                            column[column.length - 1].faceUp = false;
-                        }
-                        column.push(...cards);
-                    });
-                    return;
-                }
             }
         }
     };
@@ -218,6 +230,8 @@ export class Solitaire {
                 return true;
             }
         }
+
+        return false;
     };
 
     tryMove = (cards) => {
