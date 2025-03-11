@@ -4,11 +4,13 @@ import { Solitaire } from "../solitaire/solitaire.js";
 import { Todo } from "../todo/todo.js";
 import { Element } from "../ui/element.js";
 import { DockIcon } from "./dock-icon.js";
+import { StatusBar } from "./statusbar.js";
 
 export const Desktop = () => {
     return Element(
         "div",
         { class: "sf-desktop" },
+        StatusBar(),
         Element(
             "div",
             { class: "sf-dock" },

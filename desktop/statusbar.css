@@ -1,0 +1,37 @@
+.sf-statusbar {
+    position: absolute;
+    inset-block-start: 0;
+    inline-size: 100%;
+    block-size: 32px;
+    padding-inline: 4px;
+    background: var(--c-surface);
+    display: flex;
+    justify-content: end;
+
+    .datetimebox {
+        display: flex;
+
+        .datebox {
+            background: none;
+            border: none;
+
+            &:hover,
+            &:focus {
+                background: var(--c-shadow);
+                color: var(--c-background);
+            }
+
+            &:focus-visible {
+                outline: 4px solid var(--c-outline);
+            }
+        }
+
+        .datebox,
+        .timebox {
+            padding-block: 4px;
+            padding-inline: 8px;
+            color: var(--c-foreground);
+            line-height: 1em;
+        }
+    }
+}

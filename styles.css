@@ -7,6 +7,7 @@
 @import "./ui/window.css";
 @import "./desktop/desktop.css";
 @import "./desktop/dock-icon.css";
+@import "./desktop/statusbar.css";
 @import "./calendar/calendar.css";
 @import "./solitaire/solitaire.css";
 @import "./freecell/freecell.css";
