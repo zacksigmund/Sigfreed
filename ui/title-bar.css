@@ -17,6 +17,10 @@
         background: none;
         border: none;
 
+        &[disabled] {
+            cursor: not-allowed;
+        }
+
         > div {
             block-size: 100%;
             background: repeating-linear-gradient(

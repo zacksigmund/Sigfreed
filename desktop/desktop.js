@@ -1,3 +1,4 @@
+import { Calendar } from "../calendar/calendar.js";
 import { FreeCell } from "../freecell/freecell.js";
 import { Solitaire } from "../solitaire/solitaire.js";
 import { Todo } from "../todo/todo.js";
@@ -16,7 +17,8 @@ export const Desktop = () => {
                 {},
                 DockIcon("/todo/images/todo.app.png", () => new Todo()),
                 DockIcon("/solitaire/images/solitaire.app.png", () => new Solitaire()),
-                DockIcon("/freecell/images/freecell.app.png", () => new FreeCell())
+                DockIcon("/freecell/images/freecell.app.png", () => new FreeCell()),
+                DockIcon("/calendar/images/calendar.app.png", () => new Calendar())
             )
         )
     );
