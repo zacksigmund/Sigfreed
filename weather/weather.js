@@ -20,7 +20,16 @@ export class Weather {
                 setInterval(this.getWeather, 15 * 60 * 1000);
             },
             () => {
-                this.weatherbox.innerText = "--°F ❓";
+                this.weatherbox.innerHTML = `
+                    <p>
+                        You'll need to enable location access to get the weather.
+                    </p>
+                    <p>
+                        Your location is only stored in your browser's local storage<br>
+                        and only used for weather. We may add a zip code option<br>
+                        in the future.
+                    </p>
+                `;
             }
         );
     };
