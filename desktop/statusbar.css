@@ -8,6 +8,15 @@
     display: flex;
     justify-content: end;
 
+    .weather,
+    .datebox,
+    .timebox {
+        padding-block: 4px;
+        padding-inline: 8px;
+        color: var(--c-foreground);
+        line-height: 1em;
+    }
+
     .datetimebox {
         display: flex;
 
@@ -24,14 +33,6 @@
             &:focus-visible {
                 outline: 4px solid var(--c-outline);
             }
-        }
-
-        .datebox,
-        .timebox {
-            padding-block: 4px;
-            padding-inline: 8px;
-            color: var(--c-foreground);
-            line-height: 1em;
         }
     }
 }
