@@ -1,11 +1,13 @@
 import { Calendar } from "../calendar/calendar.js";
 import { Element } from "../ui/element.js";
+import { Weather } from "../weather/weather.js";
 
 let lat, long;
 let weatherbox, datebox, timebox;
 
 export const StatusBar = () => {
-    weatherbox = Element("div", { class: "weather" });
+    weatherbox = Element("button", { class: "weather" });
+    weatherbox.addEventListener("click", () => new Weather());
     initWeather();
     datebox = Element("button", { class: "datebox" });
     datebox.addEventListener("click", () => new Calendar());

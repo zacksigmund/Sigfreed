@@ -17,22 +17,22 @@
         line-height: 1em;
     }
 
+    button {
+        background: none;
+        border: none;
+
+        &:hover,
+        &:focus {
+            background: var(--c-shadow);
+            color: var(--c-background);
+        }
+
+        &:focus-visible {
+            outline: 4px solid var(--c-outline);
+        }
+    }
+
     .datetimebox {
         display: flex;
-
-        .datebox {
-            background: none;
-            border: none;
-
-            &:hover,
-            &:focus {
-                background: var(--c-shadow);
-                color: var(--c-background);
-            }
-
-            &:focus-visible {
-                outline: 4px solid var(--c-outline);
-            }
-        }
     }
 }
