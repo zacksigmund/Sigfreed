@@ -3,10 +3,55 @@ import { Window } from "../ui/window.js";
 
 export class Weather {
     constructor() {
-        const windowEl = Window("Weather", {}, Element("div", { class: "sf-weather" }));
+        this.weatherbox = Element("div", { class: "sf-weather" });
+        const windowEl = Window("Weather", {}, this.weatherbox);
+        this.initWeather();
         if (!windowEl) return;
         document.body.appendChild(windowEl);
     }
+
+    initWeather = () => {
+        // TODO: give context to location prompt
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                this.lat = position.coords.latitude;
+                this.long = position.coords.longitude;
+                this.getWeather();
+                setInterval(this.getWeather, 15 * 60 * 1000);
+            },
+            () => {
+                this.weatherbox.innerText = "--°F ❓";
+            }
+        );
+    };
+
+    getWeather = async () => {
+        const response = await fetch(`\
+https://api.open-meteo.com/v1/forecast\
+?latitude=${this.lat}\
+&longitude=${this.long}\
+&current=temperature_2m,weather_code,is_day\
+&daily=temperature_2m_min,temperature_2m_max\
+&timezone=auto&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch\
+`);
+        this.weatherbox.innerHTML = "";
+        const weather = await response.json();
+        const temp = weather.current.temperature_2m;
+        const unit = weather.current_units.temperature_2m;
+        const cond = weather.current.weather_code;
+        const isDay = weather.current.is_day;
+        const low = weather.daily.temperature_2m_min[0];
+        const high = weather.daily.temperature_2m_max[0];
+        this.weatherbox.appendChild(
+            Element(
+                "div",
+                {},
+                Element("div", {}, ` ${Weather.getConditionIcon(cond, isDay)}`),
+                Element("div", {}, `${Math.round(temp)}${unit}`),
+                Element("div", {}, `H: ${Math.round(high)} L: ${Math.round(low)}`)
+            )
+        );
+    };
 
     static getConditionIcon = (condition, isDay) => {
         /*

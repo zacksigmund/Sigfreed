@@ -44,6 +44,7 @@
     .dragger {
         flex: 1 1 auto;
         block-size: 100%;
+        min-inline-size: 32px;
         cursor: grab;
         padding-block: 8px;
 
