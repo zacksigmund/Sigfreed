@@ -16,9 +16,9 @@ export const Desktop = () => {
                 "div",
                 {},
                 DockIcon("/todo/images/todo.app.png", () => new Todo()),
+                DockIcon("/calendar/images/calendar.app.png", () => new Calendar()),
                 DockIcon("/solitaire/images/solitaire.app.png", () => new Solitaire()),
-                DockIcon("/freecell/images/freecell.app.png", () => new FreeCell()),
-                DockIcon("/calendar/images/calendar.app.png", () => new Calendar())
+                DockIcon("/freecell/images/freecell.app.png", () => new FreeCell())
             )
         )
     );
