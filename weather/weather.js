@@ -2,22 +2,23 @@ import { Element } from "../ui/element.js";
 import { Window } from "../ui/window.js";
 
 export class Weather {
-    constructor() {
+    constructor(callback) {
         this.weatherbox = Element("div", { class: "sf-weather" });
         const windowEl = Window("Weather", {}, this.weatherbox);
-        this.initWeather();
+        this.initWeather(callback);
         if (!windowEl) return;
         document.body.appendChild(windowEl);
     }
 
-    initWeather = () => {
-        // TODO: give context to location prompt
+    initWeather = (callback) => {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 this.lat = position.coords.latitude;
                 this.long = position.coords.longitude;
+                localStorage.setItem("coords", JSON.stringify({ lat: this.lat, long: this.long }));
                 this.getWeather();
                 setInterval(this.getWeather, 15 * 60 * 1000);
+                callback?.();
             },
             () => {
                 this.weatherbox.innerHTML = `

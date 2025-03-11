@@ -2,12 +2,11 @@ import { Calendar } from "../calendar/calendar.js";
 import { Element } from "../ui/element.js";
 import { Weather } from "../weather/weather.js";
 
-let lat, long;
-let weatherbox, datebox, timebox;
+let coords, weatherbox, datebox, timebox;
 
 export const StatusBar = () => {
     weatherbox = Element("button", { class: "weather" });
-    weatherbox.addEventListener("click", () => new Weather());
+    weatherbox.addEventListener("click", () => new Weather(initWeather));
     initWeather();
     datebox = Element("button", { class: "datebox" });
     datebox.addEventListener("click", () => new Calendar());
@@ -24,22 +23,18 @@ export const StatusBar = () => {
 
 const initWeather = () => {
     // TODO: give context to location prompt
-    navigator.geolocation.getCurrentPosition(
-        (position) => {
-            lat = position.coords.latitude;
-            long = position.coords.longitude;
-            getWeather();
-            setInterval(getWeather, 15 * 60 * 1000);
-        },
-        () => {
-            weatherbox.innerText = "--°F ❓";
-        }
-    );
+    coords = JSON.parse(localStorage.getItem("coords"));
+    if (coords === null) {
+        weatherbox.innerText = "--°F ❓";
+        return;
+    }
+    getWeather();
+    setInterval(getWeather, 15 * 60 * 1000);
 };
 
 const getWeather = async () => {
     const response = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current=temperature_2m,weather_code,is_day&timezone=auto&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch`
+        `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.long}&current=temperature_2m,weather_code,is_day&timezone=auto&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch`
     );
     const weather = await response.json();
     const temp = weather.current.temperature_2m;
