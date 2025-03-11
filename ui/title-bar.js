@@ -10,6 +10,7 @@ export const TitleBar = (menuItems, title, onClose) => {
     );
     const dragger = Element("div", { class: "dragger" }, Element("div"));
     const closeBtn = Element("button", { class: "close-button", "aria-label": "Close window" });
+    // TODO: focus trap
     const menu = Element(
         "ul",
         { class: "menu", role: "menu" },
