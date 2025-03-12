@@ -41,10 +41,10 @@ https://api.open-meteo.com/v1/forecast\
 ?latitude=${this.lat}\
 &longitude=${this.long}\
 &current=temperature_2m,weather_code,is_day\
-&daily=temperature_2m_min,temperature_2m_max\
+&daily=weather_code,temperature_2m_min,temperature_2m_max\
+&hourly=temperature_2m,weather_code\
 &timezone=auto&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch\
 `);
-        this.weatherbox.innerHTML = "";
         const weather = await response.json();
         const temp = weather.current.temperature_2m;
         const unit = weather.current_units.temperature_2m;
@@ -52,13 +52,73 @@ https://api.open-meteo.com/v1/forecast\
         const isDay = weather.current.is_day;
         const low = weather.daily.temperature_2m_min[0];
         const high = weather.daily.temperature_2m_max[0];
+        const hourly = Array.from(Array(3)).map((_, i) => ({
+            time: weather.hourly.time[i],
+            temp: weather.hourly.temperature_2m[i],
+            cond: weather.hourly.weather_code[i],
+        }));
+        const daily = Array.from(Array(3)).map((_, i) => ({
+            day: weather.daily.time[i + 1],
+            high: weather.daily.temperature_2m_max[i + 1],
+            low: weather.daily.temperature_2m_min[i + 1],
+            cond: weather.daily.weather_code[i + 1],
+        }));
+        this.weatherbox.innerHTML = "";
         this.weatherbox.appendChild(
             Element(
                 "div",
-                {},
-                Element("div", {}, ` ${Weather.getConditionIcon(cond, isDay)}`),
-                Element("div", {}, `${Math.round(temp)}${unit}`),
-                Element("div", {}, `H: ${Math.round(high)} L: ${Math.round(low)}`)
+                { class: "current" },
+                Element("div", { class: "icon" }, Weather.getConditionIcon(cond, isDay)),
+                Element("div", { class: "temp" }, `${Math.round(temp)}${unit}`),
+                Element(
+                    "div",
+                    { class: "hl" },
+                    Element("div", {}, `H: ${Math.round(high)}${unit}`),
+                    Element("div", {}, `L: ${Math.round(low)}${unit}`)
+                )
+            )
+        );
+        this.weatherbox.appendChild(
+            Element(
+                "div",
+                { class: "forecast" },
+                Element(
+                    "div",
+                    { class: "hourly" },
+                    ...hourly.map((hour) =>
+                        Element(
+                            "div",
+                            { class: "hour-tile" },
+                            Element(
+                                "div",
+                                {},
+                                new Date(hour.time)
+                                    .toLocaleTimeString("en-US", { hour: "numeric" })
+                                    .toLowerCase()
+                            ),
+                            Element("div", {}, Weather.getConditionIcon(hour.cond)),
+                            Element("div", {}, Math.round(hour.temp) + unit)
+                        )
+                    )
+                ),
+                Element(
+                    "div",
+                    { class: "daily" },
+                    ...daily.map((day) =>
+                        Element(
+                            "div",
+                            { class: "day-tile" },
+                            Element(
+                                "div",
+                                {},
+                                new Date(day.day).toLocaleDateString("en-US", { weekday: "short" })
+                            ),
+                            Element("div", {}, Weather.getConditionIcon(day.cond)),
+                            Element("div", {}, `${Math.round(day.high)}${unit}`),
+                            Element("div", {}, `${Math.round(day.low)}${unit}`)
+                        )
+                    )
+                )
             )
         );
     };

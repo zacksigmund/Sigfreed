@@ -1,2 +1,43 @@
 .sf-weather {
+    display: flex;
+    padding: 16px;
+    gap: 36px;
+    text-align: center;
+
+    .current {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 12px;
+
+        .icon {
+            font-size: 64px;
+        }
+
+        .temp {
+            font-size: 32px;
+        }
+    }
+
+    .forecast {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+
+        .hourly,
+        .daily {
+            display: flex;
+            gap: 16px;
+            inline-size: 100%;
+            justify-content: space-between;
+        }
+
+        .hour-tile,
+        .day-tile {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 4px;
+        }
+    }
 }
