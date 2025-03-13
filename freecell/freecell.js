@@ -41,7 +41,6 @@ export class FreeCell {
         deck.forEach((card) => (card.faceUp = true));
         for (let i = 0; i < this.columns.length; i++) {
             this.columns[i] = deck.splice(0, i < 4 ? 7 : 6);
-            this.columns[i][this.columns[i].length - 1].faceUp = true;
         }
     };
 
@@ -147,8 +146,8 @@ export class FreeCell {
             // find the highest element that's not part of the move stack
             while (
                 i > 0 &&
-                column[i].color != column[i - 1].color &&
-                column[i].rank + 1 == column[i - 1].rank
+                column[i].color !== column[i - 1].color &&
+                column[i].rank + 1 === column[i - 1].rank
             ) {
                 i--;
             }

@@ -5,7 +5,10 @@ export const TitleBar = (menuItems, title, onClose) => {
     let menuOpen = false;
     const menuBtn = Element(
         "button",
-        { class: "menu-button", ...(menuItems.length ? {} : { disabled: "disabled" }) },
+        {
+            class: "menu-button",
+            ...(Object.keys(menuItems).length ? {} : { disabled: "disabled" }),
+        },
         Element("div")
     );
     const dragger = Element("div", { class: "dragger" }, Element("div"));

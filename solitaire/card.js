@@ -88,10 +88,16 @@ export class Card {
 
     static allCards = () => {
         const cards = [];
+        for (let suit = 0; suit < 4; suit++) {
+            cards.push(...Card.oneSuit(Card.suits[suit]));
+        }
+        return cards;
+    };
+
+    static oneSuit = (suit) => {
+        const cards = [];
         for (let rank = 1; rank <= 13; rank++) {
-            for (let suit = 0; suit < 4; suit++) {
-                cards.push(new Card(rank, Card.suits[suit]));
-            }
+            cards.push(new Card(rank, suit));
         }
         return cards;
     };

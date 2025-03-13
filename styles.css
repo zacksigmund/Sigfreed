@@ -11,5 +11,6 @@
 @import "./calendar/calendar.css";
 @import "./solitaire/solitaire.css";
 @import "./freecell/freecell.css";
+@import "./spider/spider.css";
 @import "./todo/todo.css";
 @import "./weather/weather.css";
