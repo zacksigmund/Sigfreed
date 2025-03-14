@@ -21,6 +21,7 @@ export class Weather {
                 callback?.();
             },
             () => {
+                this.weatherbox.classList.add("error");
                 this.weatherbox.innerHTML = `
                     <p>
                         You'll need to enable location access to get the weather.

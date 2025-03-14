@@ -4,6 +4,14 @@
     gap: 36px;
     text-align: center;
 
+    &.error {
+        flex-direction: column;
+
+        p {
+            margin: 0;
+        }
+    }
+
     .current {
         display: flex;
         flex-direction: column;
