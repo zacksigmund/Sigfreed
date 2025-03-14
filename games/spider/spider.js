@@ -1,6 +1,6 @@
+import { Element } from "../../system/ui/element.js";
+import { Window } from "../../system/ui/window.js";
 import { Card } from "../solitaire/card.js";
-import { Element } from "../ui/element.js";
-import { Window } from "../ui/window.js";
 
 const noop = () => {};
 

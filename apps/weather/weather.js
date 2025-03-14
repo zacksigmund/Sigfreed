@@ -1,5 +1,5 @@
-import { Element } from "../ui/element.js";
-import { Window } from "../ui/window.js";
+import { Element } from "../../system/ui/element.js";
+import { Window } from "../../system/ui/window.js";
 
 export class Weather {
     constructor(callback) {

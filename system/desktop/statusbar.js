@@ -1,6 +1,6 @@
-import { Calendar } from "../calendar/calendar.js";
+import { Calendar } from "../../apps/calendar/calendar.js";
+import { Weather } from "../../apps/weather/weather.js";
 import { Element } from "../ui/element.js";
-import { Weather } from "../weather/weather.js";
 
 let coords, weatherbox, datebox, timebox;
 

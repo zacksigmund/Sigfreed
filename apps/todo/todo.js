@@ -1,9 +1,9 @@
-import { Button } from "../ui/button.js";
-import { Checkbox } from "../ui/checkbox.js";
-import { Element } from "../ui/element.js";
-import { Select } from "../ui/select.js";
-import { Textbox } from "../ui/textbox.js";
-import { Window } from "../ui/window.js";
+import { Button } from "../../system/ui/button.js";
+import { Checkbox } from "../../system/ui/checkbox.js";
+import { Element } from "../../system/ui/element.js";
+import { Select } from "../../system/ui/select.js";
+import { Textbox } from "../../system/ui/textbox.js";
+import { Window } from "../../system/ui/window.js";
 
 export class Todo {
     constructor() {
