@@ -66,7 +66,7 @@ export class Card {
     static init = (callback) => {
         Card.img = new Image();
         Card.img.onload = () => callback?.();
-        Card.img.src = "/solitaire/images/cards.png";
+        Card.img.src = "solitaire/images/cards.png";
     };
 
     static drawBack = (ctx, x, y) => {
