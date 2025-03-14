@@ -13,10 +13,12 @@ export class Solitaire {
         this.canvas = document.getElementById("solitaire");
         this.ctx = this.canvas.getContext("2d");
         this.canvas.addEventListener("click", this.click);
-        requestAnimationFrame(this.draw);
         addEventListener("contextmenu", (e) => {
             this.click(e, true);
             e.preventDefault();
+        });
+        Card.init(() => {
+            requestAnimationFrame(this.draw);
         });
     }
 

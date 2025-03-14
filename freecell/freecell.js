@@ -13,10 +13,12 @@ export class FreeCell {
         this.canvas = document.getElementById("freecell");
         this.ctx = this.canvas.getContext("2d");
         this.canvas.addEventListener("click", this.click);
-        requestAnimationFrame(this.draw);
         addEventListener("contextmenu", (e) => {
             this.click(e, true);
             e.preventDefault();
+        });
+        Card.init(() => {
+            requestAnimationFrame(this.draw);
         });
     }
 

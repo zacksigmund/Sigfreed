@@ -18,10 +18,12 @@ export class Spider {
         this.canvas = document.getElementById("spider");
         this.ctx = this.canvas.getContext("2d");
         this.canvas.addEventListener("click", this.click);
-        requestAnimationFrame(this.draw);
         addEventListener("contextmenu", (e) => {
             this.click(e, true);
             e.preventDefault();
+        });
+        Card.init(() => {
+            requestAnimationFrame(this.draw);
         });
     }
 
@@ -99,7 +101,6 @@ export class Spider {
     click = (e, altClick) => {
         const x = Math.floor(e.offsetX / 2),
             y = Math.floor(e.offsetY / 2);
-        console.log(x, y);
         if (7 < x && x < 80 && 7 < y && y < 71) {
             this.clickDecks();
         } else if (218 < x && x < 233 && 31 < y && y < 46) {

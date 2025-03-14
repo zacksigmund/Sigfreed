@@ -2,6 +2,7 @@ export class Card {
     rank;
     suit;
     static suits = ["spades", "clubs", "diamonds", "hearts"];
+    static img;
 
     constructor(rank, suit) {
         this.rank = rank;
@@ -57,33 +58,23 @@ export class Card {
     };
 
     drawFront = (ctx, x, y) => {
-        ctx.fillStyle = "white";
-        ctx.fillRect(x, y, 40, 64);
-        ctx.strokeStyle = "black";
-        ctx.lineWidth = 2;
-        ctx.strokeRect(x, y, 40, 64);
-        ctx.fillStyle = this.color;
-        ctx.font = "10px serif";
-        ctx.fillText(`${this.printedRank}${this.printedSuit}`, x + 4, y + 12);
-        ctx.font = "16px serif";
-        ctx.fillText(this.printedSuit, x + 9, y + 38);
+        const sy = Card.suits.indexOf(this.suit) * 58;
+        const sx = this.rank * 44;
+        ctx.drawImage(Card.img, sx, sy, 44, 58, x, y, 44, 58);
+    };
+
+    static init = (callback) => {
+        Card.img = new Image();
+        Card.img.onload = () => callback?.();
+        Card.img.src = "/solitaire/images/cards.png";
     };
 
     static drawBack = (ctx, x, y) => {
-        ctx.fillStyle = "skyblue";
-        ctx.fillRect(x, y, 40, 64);
-        ctx.strokeStyle = "black";
-        ctx.lineWidth = 2;
-        ctx.strokeRect(x, y, 40, 64);
-        ctx.font = "10px serif";
-        ctx.fillText("♠️♦️", x + 6, y + 28);
-        ctx.fillText("♥️♣️", x + 6, y + 40);
+        ctx.drawImage(Card.img, 0, 0, 44, 58, x, y, 44, 58);
     };
 
     static drawFrame = (ctx, x, y) => {
-        ctx.strokeStyle = "black";
-        ctx.lineWidth = 2;
-        ctx.strokeRect(x, y, 40, 64);
+        ctx.drawImage(Card.img, 0, 58, 44, 58, x, y, 44, 58);
     };
 
     static allCards = () => {
