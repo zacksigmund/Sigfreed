@@ -19,12 +19,12 @@ export const Desktop = () => {
             Element(
                 "div",
                 {},
-                DockIcon("/todo/images/todo.app.png", () => new Todo()),
-                DockIcon("/calendar/images/calendar.app.png", () => new Calendar()),
-                DockIcon("/weather/images/weather.app.png", () => new Weather()),
-                DockIcon("/solitaire/images/solitaire.app.png", () => new Solitaire()),
-                DockIcon("/freecell/images/freecell.app.png", () => new FreeCell()),
-                DockIcon("/spider/images/spider.app.png", () => new Spider())
+                DockIcon("todo/images/todo.app.png", () => new Todo()),
+                DockIcon("calendar/images/calendar.app.png", () => new Calendar()),
+                DockIcon("weather/images/weather.app.png", () => new Weather()),
+                DockIcon("solitaire/images/solitaire.app.png", () => new Solitaire()),
+                DockIcon("freecell/images/freecell.app.png", () => new FreeCell()),
+                DockIcon("spider/images/spider.app.png", () => new Spider())
             )
         )
     );
