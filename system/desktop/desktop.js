@@ -1,3 +1,4 @@
+import { Calculator } from "../../apps/calculator/calculator.js";
 import { Calendar } from "../../apps/calendar/calendar.js";
 import { Todo } from "../../apps/todo/todo.js";
 import { Weather } from "../../apps/weather/weather.js";
@@ -22,6 +23,7 @@ export const Desktop = () => {
                 DockIcon("apps/todo/todo.app.png", () => new Todo()),
                 DockIcon("apps/calendar/calendar.app.png", () => new Calendar()),
                 DockIcon("apps/weather/weather.app.png", () => new Weather()),
+                DockIcon("apps/calculator/calculator.app.png", () => new Calculator()),
                 DockIcon("games/solitaire/solitaire.app.png", () => new Solitaire()),
                 DockIcon("games/freecell/freecell.app.png", () => new FreeCell()),
                 DockIcon("games/spider/spider.app.png", () => new Spider())

@@ -5,7 +5,11 @@ export const Element = (name, attrs, ...children) => {
     }
     if (children) {
         children.map((child) =>
-            element.appendChild(typeof child === "string" ? document.createTextNode(child) : child)
+            element.appendChild(
+                (typeof child === "string" && document.createTextNode(child)) ||
+                    (typeof child === "number" && document.createTextNode(child.toString())) ||
+                    child
+            )
         );
     }
     return element;

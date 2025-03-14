@@ -1,0 +1,27 @@
+.sf-calculator {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .screen {
+        border: 4px solid var(--c-background);
+        color: var(--c-background);
+        background: var(--c-foreground);
+        padding: 8px;
+        margin: 8px;
+    }
+
+    .button-grid {
+        display: grid;
+        grid-template: repeat(5, auto) / repeat(4, auto);
+
+        :nth-child(8),
+        :nth-child(15) {
+            grid-row: span 2;
+        }
+
+        :nth-child(16) {
+            grid-column: span 2;
+        }
+    }
+}
