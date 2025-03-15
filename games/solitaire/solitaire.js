@@ -32,7 +32,7 @@ export class Solitaire {
 
     newGame = () => {
         this.discard = new CardStack();
-        this.goals = [[], [], [], []];
+        this.goals = Array.from(Array(4)).map(() => new CardStack());
         this.columns = Array.from(Array(7)).map(() => new CardStack());
         this.undoStack = [];
         this.deal();
@@ -48,7 +48,11 @@ export class Solitaire {
 
     draw = () => {
         this.ctx.clearRect(0, 0, 320, 240);
+
+        // deck
         this.deck.renderPile(this.ctx, 8, 8);
+
+        // discard
         this.discard.renderPile(this.ctx, 8 + 44, 8);
 
         // undo
@@ -57,19 +61,14 @@ export class Solitaire {
 
         // goal
         for (let i = 0; i < this.goals.length; i++) {
-            if (this.goals[i].length) {
-                this.goals[i][0].draw(this.ctx, 8 + 44 * (i + 3), 8);
-            } else {
-                Card.drawFrame(this.ctx, 8 + 44 * (i + 3), 8);
-            }
+            this.goals[i].renderPile(this.ctx, 8 + 44 * (i + 3), 8);
         }
 
         // columns
         for (let i = 0; i < this.columns.length; i++) {
-            const x = 8 + 44 * i;
-            let y = 84;
-            this.columns[i].render(this.ctx, x, y);
+            this.columns[i].render(this.ctx, 8 + 44 * i, 84);
         }
+
         requestAnimationFrame(this.draw);
     };
 
@@ -169,10 +168,10 @@ export class Solitaire {
         for (const goal of this.goals) {
             if (
                 (goal.length === 0 && card.rank === 1) ||
-                (goal.length && goal[0].suit === card.suit && goal[0].rank + 1 === card.rank)
+                (goal.length && goal.top.suit === card.suit && goal.top.rank + 1 === card.rank)
             ) {
-                goal.unshift(card);
-                this.undoStack.push(() => goal.shift());
+                goal.push(card);
+                this.undoStack.push(() => goal.draw());
                 return true;
             }
         }
