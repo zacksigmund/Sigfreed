@@ -6,6 +6,8 @@ import { Textbox } from "../../system/ui/textbox.js";
 import { Window } from "../../system/ui/window.js";
 
 export class Todo {
+    static about =
+        "Choose from multiple lists in the dropdown. You can't delete the last list, but you can make a second one and delete the first one.";
     constructor() {
         const todos = JSON.parse(localStorage.getItem("todos"));
         this.listName = (todos && Object.keys(todos)?.[0]) || "Todo";
@@ -17,6 +19,7 @@ export class Todo {
                 "Clear checked": this.clearChecked,
                 "Uncheck all": this.uncheckAll,
                 "Delete List": this.deleteList,
+                About: () => alert(Todo.about),
             },
             this.container
         );

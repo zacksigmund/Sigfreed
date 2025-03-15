@@ -3,6 +3,8 @@ import { Element } from "../../system/ui/element.js";
 import { Window } from "../../system/ui/window.js";
 
 export class Calculator {
+    static about =
+        "Does not support order of operations! DOES support keyboard input. You need to get focus in the window though, which can be tricky currently. Will look to fix that in the future.";
     static operators = {
         plus: (a, b) => a + b,
         minus: (a, b) => a - b,
@@ -110,7 +112,7 @@ export class Calculator {
         );
         const windowEl = Window(
             "Calculator",
-            {},
+            { About: () => alert(Calculator.about) },
             Element(
                 "div",
                 { class: "sf-calculator" },
@@ -139,6 +141,7 @@ export class Calculator {
             )
         );
         if (!windowEl) return;
+        // TODO: Listening to only windowEl makes it hard to pick up events sometimes
         windowEl.addEventListener("keydown", (event) => {
             const digit = parseInt(event.key, 10);
             if (!isNaN(digit)) {

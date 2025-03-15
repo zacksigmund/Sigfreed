@@ -3,6 +3,8 @@ import { Element } from "../../system/ui/element.js";
 import { Window } from "../../system/ui/window.js";
 
 export class Calendar {
+    static about =
+        "Events coming... event-ually! For now, enjoy knowing which date is on which day!";
     get currentMonthString() {
         const options = { month: "long" };
         if (this.currentMonth.getFullYear() !== this.thisYear) {
@@ -19,7 +21,7 @@ export class Calendar {
         this.tbody = Element("tbody", {});
         const windowEl = Window(
             "Calendar",
-            {},
+            { About: () => alert(Calendar.about) },
             Element(
                 "div",
                 { class: "sf-calendar" },

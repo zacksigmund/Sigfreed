@@ -2,9 +2,11 @@ import { Element } from "../../system/ui/element.js";
 import { Window } from "../../system/ui/window.js";
 
 export class Weather {
+    static about =
+        "Currently only supports browser location. Will look into city/ZIP in the future. Your location data is only stored in local storage and passed to the Open-meteo API. Will add some settings and maybe some more data but plan to keep it simple still.";
     constructor(callback) {
         this.weatherbox = Element("div", { class: "sf-weather" });
-        const windowEl = Window("Weather", {}, this.weatherbox);
+        const windowEl = Window("Weather", { About: () => alert(Weather.about) }, this.weatherbox);
         this.initWeather(callback);
         if (!windowEl) return;
         document.body.appendChild(windowEl);
