@@ -33,9 +33,13 @@ const initWeather = () => {
 };
 
 const getWeather = async () => {
-    const response = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.long}&current=temperature_2m,weather_code,is_day&timezone=auto&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch`
-    );
+    const units = localStorage.getItem("weather.units") || "F";
+    const response = await fetch(`\
+https://api.open-meteo.com/v1/forecast\
+?latitude=${coords.lat}&longitude=${coords.long}\
+&current=temperature_2m,weather_code,is_day\
+&timezone=auto${units === "F" ? "&temperature_unit=fahrenheit" : ""}\
+`);
     const weather = await response.json();
     const temp = weather.current.temperature_2m;
     const cond = weather.current.weather_code;

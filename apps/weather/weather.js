@@ -3,16 +3,27 @@ import { Window } from "../../system/ui/window.js";
 
 export class Weather {
     static about =
-        "Currently only supports browser location. Will look into city/ZIP in the future. Your location data is only stored in local storage and passed to the Open-meteo API. Will add some settings and maybe some more data but plan to keep it simple still.";
+        "Currently only supports browser location. Will look into city/ZIP in the future. Your location data is only stored in local storage and passed to the Open-meteo API. May add some more data but plan to keep it simple still.";
     constructor(callback) {
         this.weatherbox = Element("div", { class: "sf-weather" });
-        const windowEl = Window("Weather", { About: () => alert(Weather.about) }, this.weatherbox);
+        const windowEl = Window(
+            "Weather",
+            { "Toggle C/F": this.toggleUnits, About: () => alert(Weather.about) },
+            this.weatherbox
+        );
         this.initWeather(callback);
         if (!windowEl) return;
         document.body.appendChild(windowEl);
     }
 
+    toggleUnits = () => {
+        this.units = this.units === "F" ? "C" : "F";
+        localStorage.setItem("weather.units", this.units);
+        this.getWeather();
+    };
+
     initWeather = (callback) => {
+        this.units = localStorage.getItem("weather.units") || "F";
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 this.lat = position.coords.latitude;
@@ -46,7 +57,7 @@ https://api.open-meteo.com/v1/forecast\
 &current=temperature_2m,weather_code,is_day\
 &daily=weather_code,temperature_2m_min,temperature_2m_max\
 &hourly=temperature_2m,weather_code\
-&timezone=auto&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch\
+&timezone=auto${this.units === "F" ? "&temperature_unit=fahrenheit" : ""}\
 `);
         const weather = await response.json();
         const temp = weather.current.temperature_2m;
