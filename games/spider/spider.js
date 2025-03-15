@@ -10,6 +10,9 @@ decksBySuit[2] = ["spades", "spades", "spades", "spades", "hearts", "hearts", "h
 decksBySuit[4] = ["spades", "spades", "hearts", "hearts", "clubs", "clubs", "diamonds", "diamonds"];
 
 export class Spider {
+    static about =
+        "Only click for now, no drag-and-drop. And only click on columns. Left click tries to move from the bottom-most card, and right click from the top-most. When you've got K-A, click again to send it to the goal, it won't go automatically. Enhancements coming soon!";
+
     constructor() {
         const ui = this.render();
         if (!ui) return;
@@ -34,6 +37,7 @@ export class Spider {
                 "New 1-suit game": () => this.newGame(1),
                 "New 2-suit game": () => this.newGame(2),
                 "New 4-suit game": () => this.newGame(4),
+                About: () => alert(Spider.about),
             },
             Element("canvas", { id: "spider", width: 452, height: 320 })
         );

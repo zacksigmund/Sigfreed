@@ -5,6 +5,9 @@ import { Card } from "./card.js";
 const noop = () => {};
 
 export class Solitaire {
+    static about =
+        "Only click for now, no drag-and-drop. And only click on columns. Left click tries to move from the bottom-most card, and right click from the top-most. Enhancements coming soon!";
+
     constructor() {
         const ui = this.render();
         if (!ui) return;
@@ -25,7 +28,7 @@ export class Solitaire {
     render = () => {
         return Window(
             "Solitaire",
-            { "New Game": this.newGame },
+            { "New Game": this.newGame, About: () => alert(Solitaire.about) },
             Element("canvas", { id: "solitaire", width: 320, height: 240 })
         );
     };
