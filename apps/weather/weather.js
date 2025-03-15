@@ -66,10 +66,12 @@ https://api.open-meteo.com/v1/forecast\
         const isDay = weather.current.is_day;
         const low = weather.daily.temperature_2m_min[0];
         const high = weather.daily.temperature_2m_max[0];
+        const nextHour = new Date().getHours() + 1;
+        // The hourly response always starts from 12am
         const hourly = Array.from(Array(3)).map((_, i) => ({
-            time: weather.hourly.time[i],
-            temp: weather.hourly.temperature_2m[i],
-            cond: weather.hourly.weather_code[i],
+            time: weather.hourly.time[i + nextHour],
+            temp: weather.hourly.temperature_2m[i + nextHour],
+            cond: weather.hourly.weather_code[i + nextHour],
         }));
         const daily = Array.from(Array(3)).map((_, i) => ({
             day: weather.daily.time[i + 1],
