@@ -36,7 +36,7 @@ export class Todo {
                 "aria-label": "New todo item",
                 autocomplete: "off",
             }),
-            Button({ type: "submit" }, "Add")
+            Button({ type: "submit" }, null, "Add")
         );
         form.addEventListener("submit", this.addTodoItem);
 

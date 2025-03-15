@@ -15,19 +15,7 @@ export class Calendar {
         this.currentMonth = new Date();
         this.thisYear = this.currentMonth.getFullYear();
         this.currentMonth.setDate(1);
-        this.prevButton = Button({ "aria-label": "Previous month" }, "<");
-        this.prevButton.addEventListener("click", () => {
-            this.currentMonth.setMonth(this.currentMonth.getMonth() - 1);
-            this.monthName.innerText = this.currentMonthString;
-            this.fillMonth();
-        });
         this.monthName = Element("h1", {}, this.currentMonthString);
-        this.nextButton = Button({ "aria-label": "Next month" }, ">");
-        this.nextButton.addEventListener("click", () => {
-            this.currentMonth.setMonth(this.currentMonth.getMonth() + 1);
-            this.monthName.innerText = this.currentMonthString;
-            this.fillMonth();
-        });
         this.tbody = Element("tbody", {});
         const windowEl = Window(
             "Calendar",
@@ -38,9 +26,25 @@ export class Calendar {
                 Element(
                     "div",
                     { class: "navbar" },
-                    this.prevButton,
+                    Button(
+                        { "aria-label": "Previous month" },
+                        () => {
+                            this.currentMonth.setMonth(this.currentMonth.getMonth() - 1);
+                            this.monthName.innerText = this.currentMonthString;
+                            this.fillMonth();
+                        },
+                        "<"
+                    ),
                     this.monthName,
-                    this.nextButton
+                    Button(
+                        { "aria-label": "Next month" },
+                        () => {
+                            this.currentMonth.setMonth(this.currentMonth.getMonth() + 1);
+                            this.monthName.innerText = this.currentMonthString;
+                            this.fillMonth();
+                        },
+                        ">"
+                    )
                 ),
                 Element(
                     "table",
@@ -87,6 +91,4 @@ export class Calendar {
             dateCounter.setDate(dateCounter.getDate() + 1);
         }
     };
-
-    getMonthName = () => {};
 }
