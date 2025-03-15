@@ -7,7 +7,7 @@ const noop = () => {};
 
 export class FreeCell {
     static about =
-        "Only click for now, no drag-and-drop. And only click on columns. Left click tries to move from the bottom-most card, and right click from the top-most. Enhancements coming soon!";
+        "Only click the cards for now, no drag-and-drop. You can click specific cards within the stack, though.";
 
     constructor() {
         const ui = this.render();
