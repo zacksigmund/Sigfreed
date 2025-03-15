@@ -31,7 +31,7 @@ export class Solitaire {
     };
 
     newGame = () => {
-        this.discard = [];
+        this.discard = new CardStack();
         this.goals = [[], [], [], []];
         this.columns = Array.from(Array(7)).map(() => new CardStack());
         this.undoStack = [];
@@ -39,29 +39,17 @@ export class Solitaire {
     };
 
     deal = () => {
-        this.deck = Card.shuffle(Card.allCards());
+        this.deck = new CardStack(Card.shuffle(Card.allCards()));
         for (let i = 0; i < this.columns.length; i++) {
-            this.columns[i].assign(this.deck.splice(0, i + 1));
+            this.columns[i].assign(this.deck.draw(i + 1));
             this.columns[i].top.faceUp = true;
         }
     };
 
     draw = () => {
         this.ctx.clearRect(0, 0, 320, 240);
-
-        // deck
-        if (this.deck.length) {
-            Card.drawBack(this.ctx, 8, 8);
-        } else {
-            Card.drawFrame(this.ctx, 8, 8);
-        }
-
-        // discard
-        if (this.discard.length) {
-            this.discard[0].draw(this.ctx, 8 + 44, 8);
-        } else {
-            Card.drawFrame(this.ctx, 8 + 44, 8);
-        }
+        this.deck.renderPile(this.ctx, 8, 8);
+        this.discard.renderPile(this.ctx, 8 + 44, 8);
 
         // undo
         this.ctx.font = "16px serif";
@@ -105,32 +93,28 @@ export class Solitaire {
 
     clickDeck = () => {
         if (this.deck.length) {
-            const drawn = this.deck.shift();
+            const [drawn] = this.deck.draw();
             drawn.faceUp = true;
-            this.discard.unshift(drawn);
+            this.discard.push(drawn);
             this.undoStack.push(() => {
-                this.discard.shift();
+                this.discard.draw();
                 drawn.faceUp = false;
-                this.deck.unshift(drawn);
+                this.deck.push(drawn);
             }, noop);
         } else {
-            this.discard.forEach((card) => (card.faceUp = false));
-            this.deck = this.discard.reverse();
-            this.discard = [];
+            this.deck.assign(this.discard.flip());
             this.undoStack.push(() => {
-                this.deck.forEach((card) => (card.faceUp = true));
-                this.discard = this.deck.reverse();
-                this.deck = [];
+                this.discard.assign(this.deck.flip());
             }, noop);
         }
     };
 
     clickDiscard = () => {
         if (!this.discard.length) return;
-        const moved = this.tryGoal(this.discard[0]) || this.tryMove([this.discard[0]]);
+        const moved = this.tryGoal(this.discard.top) || this.tryMove([this.discard.top]);
         if (moved) {
-            const card = this.discard.shift();
-            this.undoStack.push(() => this.discard.unshift(card));
+            const card = this.discard.draw();
+            this.undoStack.push(() => this.discard.push(card));
         }
     };
 

@@ -13,8 +13,8 @@ export class CardStack {
         return this.cards.length;
     }
 
-    constructor() {
-        this.cards = [];
+    constructor(cards) {
+        this.cards = cards ?? [];
     }
 
     assign = (cards) => {
@@ -37,6 +37,14 @@ export class CardStack {
         return this.cards.splice(-1 * count);
     };
 
+    flip = () => {
+        const arr = this.cards;
+        this.cards = [];
+        arr.forEach((card) => (card.faceUp = !card.faceUp));
+        arr.reverse();
+        return arr;
+    };
+
     render = (ctx, ox, oy) => {
         const x = ox;
         let y = oy;
@@ -49,6 +57,14 @@ export class CardStack {
             }
         } else {
             Card.drawFrame(ctx, x, y);
+        }
+    };
+
+    renderPile = (ctx, ox, oy) => {
+        if (this.cards.length) {
+            this.top.draw(ctx, ox, oy);
+        } else {
+            Card.drawFrame(ctx, ox, oy);
         }
     };
 
