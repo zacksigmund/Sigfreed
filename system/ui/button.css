@@ -8,7 +8,8 @@
         color: var(--c-foreground);
     }
 
-    &:active {
+    &:active,
+    &.pushed {
         border-image-source: url(images/border-pressed.png);
 
         div {
@@ -20,7 +21,8 @@
         outline: none;
         border-image: url(images/border-outline.png) 4 fill / 16px;
 
-        &:active {
+        &:active,
+        &.pushed {
             border-image-source: url(images/border-outline-pressed.png);
         }
     }
