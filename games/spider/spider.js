@@ -1,6 +1,7 @@
 import { Element } from "../../system/ui/element.js";
 import { Window } from "../../system/ui/window.js";
 import { Card } from "../solitaire/card.js";
+import { CardStack } from "../solitaire/cardStack.js";
 
 const noop = () => {};
 
@@ -11,7 +12,7 @@ decksBySuit[4] = ["spades", "spades", "hearts", "hearts", "clubs", "clubs", "dia
 
 export class Spider {
     static about =
-        "Only click for now, no drag-and-drop. And only click on columns. Left click tries to move from the bottom-most card, and right click from the top-most. When you've got K-A, click again to send it to the goal, it won't go automatically. Enhancements coming soon!";
+        "Only click the cards for now, no drag-and-drop. You can click specific cards within the stack, though. When you've got K-A, click the K to send it to the goal, it won't go automatically.";
 
     constructor() {
         const ui = this.render();
@@ -21,10 +22,6 @@ export class Spider {
         this.canvas = document.getElementById("spider");
         this.ctx = this.canvas.getContext("2d");
         this.canvas.addEventListener("click", this.click);
-        addEventListener("contextmenu", (e) => {
-            this.click(e, true);
-            e.preventDefault();
-        });
         Card.init(() => {
             requestAnimationFrame(this.draw);
         });
@@ -46,20 +43,24 @@ export class Spider {
     newGame = (suits) => {
         this.decks = [];
         this.clears = [];
-        this.columns = [[], [], [], [], [], [], [], [], [], []];
+        this.columns = Array.from(Array(10)).map(() => {
+            const stack = new CardStack();
+            stack.tallStackLength = 12;
+            return stack;
+        });
         this.undoStack = [];
         this.deal(suits);
     };
 
     deal = (suits) => {
         const cards = decksBySuit[suits].flatMap((suit) => Card.oneSuit(suit));
-        const deck = Card.shuffle(cards);
+        const deck = new CardStack(Card.shuffle(cards));
         for (let i = 0; i < this.columns.length; i++) {
-            this.columns[i] = deck.splice(0, i < 4 ? 6 : 5);
-            this.columns[i][this.columns[i].length - 1].faceUp = true;
+            this.columns[i].assign(deck.draw(i < 4 ? 6 : 5));
+            this.columns[i].top.faceUp = true;
         }
         for (let i = 0; i < 5; i++) {
-            this.decks.push(deck.splice(0, 10));
+            this.decks.push(new CardStack(deck.draw(10)));
         }
     };
 
@@ -68,7 +69,7 @@ export class Spider {
 
         // decks
         for (let i = 0; i < this.decks.length; i++) {
-            Card.drawBack(this.ctx, 8 + 8 * i, 8);
+            this.decks[i].renderPile(this.ctx, 8 + 8 * i, 8);
         }
 
         // undo
@@ -77,32 +78,18 @@ export class Spider {
 
         // clears
         for (let i = 0; i < this.clears.length; i++) {
-            this.clears[i][0].draw(this.ctx, 452 - 8 - 44 - 8 * i, 8);
+            this.clears[i].renderPile(this.ctx, 452 - 8 - 44 - 8 * i, 8);
         }
 
         // columns
         for (let i = 0; i < this.columns.length; i++) {
-            const x = 8 + 44 * i;
-            let y = 84;
-            const column = this.columns[i];
-            if (column.length) {
-                for (let j = 0; j < column.length; j++) {
-                    const card = column[j];
-                    card.draw(this.ctx, x, y);
-                    y += card.faceUp
-                        ? column.filter((card) => card.faceUp).length < 12
-                            ? 16
-                            : 10
-                        : 4;
-                }
-            } else {
-                Card.drawFrame(this.ctx, x, y);
-            }
+            this.columns[i].render(this.ctx, 8 + 44 * i, 84);
         }
+
         requestAnimationFrame(this.draw);
     };
 
-    click = (e, altClick) => {
+    click = (e) => {
         const x = Math.floor(e.offsetX / 2),
             y = Math.floor(e.offsetY / 2);
         if (7 < x && x < 80 && 7 < y && y < 71) {
@@ -111,9 +98,24 @@ export class Spider {
             this.clickUndo();
         } else if (y > 83) {
             const colNum = Math.floor((x - 8) / 44);
+            if (colNum < 0 || colNum >= this.columns.length) return;
             const column = this.columns[colNum];
-            this.clickColumns(column, altClick);
+            const cards = column.click(y - 84);
+            if (this.stackIsLegal(cards)) {
+                this.clickColumns(column, cards);
+            }
         }
+    };
+
+    stackIsLegal = (cards) => {
+        for (let i = 0; i < cards.length - 1; i++) {
+            if (cards[i].suit === cards[i + 1].suit && cards[i].rank === cards[i + 1].rank + 1) {
+                continue;
+            } else {
+                return false;
+            }
+        }
+        return true;
     };
 
     clickDecks = () => {
@@ -121,20 +123,19 @@ export class Spider {
         if (this.columns.some((col) => col.length === 0)) return;
         const cards = this.decks.pop();
         for (const col of this.columns) {
-            const card = cards.pop();
+            const [card] = cards.draw();
             card.faceUp = true;
             col.push(card);
         }
         this.undoStack.push(() => {
             const cards = [];
             for (const col of this.columns) {
-                const card = col.pop();
+                const [card] = col.draw();
                 card.faceUp = false;
                 cards.unshift(card);
             }
-            this.decks.push(cards);
-        });
-        this.undoStack.push(noop);
+            this.decks.push(new CardStack(cards));
+        }, noop);
     };
 
     clickUndo = () => {
@@ -144,48 +145,24 @@ export class Spider {
         }
     };
 
-    clickColumns = (column, altClick) => {
+    clickColumns = (column, cards) => {
         if (!column.length) return;
 
-        let i = column.length - 1;
-        let cond = () =>
-            i >= 0 &&
-            column[i].faceUp &&
-            (i === column.length - 1 ||
-                (column[i + 1].suit === column[i].suit &&
-                    column[i + 1].rank + 1 === column[i].rank));
-        let inc = () => i--;
-        if (!altClick) {
-            cond = () => i < column.length;
-            inc = () => i++;
-            // find the highest element that's not part of the move stack
-            while (
-                i > 0 &&
-                column[i - 1].faceUp &&
-                column[i].suit === column[i - 1].suit &&
-                column[i].rank + 1 === column[i - 1].rank
-            ) {
-                i--;
+        let moved = this.tryMove(cards);
+        if (moved) {
+            column.draw(cards.length);
+            let flipped = false;
+            if (column.length && !column.top.faceUp) {
+                flipped = true;
+                column.top.faceUp = true;
             }
-        }
-
-        for (; cond(); inc()) {
-            let moved = this.tryMove(column.slice(i));
-            if (moved) {
-                const cards = column.splice(i);
-                let flipped = false;
-                if (column.length && !column[column.length - 1].faceUp) {
-                    flipped = true;
-                    column[column.length - 1].faceUp = true;
+            this.undoStack.push(() => {
+                if (flipped) {
+                    column.top.faceUp = false;
                 }
-                this.undoStack.push(() => {
-                    if (flipped) {
-                        column[column.length - 1].faceUp = false;
-                    }
-                    column.push(...cards);
-                });
-                return;
-            }
+                column.push(...cards);
+            });
+            return;
         }
     };
 
@@ -193,7 +170,7 @@ export class Spider {
         const card = cards[0];
 
         if (cards.length === 13 && cards[0].rank === 13 && cards[12].rank === 1) {
-            this.clears.push(cards);
+            this.clears.push(new CardStack(cards.toReversed()));
             this.undoStack.push(() => {
                 this.clears.pop();
             });
@@ -202,20 +179,20 @@ export class Spider {
 
         for (const column of this.columns) {
             if (!column.length) continue;
-            const topCard = column[column.length - 1];
+            const topCard = column.top;
             if (card.suit === topCard.suit && card.rank === topCard.rank - 1) {
                 column.push(...cards);
-                this.undoStack.push(() => column.splice(-1 * cards.length));
+                this.undoStack.push(() => column.draw(cards.length));
                 return true;
             }
         }
 
         for (const column of this.columns) {
             if (!column.length) continue;
-            const topCard = column[column.length - 1];
+            const topCard = column.top;
             if (card.rank === topCard.rank - 1) {
                 column.push(...cards);
-                this.undoStack.push(() => column.splice(-1 * cards.length));
+                this.undoStack.push(() => column.draw(cards.length));
                 return true;
             }
         }
@@ -223,7 +200,7 @@ export class Spider {
         for (const column of this.columns) {
             if (column.length) continue;
             column.push(...cards);
-            this.undoStack.push(() => column.splice(-1 * cards.length));
+            this.undoStack.push(() => column.draw(cards.length));
             return true;
         }
 
