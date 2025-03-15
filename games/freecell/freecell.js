@@ -1,6 +1,7 @@
 import { Element } from "../../system/ui/element.js";
 import { Window } from "../../system/ui/window.js";
 import { Card } from "../solitaire/card.js";
+import { CardStack } from "../solitaire/cardStack.js";
 
 const noop = () => {};
 
@@ -16,10 +17,6 @@ export class FreeCell {
         this.canvas = document.getElementById("freecell");
         this.ctx = this.canvas.getContext("2d");
         this.canvas.addEventListener("click", this.click);
-        addEventListener("contextmenu", (e) => {
-            this.click(e, true);
-            e.preventDefault();
-        });
         Card.init(() => {
             requestAnimationFrame(this.draw);
         });
@@ -35,17 +32,18 @@ export class FreeCell {
 
     newGame = () => {
         this.freeCells = [null, null, null, null];
-        this.goals = [[], [], [], []];
-        this.columns = [[], [], [], [], [], [], [], []];
+        this.goals = Array.from(Array(4)).map(() => new CardStack());
+        this.columns = Array.from(Array(8)).map(() => new CardStack());
         this.undoStack = [];
         this.deal();
     };
 
     deal = () => {
-        const deck = Card.shuffle(Card.allCards());
-        deck.forEach((card) => (card.faceUp = true));
+        const deck = new CardStack(Card.shuffle(Card.allCards()));
+        deck.cards.forEach((card) => (card.faceUp = true));
         for (let i = 0; i < this.columns.length; i++) {
-            this.columns[i] = deck.splice(0, i < 4 ? 7 : 6);
+            this.columns[i].assign(deck.draw(i < 4 ? 7 : 6));
+            this.columns[i].tallStackLength = 12;
         }
     };
 
@@ -67,36 +65,17 @@ export class FreeCell {
 
         // goal
         for (let i = 0; i < this.goals.length; i++) {
-            if (this.goals[i].length) {
-                this.goals[i][0].draw(this.ctx, 8 + 44 * (i + 5), 8);
-            } else {
-                Card.drawFrame(this.ctx, 8 + 44 * (i + 5), 8);
-            }
+            this.goals[i].renderPile(this.ctx, 8 + 44 * (i + 5), 8);
         }
 
         // columns
         for (let i = 0; i < this.columns.length; i++) {
-            const x = 8 + 22 + 44 * i;
-            let y = 84;
-            const column = this.columns[i];
-            if (column.length) {
-                for (let j = 0; j < column.length; j++) {
-                    const card = column[j];
-                    card.draw(this.ctx, x, y);
-                    y += card.faceUp
-                        ? column.filter((card) => card.faceUp).length < 12
-                            ? 16
-                            : 10
-                        : 4;
-                }
-            } else {
-                Card.drawFrame(this.ctx, x, y);
-            }
+            this.columns[i].render(this.ctx, 8 + 22 + 44 * i, 84);
         }
         requestAnimationFrame(this.draw);
     };
 
-    click = (e, altClick) => {
+    click = (e) => {
         const x = Math.floor(e.offsetX / 2),
             y = Math.floor(e.offsetY / 2);
         if (7 < x && x < 180 && 7 < y && y < 71) {
@@ -104,11 +83,26 @@ export class FreeCell {
             this.clickFreeCell(cell);
         } else if (196 < x && x < 211 && 31 < y && y < 46) {
             this.clickUndo();
-        } else if (y > 83) {
+        } else if (y >= 84) {
             const colNum = Math.floor((x - 8 - 22) / 44);
+            if (colNum < 0 || colNum >= this.columns.length) return;
             const column = this.columns[colNum];
-            this.clickColumns(column, altClick);
+            const cards = column.click(y - 84);
+            if (this.stackIsLegal(cards)) {
+                this.clickColumns(column, cards);
+            }
         }
+    };
+
+    stackIsLegal = (cards) => {
+        for (let i = 0; i < cards.length - 1; i++) {
+            if (cards[i].color !== cards[i + 1].color && cards[i].rank === cards[i + 1].rank + 1) {
+                continue;
+            } else {
+                return false;
+            }
+        }
+        return true;
     };
 
     clickFreeCell = (cell) => {
@@ -131,42 +125,26 @@ export class FreeCell {
         }
     };
 
-    clickColumns = (column, altClick) => {
+    clickColumns = (column, cards) => {
         if (!column.length) return;
-        let moved = this.tryGoal(column[column.length - 1]);
-        if (moved) {
-            const card = column.pop();
-            this.undoStack.push(() => {
-                column.push(card);
-            });
-            return;
-        }
-
-        let i = column.length - 1;
-        let cond = () => i >= 0;
-        let inc = () => i--;
-        if (!altClick) {
-            cond = () => i < column.length;
-            inc = () => i++;
-            // find the highest element that's not part of the move stack
-            while (
-                i > 0 &&
-                column[i].color !== column[i - 1].color &&
-                column[i].rank + 1 === column[i - 1].rank
-            ) {
-                i--;
-            }
-        }
-
-        for (; cond(); inc()) {
-            moved = this.tryMove(column.slice(i));
+        if (cards.length === 1) {
+            let moved = this.tryGoal(column.top);
             if (moved) {
-                const cards = column.splice(i);
+                const card = column.draw();
                 this.undoStack.push(() => {
-                    column.push(...cards);
+                    column.push(card);
                 });
                 return;
             }
+        }
+
+        let moved = this.tryMove(cards);
+        if (moved) {
+            column.draw(cards.length);
+            this.undoStack.push(() => {
+                column.push(...cards);
+            });
+            return;
         }
     };
 
@@ -174,10 +152,10 @@ export class FreeCell {
         for (const goal of this.goals) {
             if (
                 (goal.length === 0 && card.rank === 1) ||
-                (goal.length && goal[0].suit === card.suit && goal[0].rank + 1 === card.rank)
+                (goal.length && goal.top.suit === card.suit && goal.top.rank + 1 === card.rank)
             ) {
-                goal.unshift(card);
-                this.undoStack.push(() => goal.shift());
+                goal.push(card);
+                this.undoStack.push(() => goal.draw());
                 return true;
             }
         }
@@ -197,10 +175,10 @@ export class FreeCell {
 
         for (const column of this.columns) {
             if (!column.length) continue;
-            const topCard = column[column.length - 1];
-            if (card.color !== topCard.color && card.rank === topCard.rank - 1) {
+            const topCard = column.top;
+            if (card.color !== topCard.color && card.rank + 1 === topCard.rank) {
                 column.push(...cards);
-                this.undoStack.push(() => column.splice(-1 * cards.length));
+                this.undoStack.push(() => column.draw(cards.length));
                 return true;
             }
         }
@@ -210,7 +188,7 @@ export class FreeCell {
             for (const column of this.columns) {
                 if (column.length) continue;
                 column.push(...cards);
-                this.undoStack.push(() => column.splice(-1 * cards.length));
+                this.undoStack.push(() => column.draw(cards.length));
                 return true;
             }
         }

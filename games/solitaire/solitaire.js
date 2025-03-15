@@ -85,7 +85,7 @@ export class Solitaire {
             const colNum = Math.floor((x - 8) / 44);
             if (colNum < 0 || colNum >= this.columns.length) return;
             const column = this.columns[colNum];
-            const cards = column.click(x - 8 - 44 * colNum, y - 84);
+            const cards = column.click(y - 84);
             this.clickColumns(column, cards);
         }
     };

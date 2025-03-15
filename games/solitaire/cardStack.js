@@ -15,6 +15,7 @@ export class CardStack {
 
     constructor(cards) {
         this.cards = cards ?? [];
+        this.tallStackLength = 7;
     }
 
     assign = (cards) => {
@@ -49,7 +50,8 @@ export class CardStack {
         const x = ox;
         let y = oy;
         if (this.cards.length) {
-            const tallStack = this.cards.filter((card) => card.faceUp).length >= 7;
+            const tallStack =
+                this.cards.filter((card) => card.faceUp).length >= this.tallStackLength;
             for (let i = 0; i < this.cards.length; i++) {
                 const card = this.cards[i];
                 card.draw(ctx, x, y);
@@ -68,10 +70,11 @@ export class CardStack {
         }
     };
 
-    click = (_cx, cy) => {
+    // don't care about cx because we already know it's within the column
+    click = (cy) => {
         if (!this.cards.length) return [];
         let y = 0;
-        const tallStack = this.cards.filter((card) => card.faceUp).length >= 7;
+        const tallStack = this.cards.filter((card) => card.faceUp).length >= this.tallStackLength;
         for (let i = 0; i < this.cards.length; i++) {
             const card = this.cards[i];
             const ly = y;
