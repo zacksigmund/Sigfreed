@@ -1,12 +1,13 @@
 import { Element } from "../../system/ui/element.js";
 import { Window } from "../../system/ui/window.js";
 import { Card } from "./card.js";
+import { CardStack } from "./cardStack.js";
 
 const noop = () => {};
 
 export class Solitaire {
     static about =
-        "Only click for now, no drag-and-drop. And only click on columns. Left click tries to move from the bottom-most card, and right click from the top-most. Enhancements coming soon!";
+        "Only click the cards for now, no drag-and-drop. You can click specific cards within the stack, though.";
 
     constructor() {
         const ui = this.render();
@@ -16,10 +17,6 @@ export class Solitaire {
         this.canvas = document.getElementById("solitaire");
         this.ctx = this.canvas.getContext("2d");
         this.canvas.addEventListener("click", this.click);
-        addEventListener("contextmenu", (e) => {
-            this.click(e, true);
-            e.preventDefault();
-        });
         Card.init(() => {
             requestAnimationFrame(this.draw);
         });
@@ -36,7 +33,7 @@ export class Solitaire {
     newGame = () => {
         this.discard = [];
         this.goals = [[], [], [], []];
-        this.columns = [[], [], [], [], [], [], []];
+        this.columns = Array.from(Array(7)).map(() => new CardStack());
         this.undoStack = [];
         this.deal();
     };
@@ -44,8 +41,8 @@ export class Solitaire {
     deal = () => {
         this.deck = Card.shuffle(Card.allCards());
         for (let i = 0; i < this.columns.length; i++) {
-            this.columns[i] = this.deck.splice(0, i + 1);
-            this.columns[i][this.columns[i].length - 1].faceUp = true;
+            this.columns[i].assign(this.deck.splice(0, i + 1));
+            this.columns[i].top.faceUp = true;
         }
     };
 
@@ -83,25 +80,12 @@ export class Solitaire {
         for (let i = 0; i < this.columns.length; i++) {
             const x = 8 + 44 * i;
             let y = 84;
-            const column = this.columns[i];
-            if (column.length) {
-                for (let j = 0; j < column.length; j++) {
-                    const card = column[j];
-                    card.draw(this.ctx, x, y);
-                    y += card.faceUp
-                        ? column.filter((card) => card.faceUp).length < 7
-                            ? 16
-                            : 10
-                        : 4;
-                }
-            } else {
-                Card.drawFrame(this.ctx, x, y);
-            }
+            this.columns[i].render(this.ctx, x, y);
         }
         requestAnimationFrame(this.draw);
     };
 
-    click = (e, altClick) => {
+    click = (e) => {
         const x = Math.floor(e.offsetX / 2),
             y = Math.floor(e.offsetY / 2);
         if (7 < x && x < 47 && 7 < y && y < 71) {
@@ -110,10 +94,12 @@ export class Solitaire {
             this.clickDiscard();
         } else if (109 < x && x < 124 && 31 < y && y < 46) {
             this.clickUndo();
-        } else if (y > 83) {
-            const colNum = Math.floor((x - 8) / 42);
+        } else if (y >= 84) {
+            const colNum = Math.floor((x - 8) / 44);
+            if (colNum < 0 || colNum >= this.columns.length) return;
             const column = this.columns[colNum];
-            this.clickColumns(column, altClick);
+            const cards = column.click(x - 8 - 44 * colNum, y - 84);
+            this.clickColumns(column, cards);
         }
     };
 
@@ -155,52 +141,43 @@ export class Solitaire {
         }
     };
 
-    clickColumns = (column, altClick) => {
-        if (!column.length) return;
-        let moved = this.tryGoal(column[column.length - 1]);
-        if (moved) {
-            const card = column.pop();
-            let flipped = false;
-            if (column.length && !column[column.length - 1].faceUp) {
-                flipped = true;
-                column[column.length - 1].faceUp = true;
-            }
-            this.undoStack.push(() => {
-                if (flipped) {
-                    column[column.length - 1].faceUp = false;
-                }
-                column.push(card);
-            });
-            return;
-        }
-
-        let i = 0;
-        let cond = () => i < column.length;
-        let inc = () => i++;
-        if (altClick) {
-            i = column.length - 1;
-            cond = () => i >= 0;
-            inc = () => i--;
-        }
-
-        for (; cond(); inc()) {
-            if (!column[i].faceUp) continue;
-            moved = this.tryMove(column.slice(i));
+    clickColumns = (column, cards) => {
+        if (!cards.length) return;
+        if (cards.length === 1) {
+            const card = column.top;
+            let moved = this.tryGoal(card);
             if (moved) {
-                const cards = column.splice(i);
+                column.draw();
                 let flipped = false;
-                if (column.length && !column[column.length - 1].faceUp) {
+                if (column.length && !column.top.faceUp) {
                     flipped = true;
-                    column[column.length - 1].faceUp = true;
+                    column.top.faceUp = true;
                 }
                 this.undoStack.push(() => {
                     if (flipped) {
-                        column[column.length - 1].faceUp = false;
+                        column.top.faceUp = false;
                     }
-                    column.push(...cards);
+                    column.push(card);
                 });
                 return;
             }
+        }
+
+        let moved = this.tryMove(cards);
+        if (moved) {
+            column.draw(cards.length);
+            let flipped = false;
+            if (column.length && !column.top.faceUp) {
+                flipped = true;
+                column.top.faceUp = true;
+            }
+            this.undoStack.push(() => {
+                if (flipped) {
+                    column.top.faceUp = false;
+                }
+                column.push(...cards);
+            });
+            return;
         }
     };
 
@@ -224,10 +201,10 @@ export class Solitaire {
 
         for (const column of this.columns) {
             if (!column.length) continue;
-            const topCard = column[column.length - 1];
+            const topCard = column.top;
             if (card.color !== topCard.color && card.rank === topCard.rank - 1) {
                 column.push(...cards);
-                this.undoStack.push(() => column.splice(-1 * cards.length));
+                this.undoStack.push(() => column.draw(cards.length));
                 return true;
             }
         }
@@ -236,7 +213,7 @@ export class Solitaire {
             if (column.length) continue;
             if (card.rank === 13) {
                 column.push(...cards);
-                this.undoStack.push(() => column.splice(-1 * cards.length));
+                this.undoStack.push(() => column.draw(cards.length));
                 return true;
             }
         }
