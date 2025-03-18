@@ -42,6 +42,7 @@ export class Todo {
             Button({ type: "submit" }, null, "Add")
         );
         form.addEventListener("submit", this.addTodoItem);
+        this.todoList = Element("ul", { class: "todo-list" });
 
         return [
             Select(
@@ -53,7 +54,7 @@ export class Todo {
                 this.changeList
             ),
             form,
-            Element("ul", { class: "todo-list" }),
+            this.todoList,
         ];
     };
 
@@ -101,10 +102,9 @@ export class Todo {
     };
 
     addListItem = (todoText, checked = false) => {
-        const todoList = document.querySelector(".todo-list");
-        const li = Element("li", {}, Checkbox({ name: todoText, checked }, todoText));
-        li.firstElementChild.firstElementChild.addEventListener("change", this.saveList);
-        todoList.appendChild(li);
+        this.todoList.appendChild(
+            Element("li", {}, Checkbox({ name: todoText, checked }, this.saveList, todoText))
+        );
     };
 
     clearChecked = () => {
