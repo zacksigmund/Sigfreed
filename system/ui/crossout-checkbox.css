@@ -1,0 +1,20 @@
+label.sf-crossout-checkbox {
+    input[type="checkbox"] {
+        + span {
+            position: relative;
+        }
+
+        + span:after {
+            content: "";
+            display: block;
+            block-size: 4px;
+            inline-size: 0;
+            background-color: var(--c-foreground);
+            position: absolute;
+            margin-block: auto;
+            inset-block: 0;
+            inset-inline: -2px;
+            transition: all ease-out 0.2s;
+        }
+    }
+}

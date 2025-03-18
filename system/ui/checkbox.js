@@ -2,6 +2,8 @@ import { Element } from "./element.js";
 
 export const Checkbox = (attrs, onChange, ...children) => {
     const { checked, ...otherAttrs } = attrs;
+    const otherClass = attrs.class;
+    delete attrs.class;
     const input = Element("input", otherAttrs);
     input.type = "checkbox";
     input.checked = checked;
@@ -10,7 +12,7 @@ export const Checkbox = (attrs, onChange, ...children) => {
     }
     const label = Element(
         "label",
-        { class: "sf-checkbox" },
+        { class: "sf-checkbox " + otherClass },
         input,
         Element("span", {}, ...children)
     );

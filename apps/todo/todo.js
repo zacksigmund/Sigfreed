@@ -1,5 +1,5 @@
 import { Button } from "../../system/ui/button.js";
-import { Checkbox } from "../../system/ui/checkbox.js";
+import { CrossoutCheckbox } from "../../system/ui/crossout-checkbox.js";
 import { Element } from "../../system/ui/element.js";
 import { Select } from "../../system/ui/select.js";
 import { Textbox } from "../../system/ui/textbox.js";
@@ -103,7 +103,11 @@ export class Todo {
 
     addListItem = (todoText, checked = false) => {
         this.todoList.appendChild(
-            Element("li", {}, Checkbox({ name: todoText, checked }, this.saveList, todoText))
+            Element(
+                "li",
+                {},
+                CrossoutCheckbox({ name: todoText, checked }, this.saveList, todoText)
+            )
         );
     };
 
