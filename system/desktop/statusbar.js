@@ -56,6 +56,7 @@ https://api.open-meteo.com/v1/forecast\
 };
 
 const getDateTime = () => {
+    const is24h = JSON.parse(localStorage.getItem("settings.24h")) ?? false;
     const date = new Date();
     datebox.innerHTML =
         date.toLocaleDateString("en-US", {
@@ -67,6 +68,7 @@ const getDateTime = () => {
             day: "numeric",
         });
     timebox.innerHTML = date.toLocaleTimeString("en-US", {
+        hour12: !is24h,
         hour: "numeric",
         minute: "numeric",
     });
