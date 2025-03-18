@@ -1,20 +1,19 @@
 import { Calendar } from "../../apps/calendar/calendar.js";
 import { Weather } from "../../apps/weather/weather.js";
 import { Element } from "../ui/element.js";
+import { UnstyledButton } from "../ui/unstyled-button.js";
 
 let systemMenu, coords, weatherbox, datebox, timebox;
 
 export const StatusBar = () => {
-    systemMenu = Element(
-        "button",
+    systemMenu = UnstyledButton(
         { class: "system-menu" },
+        null,
         Element("img", { src: "system/ui/images/system-menu.png" })
     );
-    weatherbox = Element("button", { class: "weather" });
-    weatherbox.addEventListener("click", () => new Weather(initWeather));
+    weatherbox = UnstyledButton({ class: "weather" }, () => new Weather(initWeather));
     initWeather();
-    datebox = Element("button", { class: "datebox" });
-    datebox.addEventListener("click", () => new Calendar());
+    datebox = UnstyledButton({ class: "datebox" }, () => new Calendar());
     timebox = Element("div", { class: "timebox" });
     getDateTime();
     setInterval(getDateTime, 60 * 1000);

@@ -1,4 +1,5 @@
-import { Element } from "../ui/element.js";
+import { Element } from "./element.js";
+import { UnstyledButton } from "./unstyled-button.js";
 
 export const Select = (selected, options, onSelect) => {
     let menuOpen = false;
@@ -6,22 +7,21 @@ export const Select = (selected, options, onSelect) => {
     const menu = Element(
         "ul",
         { class: "dropdown", role: "listbox" },
-        ...Object.entries(options).map(([value, text]) => {
-            const menuButton = Element("button", {}, text);
-            menuButton.addEventListener("click", (e) => {
-                onSelect(value);
-                selected = value;
-                name.innerText = options[value];
-            });
-            return Element("li", { role: "option" }, menuButton);
-        })
-    );
-    const button = Element(
-        "button",
-        { class: "sf-select" },
-        name,
-        Element("img", { src: "system/ui/images/dropdown-arrow.png" }),
-        menu
+        ...Object.entries(options).map(([value, text]) =>
+            Element(
+                "li",
+                { role: "option" },
+                UnstyledButton(
+                    {},
+                    () => {
+                        onSelect(value);
+                        selected = value;
+                        name.innerText = options[value];
+                    },
+                    text
+                )
+            )
+        )
     );
     const toggleMenu = (e) => {
         if (!menuOpen) {
@@ -40,6 +40,11 @@ export const Select = (selected, options, onSelect) => {
             });
         }
     };
-    button.addEventListener("click", toggleMenu);
-    return button;
+    return UnstyledButton(
+        { class: "sf-select" },
+        toggleMenu,
+        name,
+        Element("img", { src: "system/ui/images/dropdown-arrow.png" }),
+        menu
+    );
 };

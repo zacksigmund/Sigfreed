@@ -1,6 +1,4 @@
-.sf-select {
-    background: none;
-    border: none;
+.sf-select.sf-ubutton {
     padding-block: 8px;
     padding-inline: 12px;
     inline-size: calc(100% + 16px);
@@ -32,7 +30,6 @@
 
         button {
             background: var(--c-shadow);
-            border: none;
             padding-block: 8px;
             padding-inline: 12px;
             inline-size: 100%;

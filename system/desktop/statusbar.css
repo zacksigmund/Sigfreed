@@ -19,9 +19,6 @@
     }
 
     button {
-        background: none;
-        border: none;
-
         &:hover,
         &:focus {
             background: var(--c-shadow);

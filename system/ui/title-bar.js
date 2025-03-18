@@ -1,39 +1,19 @@
 import { Element } from "./element.js";
+import { UnstyledButton } from "./unstyled-button.js";
 
 export const TitleBar = (menuItems, title, onClose) => {
     let moving = false;
     let menuOpen = false;
-    const menuBtn = Element(
-        "button",
-        {
-            class: "menu-button",
-            ...(Object.keys(menuItems).length ? {} : { disabled: "disabled" }),
-        },
-        Element("div")
-    );
     const dragger = Element("div", { class: "dragger" }, Element("div"));
-    const closeBtn = Element("button", { class: "close-button", "aria-label": "Close window" });
     // TODO: focus trap
     const menu = Element(
         "ul",
         { class: "menu", role: "menu" },
-        ...Object.entries(menuItems).map(([name, callback]) => {
-            const menuItem = Element("button", {}, name);
-            menuItem.addEventListener("click", (e) => {
-                callback();
-            });
-            return Element("li", { role: "menuitem" }, menuItem);
-        })
+        ...Object.entries(menuItems).map(([name, callback]) =>
+            Element("li", { role: "menuitem" }, UnstyledButton({}, callback, name))
+        )
     );
-    const titlebar = Element(
-        "div",
-        { class: "sf-titlebar" },
-        menuBtn,
-        title,
-        dragger,
-        closeBtn,
-        menu
-    );
+
     const toggleMenu = (e) => {
         if (!menuOpen) {
             menu.style.display = "flex";
@@ -51,12 +31,29 @@ export const TitleBar = (menuItems, title, onClose) => {
             });
         }
     };
-    menuBtn.addEventListener("click", toggleMenu);
+
+    const titlebar = Element(
+        "div",
+        { class: "sf-titlebar" },
+        UnstyledButton(
+            {
+                class: "menu-button",
+                ...(Object.keys(menuItems).length ? {} : { disabled: "disabled" }),
+            },
+            toggleMenu,
+            Element("div")
+        ),
+        title,
+        dragger,
+        UnstyledButton({ class: "close-button", "aria-label": "Close window" }, onClose),
+        menu
+    );
+
+    // window movement
     dragger.addEventListener("mousedown", () => {
         moving = true;
         dragger.classList.add("dragging");
     });
-    closeBtn.addEventListener("click", onClose);
     window.addEventListener("mousemove", (event) => {
         if (!moving) return;
         const windowEl = titlebar.parentElement;
@@ -84,6 +81,7 @@ export const TitleBar = (menuItems, title, onClose) => {
         dragger.classList.remove("dragging");
         saveLocation(title, windowEl.offsetTop, windowEl.offsetLeft);
     });
+
     return titlebar;
 };
 
