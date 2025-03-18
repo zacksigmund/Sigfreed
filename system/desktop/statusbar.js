@@ -2,9 +2,14 @@ import { Calendar } from "../../apps/calendar/calendar.js";
 import { Weather } from "../../apps/weather/weather.js";
 import { Element } from "../ui/element.js";
 
-let coords, weatherbox, datebox, timebox;
+let systemMenu, coords, weatherbox, datebox, timebox;
 
 export const StatusBar = () => {
+    systemMenu = Element(
+        "button",
+        { class: "system-menu" },
+        Element("img", { src: "system/ui/images/system-menu.png" })
+    );
     weatherbox = Element("button", { class: "weather" });
     weatherbox.addEventListener("click", () => new Weather(initWeather));
     initWeather();
@@ -16,13 +21,12 @@ export const StatusBar = () => {
     return Element(
         "div",
         { class: "sf-statusbar" },
-        weatherbox,
-        Element("div", { class: "datetimebox" }, datebox, timebox)
+        systemMenu,
+        Element("div", { class: "rhs" }, weatherbox, datebox, timebox)
     );
 };
 
 const initWeather = () => {
-    // TODO: give context to location prompt
     coords = JSON.parse(localStorage.getItem("coords"));
     if (coords === null) {
         weatherbox.innerText = "--°F ❓";
