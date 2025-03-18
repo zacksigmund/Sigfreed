@@ -1,4 +1,5 @@
 import { Calendar } from "../../apps/calendar/calendar.js";
+import { Settings } from "../../apps/settings/settings.js";
 import { Weather } from "../../apps/weather/weather.js";
 import { Element } from "../ui/element.js";
 import { Menu } from "../ui/menu.js";
@@ -7,7 +8,7 @@ import { UnstyledButton } from "../ui/unstyled-button.js";
 let coords, weatherbox, datebox, timebox;
 
 export const StatusBar = () => {
-    const [systemMenu, toggleSystemMenu] = Menu({ Settings: () => alert("Settings!") });
+    const [systemMenu, toggleSystemMenu] = Menu({ Settings: () => new Settings() });
     weatherbox = UnstyledButton({ class: "weather" }, () => new Weather(initWeather));
     initWeather();
     datebox = UnstyledButton({ class: "datebox" }, () => new Calendar());
