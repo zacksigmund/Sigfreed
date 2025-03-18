@@ -33,4 +33,9 @@
     .rhs {
         display: flex;
     }
+
+    .sf-menu {
+        top: 8px;
+        left: 0;
+    }
 }

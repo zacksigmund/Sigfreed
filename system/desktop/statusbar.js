@@ -1,16 +1,13 @@
 import { Calendar } from "../../apps/calendar/calendar.js";
 import { Weather } from "../../apps/weather/weather.js";
 import { Element } from "../ui/element.js";
+import { Menu } from "../ui/menu.js";
 import { UnstyledButton } from "../ui/unstyled-button.js";
 
-let systemMenu, coords, weatherbox, datebox, timebox;
+let coords, weatherbox, datebox, timebox;
 
 export const StatusBar = () => {
-    systemMenu = UnstyledButton(
-        { class: "system-menu" },
-        null,
-        Element("img", { src: "system/ui/images/system-menu.png" })
-    );
+    const [systemMenu, toggleSystemMenu] = Menu({ Settings: () => alert("Settings!") });
     weatherbox = UnstyledButton({ class: "weather" }, () => new Weather(initWeather));
     initWeather();
     datebox = UnstyledButton({ class: "datebox" }, () => new Calendar());
@@ -20,8 +17,13 @@ export const StatusBar = () => {
     return Element(
         "div",
         { class: "sf-statusbar" },
-        systemMenu,
-        Element("div", { class: "rhs" }, weatherbox, datebox, timebox)
+        UnstyledButton(
+            { class: "system-menu" },
+            toggleSystemMenu,
+            Element("img", { src: "system/ui/images/system-menu.png" })
+        ),
+        Element("div", { class: "rhs" }, weatherbox, datebox, timebox),
+        systemMenu
     );
 };
 
