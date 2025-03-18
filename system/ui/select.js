@@ -16,7 +16,13 @@ export const Select = (selected, options, onSelect) => {
             return Element("li", { role: "option" }, menuButton);
         })
     );
-    const button = Element("button", { class: "sf-select" }, name, Element("span", {}, "🔻"), menu);
+    const button = Element(
+        "button",
+        { class: "sf-select" },
+        name,
+        Element("img", { src: "system/ui/images/dropdown-arrow.png" }),
+        menu
+    );
     const toggleMenu = (e) => {
         if (!menuOpen) {
             menu.style.display = "block";
