@@ -1,6 +1,4 @@
-import { Button } from "../../system/ui/button.js";
-import { Element } from "../../system/ui/element.js";
-import { Window } from "../../system/ui/window.js";
+import { Button, Element, Window } from "../../system/ui/index.js";
 
 export class Calendar {
     static about =

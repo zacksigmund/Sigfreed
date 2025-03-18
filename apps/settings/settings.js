@@ -1,6 +1,4 @@
-import { Checkbox } from "../../system/ui/checkbox.js";
-import { Element } from "../../system/ui/element.js";
-import { Window } from "../../system/ui/window.js";
+import { Checkbox, Element, Window } from "../../system/ui/index.js";
 
 export class Settings {
     static about = "More settings coming soon!";

@@ -1,9 +1,11 @@
-import { Button } from "../../system/ui/button.js";
-import { CrossoutCheckbox } from "../../system/ui/crossout-checkbox.js";
-import { Element } from "../../system/ui/element.js";
-import { Select } from "../../system/ui/select.js";
-import { Textbox } from "../../system/ui/textbox.js";
-import { Window } from "../../system/ui/window.js";
+import {
+    Button,
+    CrossoutCheckbox,
+    Element,
+    Select,
+    Textbox,
+    Window,
+} from "../../system/ui/index.js";
 
 export class Todo {
     static about =

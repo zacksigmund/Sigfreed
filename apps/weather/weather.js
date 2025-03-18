@@ -1,5 +1,4 @@
-import { Element } from "../../system/ui/element.js";
-import { Window } from "../../system/ui/window.js";
+import { Element, Window } from "../../system/ui/index.js";
 
 export class Weather {
     static about =
