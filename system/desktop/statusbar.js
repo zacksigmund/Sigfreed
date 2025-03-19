@@ -19,7 +19,7 @@ export const StatusBar = () => {
         "div",
         { class: "sf-statusbar" },
         UnstyledButton(
-            { class: "system-menu" },
+            { class: "system-menu", "aria-label": "System menu" },
             toggleSystemMenu,
             Element("img", { src: "system/ui/images/system-menu.png" })
         ),
@@ -31,7 +31,8 @@ export const StatusBar = () => {
 const initWeather = () => {
     coords = JSON.parse(localStorage.getItem("coords"));
     if (coords === null) {
-        weatherbox.innerText = "--°F ❓";
+        weatherbox.innerHTML =
+            "<span aria-label='Weather unknown; location unavailable'>--°F ❓</span>";
         return;
     }
     getWeather();
@@ -50,9 +51,10 @@ https://api.open-meteo.com/v1/forecast\
     const temp = weather.current.temperature_2m;
     const cond = weather.current.weather_code;
     const isDay = weather.current.is_day;
-    weatherbox.innerText = `${Math.round(temp)}${
+    const [condIcon, condText] = Weather.getCondition(cond, isDay);
+    weatherbox.innerHTML = `<span aria-label="Current temperature: "></span>${Math.round(temp)}${
         weather.current_units.temperature_2m
-    } ${Weather.getConditionIcon(cond, isDay)}`;
+    } <span aria-label="Current conditions: ${condText}">${condIcon}</span>`;
 };
 
 const getDateTime = () => {

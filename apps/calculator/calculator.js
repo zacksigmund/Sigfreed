@@ -26,7 +26,7 @@ export class Calculator {
     constructor() {
         this.screen = Element("div", { class: "screen" }, 0);
         const clear = Button(
-            {},
+            { "aria-label": "Clear" },
             () => {
                 this.operator = null;
                 this.prevValue = 0;

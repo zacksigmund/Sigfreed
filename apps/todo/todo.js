@@ -41,7 +41,7 @@ export class Todo {
                 "aria-label": "New todo item",
                 autocomplete: "off",
             }),
-            Button({ type: "submit" }, null, "Add")
+            Button({ type: "submit", "aria-label": "Add todo item" }, null, "Add")
         );
         form.addEventListener("submit", this.addTodoItem);
         this.todoList = Element("ul", { class: "todo-list" });

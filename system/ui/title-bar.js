@@ -14,6 +14,7 @@ export const TitleBar = (menuItems, title, onClose) => {
         UnstyledButton(
             {
                 class: "menu-button",
+                "aria-label": "App menu",
                 ...(Object.keys(menuItems).length ? {} : { disabled: "disabled" }),
             },
             toggleMenu,

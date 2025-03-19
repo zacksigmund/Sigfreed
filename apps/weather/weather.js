@@ -79,17 +79,35 @@ https://api.open-meteo.com/v1/forecast\
             cond: weather.daily.weather_code[i + 1],
         }));
         this.weatherbox.innerHTML = "";
+        const [icon, text] = Weather.getCondition(cond, isDay);
         this.weatherbox.appendChild(
             Element(
                 "div",
                 { class: "current" },
-                Element("div", { class: "icon" }, Weather.getConditionIcon(cond, isDay)),
-                Element("div", { class: "temp" }, `${Math.round(temp)}${unit}`),
+                Element(
+                    "div",
+                    { class: "icon", "aria-label": `Current conditions: ${text}` },
+                    icon
+                ),
+                Element(
+                    "div",
+                    { class: "temp" },
+                    Element("span", { "aria-label": "Current temperature: " }),
+                    `${Math.round(temp)}${unit}`
+                ),
                 Element(
                     "div",
                     { class: "hl" },
-                    Element("div", {}, `H: ${Math.round(high)}${unit}`),
-                    Element("div", {}, `L: ${Math.round(low)}${unit}`)
+                    Element(
+                        "div",
+                        { "aria-label": `Today's high temperature: ${Math.round(high)}${unit}` },
+                        `H: ${Math.round(high)}${unit}`
+                    ),
+                    Element(
+                        "div",
+                        { "aria-label": `Today's low temperature: ${Math.round(low)}${unit}` },
+                        `L: ${Math.round(low)}${unit}`
+                    )
                 )
             )
         );
@@ -100,8 +118,9 @@ https://api.open-meteo.com/v1/forecast\
                 Element(
                     "div",
                     { class: "hourly" },
-                    ...hourly.map((hour) =>
-                        Element(
+                    ...hourly.map((hour) => {
+                        const [icon, text] = Weather.getCondition(hour.cond);
+                        return Element(
                             "div",
                             { class: "hour-tile" },
                             Element(
@@ -111,16 +130,22 @@ https://api.open-meteo.com/v1/forecast\
                                     .toLocaleTimeString("en-US", { hour: "numeric" })
                                     .toLowerCase()
                             ),
-                            Element("div", {}, Weather.getConditionIcon(hour.cond)),
-                            Element("div", {}, Math.round(hour.temp) + unit)
-                        )
-                    )
+                            Element("div", { "aria-label": `Conditions: ${text}` }, icon),
+                            Element(
+                                "div",
+                                {},
+                                Element("span", { "aria-label": "Temperature:" }),
+                                Math.round(hour.temp) + unit
+                            )
+                        );
+                    })
                 ),
                 Element(
                     "div",
                     { class: "daily" },
-                    ...daily.map((day) =>
-                        Element(
+                    ...daily.map((day) => {
+                        const [icon, text] = Weather.getCondition(day.cond);
+                        return Element(
                             "div",
                             { class: "day-tile" },
                             Element(
@@ -128,17 +153,27 @@ https://api.open-meteo.com/v1/forecast\
                                 {},
                                 new Date(day.day).toLocaleDateString("en-US", { weekday: "short" })
                             ),
-                            Element("div", {}, Weather.getConditionIcon(day.cond)),
-                            Element("div", {}, `${Math.round(day.high)}${unit}`),
-                            Element("div", {}, `${Math.round(day.low)}${unit}`)
-                        )
-                    )
+                            Element("div", { "aria-label": `Conditions: ${text}` }, icon),
+                            Element(
+                                "div",
+                                {},
+                                Element("span", { "aria-label": "High temperature:" }),
+                                `${Math.round(day.high)}${unit}`
+                            ),
+                            Element(
+                                "div",
+                                {},
+                                Element("span", { "aria-label": "Low temperature:" }),
+                                `${Math.round(day.low)}${unit}`
+                            )
+                        );
+                    })
                 )
             )
         );
     };
 
-    static getConditionIcon = (condition, isDay) => {
+    static getCondition = (condition, isDay) => {
         /*
             0	Clear sky
             1, 2, 3	Mainly clear, partly cloudy, and overcast
@@ -157,20 +192,20 @@ https://api.open-meteo.com/v1/forecast\
         switch (condition) {
             case 0:
                 if (isDay) {
-                    return "☀️";
+                    return ["☀️", "clear"];
                 } else {
                     // TODO: moon phases
-                    return "🌛";
+                    return ["🌛", "clear"];
                 }
             case 1:
-                return "🌤️";
+                return ["🌤️", "partly cloudy"];
             case 2:
-                return "⛅";
+                return ["⛅", "mostly cloudy"];
             case 3:
-                return "☁️";
+                return ["☁️", "cloudy"];
             case 45:
             case 48:
-                return "🌫️";
+                return ["🌫️", "foggy"];
             case 51:
             case 53:
             case 55:
@@ -184,18 +219,18 @@ https://api.open-meteo.com/v1/forecast\
             case 80:
             case 81:
             case 82:
-                return "🌧️";
+                return ["🌧️", "rain"];
             case 71:
             case 73:
             case 75:
             case 77:
             case 85:
             case 86:
-                return "🌨️";
+                return ["🌨️", "snow"];
             case 95:
             case 96:
             case 99:
-                return "🌩️";
+                return ["🌩️", "thunderstorms"];
         }
     };
 }
