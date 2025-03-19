@@ -24,8 +24,7 @@ export class Calculator {
     }
 
     constructor() {
-        const input = Element("div");
-        this.display = Element("div", {}, 0);
+        this.screen = Element("div", { class: "screen" }, 0);
         const clear = Button(
             {},
             () => {
@@ -114,7 +113,7 @@ export class Calculator {
             Element(
                 "div",
                 { class: "sf-calculator" },
-                Element("div", { class: "screen" }, input, this.display),
+                this.screen,
                 Element(
                     "div",
                     { class: "button-grid" },
@@ -202,6 +201,6 @@ export class Calculator {
     };
 
     displayValue = (value) => {
-        this.display.innerText = this.decimal < 0 && value % 1 === 0 ? value + "." : value;
+        this.screen.innerText = this.decimal < 0 && value % 1 === 0 ? value + "." : value;
     };
 }
