@@ -4,23 +4,32 @@ import { UnstyledButton } from "./unstyled-button.js";
 
 export const TitleBar = (menuItems, title, onClose) => {
     let moving = false;
+    let menuButton;
     const dragger = Element("div", { class: "dragger" }, Element("div"));
 
+    for (const [key, value] of Object.entries(menuItems)) {
+        menuItems[key] = () => {
+            value();
+            menuButton.focus();
+        };
+    }
+
     const [menu, toggleMenu] = Menu(menuItems);
+    menuButton = UnstyledButton(
+        {
+            class: "menu-button",
+            "aria-label": "App menu",
+            "aria-haspopup": "menu",
+            "aria-expanded": false,
+        },
+        toggleMenu,
+        Element("div")
+    );
 
     const titlebar = Element(
         "div",
         { class: "sf-titlebar" },
-        UnstyledButton(
-            {
-                class: "menu-button",
-                "aria-label": "App menu",
-                "aria-haspopup": "menu",
-                "aria-expanded": false,
-            },
-            toggleMenu,
-            Element("div")
-        ),
+        menuButton,
         menu,
         title,
         dragger,

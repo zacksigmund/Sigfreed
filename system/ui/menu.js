@@ -24,6 +24,7 @@ export const Menu = (menuItems) => {
         } else if (event.key === "ArrowUp") {
             event.target.parentElement.previousElementSibling?.children?.[0]?.focus();
         } else if (event.key === "Escape") {
+            menu.parentElement.querySelector("[aria-haspopup='menu']").focus();
             offClick();
         }
     };
