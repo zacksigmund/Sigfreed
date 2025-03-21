@@ -6,7 +6,6 @@ const windows = [];
 export const Window = (title, menuItems, ...children) => {
     if (windows.includes(title)) return null;
 
-    // TODO: focus trap
     const close = () => {
         windows.splice(windows.indexOf("title"), 1);
         windowEl.parentElement.removeChild(windowEl);
