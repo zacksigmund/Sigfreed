@@ -23,6 +23,7 @@
             &:hover,
             &:focus {
                 background: var(--c-shadow);
+                color: var(--c-background);
             }
 
             &:focus-visible {
