@@ -24,6 +24,11 @@
             &:focus {
                 background: var(--c-shadow);
             }
+
+            &:focus-visible {
+                outline: 4px solid var(--c-outline);
+                outline-offset: -4px;
+            }
         }
     }
 }

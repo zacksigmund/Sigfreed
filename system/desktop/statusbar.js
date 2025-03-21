@@ -23,8 +23,8 @@ export const StatusBar = () => {
             toggleSystemMenu,
             Element("img", { src: "system/ui/images/system-menu.png" })
         ),
-        Element("div", { class: "rhs" }, weatherbox, datebox, timebox),
-        systemMenu
+        systemMenu,
+        Element("div", { class: "rhs" }, weatherbox, datebox, timebox)
     );
 };
 

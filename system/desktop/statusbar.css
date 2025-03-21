@@ -8,7 +8,6 @@
     display: flex;
     justify-content: space-between;
 
-    .systemMenu,
     .weather,
     .datebox,
     .timebox {
@@ -27,6 +26,7 @@
 
         &:focus-visible {
             outline: 4px solid var(--c-outline);
+            outline-offset: -4px;
         }
     }
 
