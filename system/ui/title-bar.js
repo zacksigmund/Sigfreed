@@ -15,6 +15,8 @@ export const TitleBar = (menuItems, title, onClose) => {
             {
                 class: "menu-button",
                 "aria-label": "App menu",
+                "aria-haspopup": "menu",
+                "aria-expanded": false,
             },
             toggleMenu,
             Element("div")

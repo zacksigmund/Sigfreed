@@ -34,6 +34,9 @@ export const Menu = (menuItems) => {
         if (menuOpen) {
             menu.style.display = "none";
             document.body.removeEventListener("click", offClick);
+            menu.parentElement
+                .querySelector("[aria-haspopup='menu']")
+                .setAttribute("aria-expanded", "false");
             menuOpen = false;
         }
     };
@@ -43,6 +46,9 @@ export const Menu = (menuItems) => {
             menu.style.display = "flex";
             menuOpen = true;
             menu.firstElementChild.firstElementChild.focus();
+            menu.parentElement
+                .querySelector("[aria-haspopup='menu']")
+                .setAttribute("aria-expanded", "true");
             // was propagating to the offClick listener on the same frame otherwise
             requestAnimationFrame(() => {
                 document.body.addEventListener("click", offClick);

@@ -19,7 +19,12 @@ export const StatusBar = () => {
         "div",
         { class: "sf-statusbar" },
         UnstyledButton(
-            { class: "system-menu", "aria-label": "System menu" },
+            {
+                class: "system-menu",
+                "aria-label": "System menu",
+                "aria-haspopup": "menu",
+                "aria-expanded": false,
+            },
             toggleSystemMenu,
             Element("img", { src: "system/ui/images/system-menu.png" })
         ),
