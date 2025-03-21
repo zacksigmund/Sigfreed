@@ -13,7 +13,7 @@ export const Window = (title, menuItems, ...children) => {
     };
     windows.push(title);
     const windowEl = Element(
-        "div",
+        "dialog",
         { class: "sf-window" },
         TitleBar(menuItems, title, close),
         Element("div", { class: "body" }, ...children)
@@ -26,7 +26,31 @@ export const Window = (title, menuItems, ...children) => {
         windowEl.style.left = `${left}px`;
         saveLocation(title, top, left);
     });
+    windowEl.addEventListener("keydown", (event) => focusTrap(windowEl, event));
     return windowEl;
+};
+
+const focusTrap = (windowEl, event) => {
+    let focusable = windowEl.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    let firstFocusableElement = focusable[0];
+    let lastFocusableElement = focusable[focusable.length - 1];
+
+    //When doing event handling this would be how to reset focus
+    if (event.key == "Tab") {
+        if (!event.shiftKey) {
+            if (document.activeElement == lastFocusableElement) {
+                firstFocusableElement.focus();
+                event.preventDefault();
+            }
+        } else {
+            if (document.activeElement == firstFocusableElement) {
+                lastFocusableElement.focus();
+                event.preventDefault();
+            }
+        }
+    }
 };
 
 const loadLocation = (title) => {

@@ -30,6 +30,7 @@ export class Todo {
         todos?.[this.listName]?.forEach((todo) => {
             this.addListItem(todo.text, todo.checked);
         });
+        windowEl.show();
     }
 
     render = () => {

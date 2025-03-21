@@ -19,10 +19,10 @@ export const TitleBar = (menuItems, title, onClose) => {
             toggleMenu,
             Element("div")
         ),
+        menu,
         title,
         dragger,
-        UnstyledButton({ class: "close-button", "aria-label": "Close window" }, onClose),
-        menu
+        UnstyledButton({ class: "close-button", "aria-label": "Close window" }, onClose)
     );
 
     // window movement

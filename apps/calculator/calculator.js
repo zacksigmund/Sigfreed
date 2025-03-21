@@ -144,7 +144,9 @@ export class Calculator {
             if (!isNaN(digit)) {
                 numbers[digit].classList.add("pushed");
                 numbers[digit].click();
-            } else if (event.key === "Enter" || event.key === "=") {
+            } else if (event.key === "Enter") {
+                event.target.classList.add("pushed");
+            } else if (event.key === "=") {
                 event.preventDefault();
                 equals.classList.add("pushed");
                 equals.click();
@@ -172,7 +174,9 @@ export class Calculator {
             const digit = parseInt(event.key, 10);
             if (!isNaN(digit)) {
                 numbers[digit].classList.remove("pushed");
-            } else if (event.key === "Enter" || event.key === "=") {
+            } else if (event.key === "Enter") {
+                event.target.classList.remove("pushed");
+            } else if (event.key === "=") {
                 equals.classList.remove("pushed");
             } else if (event.key === "+") {
                 plus.classList.remove("pushed");
@@ -189,6 +193,7 @@ export class Calculator {
             }
         });
         document.body.appendChild(windowEl);
+        windowEl.show();
     }
 
     evaluate = () => {

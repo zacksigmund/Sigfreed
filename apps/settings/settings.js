@@ -13,6 +13,7 @@ export class Settings {
         );
         if (!windowEl) return;
         document.body.appendChild(windowEl);
+        windowEl.show();
     }
 
     toggle24h = (event) => {

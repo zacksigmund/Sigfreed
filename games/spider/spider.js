@@ -14,9 +14,10 @@ export class Spider {
         "Only click the cards for now, no drag-and-drop. You can click specific cards within the stack, though. When you've got K-A, click the K to send it to the goal, it won't go automatically.";
 
     constructor() {
-        const ui = this.render();
-        if (!ui) return;
-        document.body.appendChild(ui);
+        const windowEl = this.render();
+        if (!windowEl) return;
+        document.body.appendChild(windowEl);
+        windowEl.show();
         this.newGame(1);
         this.canvas = document.getElementById("spider");
         this.ctx = this.canvas.getContext("2d");

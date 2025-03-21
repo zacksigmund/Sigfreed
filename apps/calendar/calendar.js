@@ -67,6 +67,7 @@ export class Calendar {
         if (!windowEl) return;
         this.fillMonth();
         document.body.appendChild(windowEl);
+        windowEl.show();
     }
 
     fillMonth = () => {

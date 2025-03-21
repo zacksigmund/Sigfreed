@@ -9,9 +9,10 @@ export class FreeCell {
         "Only click the cards for now, no drag-and-drop. You can click specific cards within the stack, though.";
 
     constructor() {
-        const ui = this.render();
-        if (!ui) return;
-        document.body.appendChild(ui);
+        const windowEl = this.render();
+        if (!windowEl) return;
+        document.body.appendChild(windowEl);
+        windowEl.show();
         this.newGame();
         this.canvas = document.getElementById("freecell");
         this.ctx = this.canvas.getContext("2d");

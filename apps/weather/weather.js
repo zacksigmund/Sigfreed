@@ -13,6 +13,7 @@ export class Weather {
         this.initWeather(callback);
         if (!windowEl) return;
         document.body.appendChild(windowEl);
+        windowEl.show();
     }
 
     toggleUnits = () => {
