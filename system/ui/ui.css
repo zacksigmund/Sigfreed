@@ -20,7 +20,13 @@ html {
     color: var(--c-foreground);
     box-sizing: border-box;
     image-rendering: pixelated;
+}
 
+body.sf-theme-dark * {
+    color: var(--c-background);
+}
+
+body.sf-theme-system * {
     @media (prefers-color-scheme: dark) {
         color: var(--c-background);
     }
