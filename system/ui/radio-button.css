@@ -1,0 +1,42 @@
+label.sf-radio {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+
+    input[type="radio"] {
+        appearance: none;
+        background-image: url(images/radio.png);
+        inline-size: 40px;
+        block-size: 40px;
+        margin: 0;
+
+        &:active {
+            background-image: url(images/radio-pressed.png);
+        }
+
+        &:checked {
+            background-image: url(images/radio-checked.png);
+
+            &:active {
+                background-image: url(images/radio-checked-pressed.png);
+            }
+        }
+
+        &:focus-visible {
+            outline: none;
+            background-image: url(images/radio-outline.png);
+
+            &:active {
+                background-image: url(images/radio-outline-pressed.png);
+            }
+
+            &:checked {
+                background-image: url(images/radio-outline-checked.png);
+
+                &:active {
+                    background-image: url(images/radio-outline-checked-pressed.png);
+                }
+            }
+        }
+    }
+}
