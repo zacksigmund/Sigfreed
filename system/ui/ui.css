@@ -1,41 +1,43 @@
-html {
-    --c-background: #f0edea;
-    --c-foreground: #2e2a2a;
-    --c-surface: #ccc6c1;
-    --c-shadow: #807c79;
-    --c-outline: #e09844;
-    --c-success: #137a28;
-    --c-warning: #ffdb3d;
-    --c-danger: #b21e17;
-    --c-danger-dark: #7c1210;
-    --c-danger-light: #e2201d;
-    --c-teal: #3e8b91;
-    --c-brown: #89572a;
-    cursor: url(images/cursor-default.png), default;
-}
+@layer base {
+    html {
+        --c-background: #f0edea;
+        --c-foreground: #2e2a2a;
+        --c-surface: #ccc6c1;
+        --c-shadow: #807c79;
+        --c-outline: #e09844;
+        --c-success: #137a28;
+        --c-warning: #ffdb3d;
+        --c-danger: #b21e17;
+        --c-danger-dark: #7c1210;
+        --c-danger-light: #e2201d;
+        --c-teal: #3e8b91;
+        --c-brown: #89572a;
+        cursor: url(images/cursor-default.png), default;
+    }
 
-* {
-    font-family: Tiny5, monospace;
-    font-size: 24px;
-    color: var(--c-foreground);
-    box-sizing: border-box;
-    image-rendering: pixelated;
-}
+    * {
+        font-family: Tiny5, monospace;
+        font-size: 24px;
+        color: var(--c-foreground);
+        box-sizing: border-box;
+        image-rendering: pixelated;
+    }
 
-body.sf-theme-dark * {
-    color: var(--c-background);
-}
-
-body.sf-theme-system * {
-    @media (prefers-color-scheme: dark) {
+    body.sf-theme-dark * {
         color: var(--c-background);
     }
-}
 
-body {
-    margin: 0;
-}
+    body.sf-theme-system * {
+        @media (prefers-color-scheme: dark) {
+            color: var(--c-background);
+        }
+    }
 
-button {
-    cursor: pointer;
+    body {
+        margin: 0;
+    }
+
+    button {
+        cursor: pointer;
+    }
 }

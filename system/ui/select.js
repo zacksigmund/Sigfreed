@@ -44,7 +44,8 @@ export const Select = (selected, options, onSelect) => {
         { class: "sf-select" },
         toggleMenu,
         name,
-        Element("img", { src: "system/ui/images/dropdown-arrow.png" }),
+        Element("img", { class: "arrow-light", src: "system/ui/images/dropdown-arrow.png" }),
+        Element("img", { class: "arrow-dark", src: "system/ui/images/dropdown-arrow-dark.png" }),
         menu
     );
 };

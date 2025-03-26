@@ -29,7 +29,7 @@
         inline-size: calc(100% + 8px);
 
         button {
-            background: var(--c-shadow);
+            background: var(--c-background);
             padding-block: 8px;
             padding-inline: 12px;
             inline-size: 100%;
@@ -37,9 +37,50 @@
 
             &:hover,
             &:focus {
-                background: var(--c-surface);
-                color: var(--c-foreground);
+                background-color: var(--c-surface);
             }
+
+            .sf-theme-dark & {
+                background-color: var(--c-shadow);
+
+                &:hover,
+                &:focus {
+                    background-color: var(--c-surface);
+                    color: var(--c-foreground);
+                }
+            }
+
+            .sf-theme-system & {
+                @media (prefers-color-scheme: dark) {
+                    background-color: var(--c-shadow);
+
+                    &:hover,
+                    &:focus {
+                        background-color: var(--c-surface);
+                        color: var(--c-foreground);
+                    }
+                }
+            }
+        }
+    }
+
+    .sf-theme-dark & .arrow-light {
+        display: none;
+    }
+
+    .sf-theme-light & .arrow-dark {
+        display: none;
+    }
+
+    .sf-theme-system & .arrow-light {
+        @media (prefers-color-scheme: dark) {
+            display: none;
+        }
+    }
+
+    .sf-theme-system & .arrow-dark {
+        @media (prefers-color-scheme: light) {
+            display: none;
         }
     }
 }
