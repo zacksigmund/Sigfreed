@@ -1,4 +1,4 @@
-import { Checkbox, Element, Window } from "../../system/ui/index.js";
+import { Checkbox, Element, RadioGroup, Window } from "../../system/ui/index.js";
 
 export class Settings {
     static about = "More settings coming soon!";
@@ -9,7 +9,17 @@ export class Settings {
             {
                 About: () => alert(Settings.about),
             },
-            Element("div", {}, Checkbox({ checked: is24h }, this.toggle24h, "24h time"))
+            Element("div", {}, Checkbox({ checked: is24h }, this.toggle24h, "24h time")),
+            RadioGroup(
+                "Theme",
+                "theme",
+                {
+                    light: "Light",
+                    system: "System",
+                    dark: "Dark",
+                },
+                "system"
+            )
         );
         if (!windowEl) return;
         document.body.appendChild(windowEl);
