@@ -30,6 +30,7 @@ export class Settings {
 
     toggle24h = (event) => {
         localStorage.setItem("settings.24h", event.target.checked);
+        window.bus.push("settingsChanged");
     };
 
     saveTheme = (value) => {

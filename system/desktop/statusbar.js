@@ -15,6 +15,7 @@ export const StatusBar = () => {
     timebox = Element("div", { class: "timebox" });
     getDateTime();
     setInterval(getDateTime, 60 * 1000);
+    window.bus.on("settingsChanged", getDateTime);
     return Element(
         "div",
         { class: "sf-statusbar" },
