@@ -11,30 +11,30 @@ label.sf-radio {
         margin: 0;
 
         &:active {
-            background-image: url(images/radio-pressed.png);
+            background-position: top left -40px;
         }
 
         &:checked {
-            background-image: url(images/radio-checked.png);
+            background-position: top left -80px;
 
             &:active {
-                background-image: url(images/radio-checked-pressed.png);
+                background-position: top left -120px;
             }
         }
 
         &:focus-visible {
             outline: none;
-            background-image: url(images/radio-outline.png);
+            background-position: top -40px left;
 
             &:active {
-                background-image: url(images/radio-outline-pressed.png);
+                background-position: top -40px left -40px;
             }
 
             &:checked {
-                background-image: url(images/radio-outline-checked.png);
+                background-position: top -40px left -80px;
 
                 &:active {
-                    background-image: url(images/radio-outline-checked-pressed.png);
+                    background-position: top -40px left -120px;
                 }
             }
         }
