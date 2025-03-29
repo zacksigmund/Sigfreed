@@ -7,14 +7,12 @@ export class Weather {
         "Currently only supports browser location. Will look into city/ZIP in the future. Your location data is only stored in local storage and passed to the Open-meteo API. May add some more data but plan to keep it simple still.";
     constructor() {
         this.weatherbox = Element("div", { class: "sf-weather" });
-        const windowEl = Window(
-            "Weather",
+        this.windowEl = Window(
+            Weather.name,
             { "Toggle C/F": this.toggleUnits, About: () => alert(Weather.about) },
             this.weatherbox
         );
         this.initWeather();
-        document.body.appendChild(windowEl);
-        windowEl.show();
     }
 
     toggleUnits = () => {

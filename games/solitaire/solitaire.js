@@ -11,9 +11,14 @@ export class Solitaire {
         "Only click the cards for now, no drag-and-drop. You can click specific cards within the stack, though.";
 
     constructor() {
-        const windowEl = this.render();
-        document.body.appendChild(windowEl);
-        windowEl.show();
+        this.windowEl = Window(
+            Solitaire.name,
+            { "New Game": this.newGame, About: () => alert(Solitaire.about) },
+            Element("canvas", { id: "solitaire", width: 320, height: 240 })
+        );
+    }
+
+    init = () => {
         this.newGame();
         this.canvas = document.getElementById("solitaire");
         this.ctx = this.canvas.getContext("2d");
@@ -21,14 +26,6 @@ export class Solitaire {
         Card.init(() => {
             requestAnimationFrame(this.draw);
         });
-    }
-
-    render = () => {
-        return Window(
-            "Solitaire",
-            { "New Game": this.newGame, About: () => alert(Solitaire.about) },
-            Element("canvas", { id: "solitaire", width: 320, height: 240 })
-        );
     };
 
     newGame = () => {

@@ -3,7 +3,6 @@ import { TitleBar, saveLocation } from "./title-bar.js";
 
 export const Window = (title, menuItems, ...children) => {
     const close = () => {
-        windowEl.parentElement.removeChild(windowEl);
         window.windowManager.close(title);
     };
     const windowEl = Element(

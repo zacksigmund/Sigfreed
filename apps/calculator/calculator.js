@@ -109,8 +109,8 @@ export class Calculator {
             },
             "."
         );
-        const windowEl = Window(
-            "Calculator",
+        this.windowEl = Window(
+            Calculator.name,
             { About: () => alert(Calculator.about) },
             Element(
                 "div",
@@ -140,7 +140,7 @@ export class Calculator {
             )
         );
         // TODO: Listening to only windowEl makes it hard to pick up events sometimes
-        windowEl.addEventListener("keydown", (event) => {
+        this.windowEl.addEventListener("keydown", (event) => {
             const digit = parseInt(event.key, 10);
             if (!isNaN(digit)) {
                 numbers[digit].classList.add("pushed");
@@ -171,7 +171,7 @@ export class Calculator {
                 clear.click();
             }
         });
-        windowEl.addEventListener("keyup", (event) => {
+        this.windowEl.addEventListener("keyup", (event) => {
             const digit = parseInt(event.key, 10);
             if (!isNaN(digit)) {
                 numbers[digit].classList.remove("pushed");
@@ -193,8 +193,6 @@ export class Calculator {
                 clear.classList.remove("pushed");
             }
         });
-        document.body.appendChild(windowEl);
-        windowEl.show();
     }
 
     evaluate = () => {

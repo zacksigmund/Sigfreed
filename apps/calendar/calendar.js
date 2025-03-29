@@ -19,8 +19,8 @@ export class Calendar {
         this.currentMonth.setDate(1);
         this.monthName = Element("h1", {}, this.currentMonthString);
         this.tbody = Element("tbody", {});
-        const windowEl = Window(
-            "Calendar",
+        this.windowEl = Window(
+            Calendar.name,
             { About: () => alert(Calendar.about) },
             Element(
                 "div",
@@ -67,8 +67,6 @@ export class Calendar {
             )
         );
         this.fillMonth();
-        document.body.appendChild(windowEl);
-        windowEl.show();
     }
 
     fillMonth = () => {

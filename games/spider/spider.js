@@ -16,21 +16,8 @@ export class Spider {
         "Only click the cards for now, no drag-and-drop. You can click specific cards within the stack, though. When you've got K-A, click the K to send it to the goal, it won't go automatically.";
 
     constructor() {
-        const windowEl = this.render();
-        document.body.appendChild(windowEl);
-        windowEl.show();
-        this.newGame(1);
-        this.canvas = document.getElementById("spider");
-        this.ctx = this.canvas.getContext("2d");
-        this.canvas.addEventListener("click", this.click);
-        Card.init(() => {
-            requestAnimationFrame(this.draw);
-        });
-    }
-
-    render = () => {
-        return Window(
-            "Spider",
+        this.windowEl = Window(
+            Spider.name,
             {
                 "New 1-suit game": () => this.newGame(1),
                 "New 2-suit game": () => this.newGame(2),
@@ -39,6 +26,16 @@ export class Spider {
             },
             Element("canvas", { id: "spider", width: 452, height: 320 })
         );
+    }
+
+    init = () => {
+        this.newGame(1);
+        this.canvas = document.getElementById("spider");
+        this.ctx = this.canvas.getContext("2d");
+        this.canvas.addEventListener("click", this.click);
+        Card.init(() => {
+            requestAnimationFrame(this.draw);
+        });
     };
 
     newGame = (suits) => {

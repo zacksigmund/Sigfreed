@@ -17,8 +17,8 @@ export class Todo {
         this.listName = (todos && Object.keys(todos)?.[0]) || "Todo";
         this.listNames = todos && Object.keys(todos)?.length ? Object.keys(todos) : ["Todo"];
         this.container = Element("div", { class: "sf-todo" }, ...this.render());
-        const windowEl = Window(
-            "Todo",
+        this.windowEl = Window(
+            Todo.name,
             {
                 "Clear checked": this.clearChecked,
                 "Uncheck all": this.uncheckAll,
@@ -27,11 +27,9 @@ export class Todo {
             },
             this.container
         );
-        document.body.appendChild(windowEl);
         todos?.[this.listName]?.forEach((todo) => {
             this.addListItem(todo.text, todo.checked);
         });
-        windowEl.show();
     }
 
     render = () => {

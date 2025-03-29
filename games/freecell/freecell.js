@@ -5,15 +5,20 @@ import { CardStack } from "../solitaire/cardStack.js";
 const noop = () => {};
 
 export class FreeCell {
-    static name = "FreeCell";
+    static name = "Free Cell";
     static icon = "games/freecell/freecell.app.png";
     static about =
         "Only click the cards for now, no drag-and-drop. You can click specific cards within the stack, though.";
 
     constructor() {
-        const windowEl = this.render();
-        document.body.appendChild(windowEl);
-        windowEl.show();
+        this.windowEl = Window(
+            FreeCell.name,
+            { "New Game": this.newGame, About: () => alert(FreeCell.about) },
+            Element("canvas", { id: "freecell", width: 408, height: 320 })
+        );
+    }
+
+    init = () => {
         this.newGame();
         this.canvas = document.getElementById("freecell");
         this.ctx = this.canvas.getContext("2d");
@@ -21,14 +26,10 @@ export class FreeCell {
         Card.init(() => {
             requestAnimationFrame(this.draw);
         });
-    }
+    };
 
     render = () => {
-        return Window(
-            "Free Cell",
-            { "New Game": this.newGame, About: () => alert(FreeCell.about) },
-            Element("canvas", { id: "freecell", width: 408, height: 320 })
-        );
+        return;
     };
 
     newGame = () => {
