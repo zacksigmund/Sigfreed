@@ -11,14 +11,14 @@ label.sf-checkbox {
         margin: 0;
 
         &:active {
-            background-image: url(images/checkbox-pressed.png);
+            background-position: top left -40px;
         }
 
         &:checked {
-            background-image: url(images/checkbox-checked.png);
+            background-position: top left -80px;
 
             &:active {
-                background-image: url(images/checkbox-checked-pressed.png);
+                background-position: top left -120px;
             }
 
             + span:after {
@@ -28,17 +28,17 @@ label.sf-checkbox {
 
         &:focus-visible {
             outline: none;
-            background-image: url(images/checkbox-outline.png);
+            background-position: top -40px left;
 
             &:active {
-                background-image: url(images/checkbox-outline-pressed.png);
+                background-position: top -40px left -40px;
             }
 
             &:checked {
-                background-image: url(images/checkbox-outline-checked.png);
+                background-position: top -40px left -80px;
 
                 &:active {
-                    background-image: url(images/checkbox-outline-checked-pressed.png);
+                    background-position: top -40px left -120px;
                 }
             }
         }
