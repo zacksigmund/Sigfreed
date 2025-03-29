@@ -9,7 +9,8 @@ let coords, weatherbox, datebox, timebox;
 
 export const StatusBar = () => {
     const [systemMenu, toggleSystemMenu] = Menu({ Settings: () => new Settings() });
-    weatherbox = UnstyledButton({ class: "weather" }, () => new Weather(initWeather));
+    weatherbox = UnstyledButton({ class: "weather" }, () => new Weather());
+    window.bus.on("locationUpdated", initWeather);
     initWeather();
     datebox = UnstyledButton({ class: "datebox" }, () => new Calendar());
     timebox = Element("div", { class: "timebox" });

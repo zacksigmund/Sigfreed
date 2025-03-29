@@ -3,14 +3,14 @@ import { Element, Window } from "../../system/ui/index.js";
 export class Weather {
     static about =
         "Currently only supports browser location. Will look into city/ZIP in the future. Your location data is only stored in local storage and passed to the Open-meteo API. May add some more data but plan to keep it simple still.";
-    constructor(callback) {
+    constructor() {
         this.weatherbox = Element("div", { class: "sf-weather" });
         const windowEl = Window(
             "Weather",
             { "Toggle C/F": this.toggleUnits, About: () => alert(Weather.about) },
             this.weatherbox
         );
-        this.initWeather(callback);
+        this.initWeather();
         if (!windowEl) return;
         document.body.appendChild(windowEl);
         windowEl.show();
@@ -22,7 +22,7 @@ export class Weather {
         this.getWeather();
     };
 
-    initWeather = (callback) => {
+    initWeather = () => {
         this.units = localStorage.getItem("weather.units") || "F";
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -31,7 +31,7 @@ export class Weather {
                 localStorage.setItem("coords", JSON.stringify({ lat: this.lat, long: this.long }));
                 this.getWeather();
                 setInterval(this.getWeather, 15 * 60 * 1000);
-                callback?.();
+                window.bus.push("locationUpdated");
             },
             () => {
                 this.weatherbox.classList.add("error");
