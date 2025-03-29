@@ -9,7 +9,7 @@ import { Element } from "../ui/element.js";
 import { DockIcon } from "./dock-icon.js";
 import { StatusBar } from "./statusbar.js";
 
-export const Desktop = () => {
+export const Desktop = (windowManager) => {
     return Element(
         "div",
         { class: "sf-desktop" },
@@ -20,17 +20,25 @@ export const Desktop = () => {
             Element(
                 "div",
                 {},
-                DockIcon("Todo", "apps/todo/todo.app.png", () => new Todo()),
-                DockIcon("Calendar", "apps/calendar/calendar.app.png", () => new Calendar()),
-                DockIcon("Weather", "apps/weather/weather.app.png", () => new Weather()),
-                DockIcon(
-                    "Calculator",
-                    "apps/calculator/calculator.app.png",
-                    () => new Calculator()
+                DockIcon("Todo", "apps/todo/todo.app.png", () => windowManager.launch(Todo)),
+                DockIcon("Calendar", "apps/calendar/calendar.app.png", () =>
+                    windowManager.launch(Calendar)
                 ),
-                DockIcon("Solitaire", "games/solitaire/solitaire.app.png", () => new Solitaire()),
-                DockIcon("FreeCell", "games/freecell/freecell.app.png", () => new FreeCell()),
-                DockIcon("Spider", "games/spider/spider.app.png", () => new Spider())
+                DockIcon("Weather", "apps/weather/weather.app.png", () =>
+                    windowManager.launch(Weather)
+                ),
+                DockIcon("Calculator", "apps/calculator/calculator.app.png", () =>
+                    windowManager.launch(Calculator)
+                ),
+                DockIcon("Solitaire", "games/solitaire/solitaire.app.png", () =>
+                    windowManager.launch(Solitaire)
+                ),
+                DockIcon("FreeCell", "games/freecell/freecell.app.png", () =>
+                    windowManager.launch(FreeCell)
+                ),
+                DockIcon("Spider", "games/spider/spider.app.png", () =>
+                    windowManager.launch(Spider)
+                )
             )
         )
     );
