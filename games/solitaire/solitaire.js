@@ -5,12 +5,13 @@ import { CardStack } from "./cardStack.js";
 const noop = () => {};
 
 export class Solitaire {
+    static name = "Solitaire";
+    static icon = "games/solitaire/solitaire.app.png";
     static about =
         "Only click the cards for now, no drag-and-drop. You can click specific cards within the stack, though.";
 
     constructor() {
         const windowEl = this.render();
-        if (!windowEl) return;
         document.body.appendChild(windowEl);
         windowEl.show();
         this.newGame();

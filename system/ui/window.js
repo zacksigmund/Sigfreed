@@ -1,16 +1,11 @@
 import { Element } from "./element.js";
 import { TitleBar, saveLocation } from "./title-bar.js";
 
-const windows = [];
-
 export const Window = (title, menuItems, ...children) => {
-    if (windows.includes(title)) return null;
-
     const close = () => {
-        windows.splice(windows.indexOf("title"), 1);
         windowEl.parentElement.removeChild(windowEl);
+        window.windowManager.close(title);
     };
-    windows.push(title);
     const windowEl = Element(
         "dialog",
         { class: "sf-window" },

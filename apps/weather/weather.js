@@ -1,6 +1,8 @@
 import { Element, Window } from "../../system/ui/index.js";
 
 export class Weather {
+    static name = "Weather";
+    static icon = "apps/weather/weather.app.png";
     static about =
         "Currently only supports browser location. Will look into city/ZIP in the future. Your location data is only stored in local storage and passed to the Open-meteo API. May add some more data but plan to keep it simple still.";
     constructor() {
@@ -11,7 +13,6 @@ export class Weather {
             this.weatherbox
         );
         this.initWeather();
-        if (!windowEl) return;
         document.body.appendChild(windowEl);
         windowEl.show();
     }

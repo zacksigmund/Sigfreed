@@ -1,13 +1,20 @@
 import { Desktop } from "./desktop.js";
 
 export class WindowManager {
-    constructor() {}
-
-    init = () => {
-        document.body.appendChild(Desktop(this));
-    };
+    constructor() {
+        this.openApps = [];
+        document.body.appendChild(Desktop());
+    }
 
     launch = (App) => {
-        new App();
+        if (this.openApps.includes(App.name)) return;
+        new App(this);
+        this.openApps.push(App.name);
+    };
+
+    close = (appName) => {
+        if (this.openApps.includes(appName)) {
+            this.openApps.splice(this.openApps.indexOf(appName), 1);
+        }
     };
 }

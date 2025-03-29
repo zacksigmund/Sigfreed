@@ -9,7 +9,7 @@ import { Element } from "../ui/element.js";
 import { DockIcon } from "./dock-icon.js";
 import { StatusBar } from "./statusbar.js";
 
-export const Desktop = (windowManager) => {
+export const Desktop = () => {
     return Element(
         "div",
         { class: "sf-desktop" },
@@ -20,25 +20,13 @@ export const Desktop = (windowManager) => {
             Element(
                 "div",
                 {},
-                DockIcon("Todo", "apps/todo/todo.app.png", () => windowManager.launch(Todo)),
-                DockIcon("Calendar", "apps/calendar/calendar.app.png", () =>
-                    windowManager.launch(Calendar)
-                ),
-                DockIcon("Weather", "apps/weather/weather.app.png", () =>
-                    windowManager.launch(Weather)
-                ),
-                DockIcon("Calculator", "apps/calculator/calculator.app.png", () =>
-                    windowManager.launch(Calculator)
-                ),
-                DockIcon("Solitaire", "games/solitaire/solitaire.app.png", () =>
-                    windowManager.launch(Solitaire)
-                ),
-                DockIcon("FreeCell", "games/freecell/freecell.app.png", () =>
-                    windowManager.launch(FreeCell)
-                ),
-                DockIcon("Spider", "games/spider/spider.app.png", () =>
-                    windowManager.launch(Spider)
-                )
+                DockIcon(Todo),
+                DockIcon(Calendar),
+                DockIcon(Weather),
+                DockIcon(Calculator),
+                DockIcon(Solitaire),
+                DockIcon(FreeCell),
+                DockIcon(Spider)
             )
         )
     );

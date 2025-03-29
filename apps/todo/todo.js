@@ -8,6 +8,8 @@ import {
 } from "../../system/ui/index.js";
 
 export class Todo {
+    static name = "Todo";
+    static icon = "apps/todo/todo.app.png";
     static about =
         "Choose from multiple lists in the dropdown. You can't delete the last list, but you can make a second one and delete the first one.";
     constructor() {
@@ -25,7 +27,6 @@ export class Todo {
             },
             this.container
         );
-        if (!windowEl) return;
         document.body.appendChild(windowEl);
         todos?.[this.listName]?.forEach((todo) => {
             this.addListItem(todo.text, todo.checked);

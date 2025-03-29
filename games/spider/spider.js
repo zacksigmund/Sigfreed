@@ -10,12 +10,13 @@ decksBySuit[2] = ["spades", "spades", "spades", "spades", "hearts", "hearts", "h
 decksBySuit[4] = ["spades", "spades", "hearts", "hearts", "clubs", "clubs", "diamonds", "diamonds"];
 
 export class Spider {
+    static name = "Spider";
+    static icon = "games/spider/spider.app.png";
     static about =
         "Only click the cards for now, no drag-and-drop. You can click specific cards within the stack, though. When you've got K-A, click the K to send it to the goal, it won't go automatically.";
 
     constructor() {
         const windowEl = this.render();
-        if (!windowEl) return;
         document.body.appendChild(windowEl);
         windowEl.show();
         this.newGame(1);

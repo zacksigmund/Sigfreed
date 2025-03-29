@@ -1,6 +1,8 @@
 import { Button, Element, Window } from "../../system/ui/index.js";
 
 export class Calendar {
+    static name = "Calendar";
+    static icon = "apps/calendar/calendar.app.png";
     static about =
         "Events coming... event-ually! For now, enjoy knowing which date is on which day!";
     get currentMonthString() {
@@ -64,7 +66,6 @@ export class Calendar {
                 )
             )
         );
-        if (!windowEl) return;
         this.fillMonth();
         document.body.appendChild(windowEl);
         windowEl.show();
