@@ -9,6 +9,7 @@
     justify-content: space-between;
 
     .weather,
+    .weather > span,
     .datebox,
     .timebox {
         padding-block: 4px;
