@@ -42,11 +42,14 @@ export const Menu = (menuItems) => {
         }
     };
 
-    const toggleMenu = () => {
+    const toggleMenu = (event) => {
         if (!menuOpen) {
             menu.style.display = "flex";
             menuOpen = true;
-            menu.firstElementChild.firstElementChild.focus();
+            if (!event.detail) {
+                // only autofocus when triggering from keyboard
+                menu.firstElementChild.firstElementChild.focus();
+            }
             menu.parentElement
                 .querySelector("[aria-haspopup='menu']")
                 .setAttribute("aria-expanded", "true");
