@@ -2,9 +2,8 @@ import { Element } from "./element.js";
 import { Menu } from "./menu.js";
 import { UnstyledButton } from "./unstyled-button.js";
 
-export const TitleBar = (menuItems, title) => {
+export const TitleBar = (menuItems, title, maximized) => {
     let moving = false;
-    let maximized = false;
     let menuButton;
     const dragger = Element("div", { class: "dragger" }, Element("div"));
 
@@ -55,6 +54,7 @@ export const TitleBar = (menuItems, title) => {
         } else {
             windowEl.classList.remove("maximized");
         }
+        saveLocation(title, windowEl.offsetTop, windowEl.offsetLeft, maximized);
     });
 
     // window movement
@@ -88,12 +88,12 @@ export const TitleBar = (menuItems, title) => {
         windowEl.style.left = `${windowEl.offsetLeft + event.movementX}px`;
         moving = false;
         dragger.classList.remove("dragging");
-        saveLocation(title, windowEl.offsetTop, windowEl.offsetLeft);
+        saveLocation(title, windowEl.offsetTop, windowEl.offsetLeft, maximized);
     });
 
     return titlebar;
 };
 
-export const saveLocation = (title, top, left) => {
-    localStorage.setItem(`window.${title}`, JSON.stringify({ top, left }));
+export const saveLocation = (title, top, left, maximized) => {
+    localStorage.setItem(`window.${title}`, JSON.stringify({ top, left, maximized }));
 };

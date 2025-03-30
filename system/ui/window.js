@@ -2,19 +2,19 @@ import { Element } from "./element.js";
 import { TitleBar, saveLocation } from "./title-bar.js";
 
 export const Window = (title, menuItems, ...children) => {
+    let { top, left, maximized } = loadLocation(title);
     const windowEl = Element(
         "dialog",
-        { class: "sf-window" },
-        TitleBar(menuItems, title),
+        { class: `sf-window${maximized ? " maximized" : ""}` },
+        TitleBar(menuItems, title, maximized),
         Element("div", { class: "body" }, ...children)
     );
-    let { top, left } = loadLocation(title);
     requestAnimationFrame(() => {
         top = Math.min(top, window.innerHeight - windowEl.clientHeight);
         left = Math.min(left, window.innerWidth - windowEl.clientWidth);
         windowEl.style.top = `${top}px`;
         windowEl.style.left = `${left}px`;
-        saveLocation(title, top, left);
+        saveLocation(title, top, left, maximized);
     });
     windowEl.addEventListener("keydown", (event) => focusTrap(windowEl, event));
     windowEl.addEventListener("click", () => window.windowManager.focus(title));
