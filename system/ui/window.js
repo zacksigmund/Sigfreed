@@ -1,3 +1,4 @@
+import { classes } from "../utils.js";
 import { Element } from "./element.js";
 import { TitleBar, saveLocation } from "./title-bar.js";
 
@@ -5,7 +6,7 @@ export const Window = (title, menuItems, ...children) => {
     let { top, left, maximized } = loadLocation(title);
     const windowEl = Element(
         "dialog",
-        { class: `sf-window${maximized ? " maximized" : ""}` },
+        { class: classes("sf-window", maximized && "maximized") },
         TitleBar(menuItems, title, maximized),
         Element("div", { class: "body" }, ...children)
     );
