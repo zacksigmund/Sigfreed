@@ -9,13 +9,16 @@
     justify-content: space-between;
 
     .weather,
-    .weather > span,
     .datebox,
     .timebox {
         padding-block: 4px;
         padding-inline: 8px;
         color: var(--c-foreground);
         line-height: 1em;
+    }
+
+    .weather > span {
+        color: var(--c-foreground);
     }
 
     button {
