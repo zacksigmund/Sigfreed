@@ -7,6 +7,7 @@
 label.sf-textbox {
     display: inline-flex;
     position: relative;
+    flex: 1 1 auto;
 
     input[type="text"] {
         border-image: url(images/input-border.png) 12 fill / 12px;
@@ -15,6 +16,9 @@ label.sf-textbox {
         padding-block: 12px;
         color: var(--c-foreground);
         background: none;
+        inline-size: 0;
+        min-inline-size: 212px;
+        flex: 1 1 auto;
 
         &::selection {
             color: var(--c-foreground);
