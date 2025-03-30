@@ -3,6 +3,8 @@
     padding: 16px;
     gap: 36px;
     text-align: center;
+    margin-inline: auto;
+    inline-size: fit-content;
 
     &.error {
         flex-direction: column;
