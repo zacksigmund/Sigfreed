@@ -88,8 +88,8 @@ export class Spider {
     };
 
     click = (e) => {
-        const x = Math.floor(e.offsetX / 2),
-            y = Math.floor(e.offsetY / 2);
+        const x = Math.floor((e.offsetX * e.target.width) / e.target.clientWidth),
+            y = Math.floor((e.offsetY * e.target.height) / e.target.clientHeight);
         if (7 < x && x < 80 && 7 < y && y < 71) {
             this.clickDecks();
         } else if (218 < x && x < 233 && 31 < y && y < 46) {

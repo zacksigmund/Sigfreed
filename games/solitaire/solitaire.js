@@ -71,8 +71,8 @@ export class Solitaire {
     };
 
     click = (e) => {
-        const x = Math.floor(e.offsetX / 2),
-            y = Math.floor(e.offsetY / 2);
+        const x = Math.floor((e.offsetX * e.target.width) / e.target.clientWidth),
+            y = Math.floor((e.offsetY * e.target.height) / e.target.clientHeight);
         if (7 < x && x < 47 && 7 < y && y < 71) {
             this.clickDeck();
         } else if (51 < x && x < 91 && 7 < y && y < 71) {

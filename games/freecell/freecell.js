@@ -78,8 +78,8 @@ export class FreeCell {
     };
 
     click = (e) => {
-        const x = Math.floor(e.offsetX / 2),
-            y = Math.floor(e.offsetY / 2);
+        const x = Math.floor((e.offsetX * e.target.width) / e.target.clientWidth),
+            y = Math.floor((e.offsetY * e.target.height) / e.target.clientHeight);
         if (7 < x && x < 180 && 7 < y && y < 71) {
             const cell = Math.floor((x - 8) / 44);
             this.clickFreeCell(cell);
