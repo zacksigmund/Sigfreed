@@ -6,8 +6,11 @@ export class WindowManager {
         document.body.appendChild(Desktop());
     }
 
-    launch = (App) => {
-        if (this.openApps[App.name]) return;
+    open = (App) => {
+        if (this.openApps[App.name]) {
+            this.openApps[App.name].windowEl.show();
+            return;
+        }
         const app = new App(this);
         this.openApps[App.name] = app;
         document.body.appendChild(app.windowEl);
@@ -20,5 +23,9 @@ export class WindowManager {
             document.body.removeChild(this.openApps[appName].windowEl);
             delete this.openApps[appName];
         }
+    };
+
+    minimize = (appName) => {
+        this.openApps[appName].windowEl.close();
     };
 }

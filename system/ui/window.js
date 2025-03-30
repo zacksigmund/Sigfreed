@@ -2,13 +2,10 @@ import { Element } from "./element.js";
 import { TitleBar, saveLocation } from "./title-bar.js";
 
 export const Window = (title, menuItems, ...children) => {
-    const close = () => {
-        window.windowManager.close(title);
-    };
     const windowEl = Element(
         "dialog",
         { class: "sf-window" },
-        TitleBar(menuItems, title, close),
+        TitleBar(menuItems, title),
         Element("div", { class: "body" }, ...children)
     );
     let { top, left } = loadLocation(title);

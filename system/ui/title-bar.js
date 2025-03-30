@@ -2,7 +2,7 @@ import { Element } from "./element.js";
 import { Menu } from "./menu.js";
 import { UnstyledButton } from "./unstyled-button.js";
 
-export const TitleBar = (menuItems, title, onClose) => {
+export const TitleBar = (menuItems, title) => {
     let moving = false;
     let menuButton;
     const dragger = Element("div", { class: "dragger" }, Element("div"));
@@ -33,7 +33,12 @@ export const TitleBar = (menuItems, title, onClose) => {
         menu,
         title,
         dragger,
-        UnstyledButton({ class: "close-button", "aria-label": "Close window" }, onClose)
+        UnstyledButton({ class: "minimize-button", "aria-label": "Minimize window" }, () =>
+            window.windowManager.minimize(title)
+        ),
+        UnstyledButton({ class: "close-button", "aria-label": "Close window" }, () =>
+            window.windowManager.close(title)
+        )
     );
 
     // window movement
