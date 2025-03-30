@@ -72,6 +72,22 @@
         }
     }
 
+    .expand-button {
+        background-image: url(images/expand-window.png);
+        block-size: 40px;
+        inline-size: 40px;
+        margin-inline: -4px;
+
+        &:active {
+            transform: rotate(180deg);
+        }
+
+        &:focus-visible {
+            outline: none;
+            background-image: url(images/expand-window-outline.png);
+        }
+    }
+
     .close-button {
         background-image: url(images/close-window.png);
         block-size: 40px;

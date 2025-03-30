@@ -36,6 +36,7 @@ export const TitleBar = (menuItems, title) => {
         UnstyledButton({ class: "minimize-button", "aria-label": "Minimize window" }, () =>
             window.windowManager.minimize(title)
         ),
+        UnstyledButton({ class: "expand-button", "aria-label": "Expand window" }, () => {}),
         UnstyledButton({ class: "close-button", "aria-label": "Close window" }, () =>
             window.windowManager.close(title)
         )
