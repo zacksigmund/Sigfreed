@@ -17,6 +17,7 @@
 
     > div {
         margin-inline: auto;
+        margin-block: 8px;
         inline-size: fit-content;
     }
 }

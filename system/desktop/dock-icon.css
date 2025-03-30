@@ -1,19 +1,37 @@
 .sf-dockicon {
-    transition: transform 0.15s ease;
     cursor: pointer;
+    position: relative;
 
-    &:hover,
-    &:focus {
+    img {
+        transition: transform 0.15s ease;
+    }
+
+    &:hover img,
+    &:focus img {
         transform: translateY(-6px);
     }
 
-    &:active {
+    &:active img {
         transform: translate(-2px, -4px);
     }
 
     &:focus-visible {
-        outline: 8px solid var(--c-outline);
-        background: var(--c-outline);
-        outline-offset: -8px;
+        outline: none;
+        img {
+            outline: 8px solid var(--c-outline);
+            background: var(--c-outline);
+            outline-offset: -8px;
+        }
+    }
+
+    &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: -4px;
+        left: calc(50% - 4px);
+        block-size: 8px;
+        inline-size: 8px;
+        background-color: var(--c-background);
     }
 }
