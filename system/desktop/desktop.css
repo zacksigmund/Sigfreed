@@ -17,7 +17,7 @@
 
     > div {
         margin-inline: auto;
-        margin-block: 8px;
+        padding-block: 8px;
         inline-size: fit-content;
         max-inline-size: 100%;
         white-space: nowrap;
