@@ -4,6 +4,7 @@ import { UnstyledButton } from "./unstyled-button.js";
 
 export const TitleBar = (menuItems, title) => {
     let moving = false;
+    let maximized = false;
     let menuButton;
     const dragger = Element("div", { class: "dragger" }, Element("div"));
 
@@ -26,6 +27,8 @@ export const TitleBar = (menuItems, title) => {
         Element("div")
     );
 
+    const expandButton = UnstyledButton({ class: "expand-button", "aria-label": "Expand window" });
+
     const titlebar = Element(
         "div",
         { class: "sf-titlebar" },
@@ -36,14 +39,27 @@ export const TitleBar = (menuItems, title) => {
         UnstyledButton({ class: "minimize-button", "aria-label": "Minimize window" }, () =>
             window.windowManager.minimize(title)
         ),
-        UnstyledButton({ class: "expand-button", "aria-label": "Expand window" }, () => {}),
+        expandButton,
         UnstyledButton({ class: "close-button", "aria-label": "Close window" }, () =>
             window.windowManager.close(title)
         )
     );
 
+    expandButton.addEventListener("click", () => {
+        maximized = !maximized;
+        const windowEl = titlebar.parentElement;
+        if (maximized) {
+            windowEl.classList.add("maximized");
+            windowEl.style.removeProperty("top");
+            windowEl.style.removeProperty("left");
+        } else {
+            windowEl.classList.remove("maximized");
+        }
+    });
+
     // window movement
     dragger.addEventListener("mousedown", () => {
+        if (maximized) return;
         moving = true;
         dragger.classList.add("dragging");
     });

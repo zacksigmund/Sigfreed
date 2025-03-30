@@ -3,9 +3,18 @@
     border: 4px solid var(--c-foreground);
     background: var(--c-background);
     block-size: fit-content;
+    max-block-size: calc(100% - 32px - 111px);
     inline-size: fit-content;
+    max-inline-size: 100%;
     margin: 0;
     padding: 0;
+    top: 32px;
+    left: 0;
+
+    &.maximized {
+        block-size: calc(100% - 32px - 111px);
+        inline-size: 100%;
+    }
 
     body.sf-theme-system & {
         @media (prefers-color-scheme: dark) {

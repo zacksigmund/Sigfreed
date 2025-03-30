@@ -41,6 +41,10 @@
         cursor: grab;
         padding-block: 10px;
 
+        .maximized & {
+            cursor: unset;
+        }
+
         &.dragging {
             cursor: grabbing;
         }
