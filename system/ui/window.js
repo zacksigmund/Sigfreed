@@ -17,6 +17,7 @@ export const Window = (title, menuItems, ...children) => {
         saveLocation(title, top, left);
     });
     windowEl.addEventListener("keydown", (event) => focusTrap(windowEl, event));
+    windowEl.addEventListener("click", () => window.windowManager.focus(title));
     return windowEl;
 };
 
