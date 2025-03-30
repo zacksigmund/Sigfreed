@@ -24,7 +24,7 @@
         }
     }
 
-    &:after {
+    &.open:after {
         content: "";
         display: block;
         position: absolute;

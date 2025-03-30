@@ -16,12 +16,16 @@ export class WindowManager {
         document.body.appendChild(app.windowEl);
         app.windowEl.show();
         app.init?.();
+        window.bus.push("appStateChanged");
     };
+
+    isOpen = (appName) => !!this.openApps[appName];
 
     close = (appName) => {
         if (this.openApps[appName]) {
             document.body.removeChild(this.openApps[appName].windowEl);
             delete this.openApps[appName];
+            window.bus.push("appStateChanged");
         }
     };
 
