@@ -19,6 +19,7 @@ export class Calendar {
         this.currentMonth.setDate(1);
         this.monthName = Element("h1", {}, this.currentMonthString);
         this.tbody = Element("tbody", {});
+        const smallScreen = window.matchMedia("(max-width: 480px)").matches;
         this.windowEl = Window(
             Calendar.name,
             { About: () => alert(Calendar.about) },
@@ -54,13 +55,13 @@ export class Calendar {
                     Element(
                         "thead",
                         {},
-                        Element("th", {}, "Sun"),
-                        Element("th", {}, "Mon"),
-                        Element("th", {}, "Tue"),
-                        Element("th", {}, "Wed"),
-                        Element("th", {}, "Thu"),
-                        Element("th", {}, "Fri"),
-                        Element("th", {}, "Sat")
+                        Element("th", {}, smallScreen ? "S" : "Sun"),
+                        Element("th", {}, smallScreen ? "M" : "Mon"),
+                        Element("th", {}, smallScreen ? "T" : "Tue"),
+                        Element("th", {}, smallScreen ? "W" : "Wed"),
+                        Element("th", {}, smallScreen ? "T" : "Thu"),
+                        Element("th", {}, smallScreen ? "F" : "Fri"),
+                        Element("th", {}, smallScreen ? "S" : "Sat")
                     ),
                     this.tbody
                 )
