@@ -3,7 +3,7 @@
     border: 4px solid var(--c-foreground);
     background: var(--c-background);
     block-size: fit-content;
-    max-block-size: calc(100% - 32px - 111px);
+    max-block-size: calc(100% - 32px - 94px);
     inline-size: fit-content;
     max-inline-size: 100%;
     margin: 0;
@@ -12,7 +12,7 @@
     left: 0;
 
     &.maximized {
-        block-size: calc(100% - 32px - 111px);
+        block-size: calc(100% - 32px - 94px);
         inline-size: 100%;
     }
 

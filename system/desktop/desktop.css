@@ -22,5 +22,38 @@
         max-inline-size: 100%;
         white-space: nowrap;
         overflow-x: auto;
+        scrollbar-width: none;
+
+        &.gradientStart:before {
+            content: "";
+            display: block;
+            position: absolute;
+            left: 0;
+            top: 16px;
+            block-size: 64px;
+            inline-size: 24px;
+            z-index: 1;
+            background: radial-gradient(
+                ellipse 100% 44px at left,
+                var(--c-foreground),
+                transparent
+            );
+        }
+
+        &.gradientEnd:after {
+            content: "";
+            display: block;
+            position: absolute;
+            right: 0;
+            top: 16px;
+            block-size: 64px;
+            inline-size: 24px;
+            z-index: 1;
+            background: radial-gradient(
+                ellipse 100% 44px at right,
+                var(--c-foreground),
+                transparent
+            );
+        }
     }
 }
