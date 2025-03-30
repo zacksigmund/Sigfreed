@@ -27,6 +27,16 @@
         image-rendering: pixelated;
     }
 
+    h1 {
+        font-weight: normal;
+        font-size: 32px;
+    }
+
+    th {
+        font-weight: normal;
+        font-size: 28px;
+    }
+
     body.sf-theme-dark * {
         color: var(--c-background);
     }
