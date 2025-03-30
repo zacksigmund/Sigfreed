@@ -38,7 +38,7 @@ export class WindowManager {
     };
 
     focus = (appName) => {
-        if (this.focusedApp !== appName) {
+        if (this.focusedApp !== appName && this.isOpen(appName)) {
             this.openApps[appName].windowEl.style["z-index"] = this.topZ++;
             this.focusedApp = appName;
         }
