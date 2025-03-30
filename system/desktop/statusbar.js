@@ -17,7 +17,6 @@ export const StatusBar = () => {
     datebox = UnstyledButton({ class: "datebox" }, () => window.windowManager.open(Calendar));
     timebox = Element("div", { class: "timebox" });
     getDateTime();
-    setInterval(getDateTime, 60 * 1000);
     window.bus.on("settingsChanged", getDateTime);
     return Element(
         "div",
@@ -83,4 +82,5 @@ const getDateTime = () => {
         hour: "numeric",
         minute: "numeric",
     });
+    setTimeout(getDateTime, (60 - date.getSeconds()) * 1000);
 };
