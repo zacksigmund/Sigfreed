@@ -8,11 +8,13 @@ import { UnstyledButton } from "../ui/unstyled-button.js";
 let coords, weatherbox, datebox, timebox;
 
 export const StatusBar = () => {
-    const [systemMenu, toggleSystemMenu] = Menu({ Settings: () => new Settings() });
-    weatherbox = UnstyledButton({ class: "weather" }, () => new Weather());
+    const [systemMenu, toggleSystemMenu] = Menu({
+        Settings: () => window.windowManager.open(Settings),
+    });
+    weatherbox = UnstyledButton({ class: "weather" }, () => window.windowManager.open(Weather));
     window.bus.on("locationUpdated", initWeather);
     initWeather();
-    datebox = UnstyledButton({ class: "datebox" }, () => new Calendar());
+    datebox = UnstyledButton({ class: "datebox" }, () => window.windowManager.open(Calendar));
     timebox = Element("div", { class: "timebox" });
     getDateTime();
     setInterval(getDateTime, 60 * 1000);

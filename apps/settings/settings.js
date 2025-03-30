@@ -1,11 +1,12 @@
 import { Checkbox, Element, RadioGroup, Window } from "../../system/ui/index.js";
 
 export class Settings {
+    static name = "Settings";
     static about = "More settings coming soon!";
     constructor() {
         const is24h = JSON.parse(localStorage.getItem("settings.24h")) ?? false;
         const theme = localStorage.getItem("system.theme") ?? "system";
-        const windowEl = Window(
+        this.windowEl = Window(
             "Settings",
             {
                 About: () => alert(Settings.about),
@@ -23,9 +24,6 @@ export class Settings {
                 this.saveTheme
             )
         );
-        if (!windowEl) return;
-        document.body.appendChild(windowEl);
-        windowEl.show();
     }
 
     toggle24h = (event) => {
