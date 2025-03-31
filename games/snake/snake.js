@@ -3,7 +3,7 @@ import { Element, Window } from "../../system/ui/index.js";
 export class Snake {
     static name = "Snake";
     static icon = "games/snake/snake.app.png";
-    static about = "Snake! Alt+N for new game.";
+    static about = "Snake! Arrow keys or WASD to move. Alt+N for new game.";
     static GRID_WIDTH = 38;
     static GRID_HEIGHT = 28;
 
@@ -56,13 +56,13 @@ export class Snake {
             this.stop();
             this.newGame();
         }
-        if (event.key === "ArrowUp" && this.dir !== "down") {
+        if ((event.key === "ArrowUp" || event.key === "w") && this.dir !== "down") {
             this.dir = "up";
-        } else if (event.key === "ArrowDown" && this.dir !== "up") {
+        } else if ((event.key === "ArrowDown" || event.key === "s") && this.dir !== "up") {
             this.dir = "down";
-        } else if (event.key === "ArrowLeft" && this.dir !== "right") {
+        } else if ((event.key === "ArrowLeft" || event.key === "a") && this.dir !== "right") {
             this.dir = "left";
-        } else if (event.key === "ArrowRight" && this.dir !== "left") {
+        } else if ((event.key === "ArrowRight" || event.key === "d") && this.dir !== "left") {
             this.dir = "right";
         }
     };
