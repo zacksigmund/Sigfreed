@@ -67,12 +67,16 @@
         margin-inline: -4px;
 
         &:active {
-            transform: rotate(180deg);
+            background-image: url(images/minimize-window-pressed.png);
         }
 
         &:focus-visible {
             outline: none;
             background-image: url(images/minimize-window-outline.png);
+
+            &:active {
+                background-image: url(images/minimize-window-outline-pressed.png);
+            }
         }
     }
 
