@@ -132,7 +132,7 @@ export class FreeCell {
         if (cards.length === 1) {
             let moved = this.tryGoal(column.top);
             if (moved) {
-                const card = column.draw();
+                const [card] = column.draw();
                 this.undoStack.push(() => {
                     column.push(card);
                 });
