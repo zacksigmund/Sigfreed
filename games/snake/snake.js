@@ -82,8 +82,8 @@ export class Snake {
         }
 
         // die
-        // if (this.snake.some(([sx, sy], i) => i > 0 && next[0] === sx && next[1] === sy))
-        // this.stop();
+        if (this.snake.some(([sx, sy], i) => i > 0 && next[0] === sx && next[1] === sy))
+            this.stop();
         if (
             next[0] < 1 ||
             next[0] > Snake.GRID_WIDTH + 1 ||
