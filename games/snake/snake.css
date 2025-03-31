@@ -1,0 +1,10 @@
+#snake {
+    image-rendering: pixelated;
+    background-color: var(--c-surface);
+    margin: -8px;
+
+    @media (min-width: 640px) and (min-height: 480px) {
+        height: 480px;
+        width: 640px;
+    }
+}

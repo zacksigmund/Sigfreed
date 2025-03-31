@@ -3,6 +3,7 @@ import { Calendar } from "../../apps/calendar/calendar.js";
 import { Todo } from "../../apps/todo/todo.js";
 import { Weather } from "../../apps/weather/weather.js";
 import { FreeCell } from "../../games/freecell/freecell.js";
+import { Snake } from "../../games/snake/snake.js";
 import { Solitaire } from "../../games/solitaire/solitaire.js";
 import { Spider } from "../../games/spider/spider.js";
 import { Element } from "../ui/element.js";
@@ -19,7 +20,8 @@ export const Desktop = () => {
         DockIcon(Calculator),
         DockIcon(Solitaire),
         DockIcon(FreeCell),
-        DockIcon(Spider)
+        DockIcon(Spider),
+        DockIcon(Snake)
     );
     const updateGradient = () => {
         if (dockScroll.scrollLeft <= 8) {

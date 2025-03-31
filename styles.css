@@ -18,5 +18,6 @@
 @import "./apps/weather/weather.css";
 @import "./apps/calculator/calculator.css";
 @import "./games/freecell/freecell.css";
+@import "./games/snake/snake.css";
 @import "./games/solitaire/solitaire.css";
 @import "./games/spider/spider.css";
