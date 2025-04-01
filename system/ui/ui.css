@@ -1,28 +1,39 @@
 @layer base {
     html {
-        --c-background: #f0edea;
-        --c-foreground: #2e2a2a;
-        --c-surface: #ccc6c1;
-        --c-shadow: #807c79;
-        --c-outline: #e09844;
-        --c-success: #137a28;
-        --c-success-dark: #0c4f1a;
-        --c-success-light: #1aa836;
-        --c-warning: #ffdb3d;
-        --c-warning-dark: #d6af00;
-        --c-warning-light: #ffe98a;
-        --c-danger: #b21e17;
-        --c-danger-dark: #7c1210;
-        --c-danger-light: #e2201d;
+        --c-white: #f0edea;
+        --c-black: #2e2a2a;
+        --c-lightgray: #ccc6c1;
+        --c-darkgray: #807c79;
+        --c-orange: #e09844;
+        --c-darkgreen: #0c4f1a;
+        --c-green: #137a28;
+        --c-lightgreen: #1aa836;
+        --c-darkyellow: #d6af00;
+        --c-yellow: #ffdb3d;
+        --c-lightyelow: #ffe98a;
+        --c-darkred: #7c1210;
+        --c-red: #b21e17;
+        --c-lightred: #e2201d;
         --c-teal: #3e8b91;
         --c-brown: #89572a;
+
+        --c-primary-bg: var(--c-white);
+        --c-primary-fg: var(--c-black);
+        --c-surface-bg: var(--c-lightgray);
+        --c-surface-fg: var(--c-black);
+        --c-alt-bg: var(--c-darkgray);
+        --c-alt-fg: var(--c-white);
+        --c-border: var(--c-black);
+        --c-outline: var(--c-orange);
+        --c-success: var(--c-green);
+        --c-danger: var(--c-red);
         cursor: url(images/cursor-default.png), default;
     }
 
     * {
         font-family: Tiny5, monospace;
         font-size: 24px;
-        color: var(--c-foreground);
+        color: var(--c-primary-fg);
         box-sizing: border-box;
         image-rendering: pixelated;
     }
@@ -38,12 +49,14 @@
     }
 
     body.sf-theme-dark * {
-        color: var(--c-background);
+        --c-primary-fg: var(--c-white);
+        --c-primary-bg: var(--c-darkgray);
     }
 
     body.sf-theme-system * {
         @media (prefers-color-scheme: dark) {
-            color: var(--c-background);
+            --c-primary-fg: var(--c-white);
+            --c-primary-bg: var(--c-darkgray);
         }
     }
 

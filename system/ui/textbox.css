@@ -14,21 +14,21 @@ label.sf-textbox {
         margin-block-start: -4px;
         padding-inline: 20px;
         padding-block: 12px;
-        color: var(--c-foreground);
+        color: var(--c-black);
         background: none;
         inline-size: 0;
         min-inline-size: 212px;
         flex: 1 1 auto;
 
         &::selection {
-            color: var(--c-foreground);
+            color: var(--c-black);
             background-color: transparent;
         }
 
         + span {
             position: absolute;
             visibility: hidden;
-            inset-block-start: 10px;
+            inset-block-start: 14px;
             inset-inline-start: 22px;
         }
 
@@ -38,8 +38,8 @@ label.sf-textbox {
 
             + span span:last-child {
                 visibility: visible;
-                background-color: var(--c-foreground);
-                color: var(--c-background);
+                background-color: var(--c-black);
+                color: var(--c-white);
                 display: inline-block;
                 block-size: 24px;
 

@@ -32,6 +32,6 @@
         left: calc(50% - 4px);
         block-size: 8px;
         inline-size: 8px;
-        background-color: var(--c-background);
+        background-color: var(--c-white);
     }
 }

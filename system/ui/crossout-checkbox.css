@@ -9,7 +9,7 @@ label.sf-crossout-checkbox {
             display: block;
             block-size: 4px;
             inline-size: 0;
-            background-color: var(--c-foreground);
+            background-color: var(--c-primary-fg);
             position: absolute;
             margin-block: auto;
             inset-block: 0;

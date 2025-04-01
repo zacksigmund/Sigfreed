@@ -1,6 +1,6 @@
 #solitaire {
     image-rendering: pixelated;
-    background-color: var(--c-success);
+    background-color: var(--c-green);
     margin: -8px;
 
     @media (min-width: 640px) and (min-height: 480px) {

@@ -1,7 +1,7 @@
 .sf-titlebar {
-    background-color: var(--c-surface);
-    border-block-end: 4px solid var(--c-foreground);
-    color: var(--c-foreground);
+    background-color: var(--c-surface-bg);
+    border-block-end: 4px solid var(--c-border);
+    color: var(--c-surface-fg);
     padding-inline: 8px;
     block-size: 40px;
     user-select: none;
@@ -17,8 +17,8 @@
         > div {
             block-size: 100%;
             background: repeating-linear-gradient(
-                var(--c-foreground),
-                var(--c-foreground) 3px,
+                var(--c-surface-fg),
+                var(--c-surface-fg) 3px,
                 transparent 3px,
                 transparent 6px
             );
@@ -52,8 +52,8 @@
         > div {
             block-size: 100%;
             background: repeating-linear-gradient(
-                var(--c-shadow),
-                var(--c-shadow) 4px,
+                var(--c-alt-bg),
+                var(--c-alt-bg) 4px,
                 transparent 4px,
                 transparent 8px
             );

@@ -3,9 +3,9 @@
     background: none;
     border-image: url(images/border.png) 4 fill / 16px;
     position: relative;
-    color: var(--c-foreground);
+    color: var(--c-surface-fg);
     div {
-        color: var(--c-foreground);
+        color: var(--c-surface-fg);
     }
 
     &:active,

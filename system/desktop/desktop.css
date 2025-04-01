@@ -2,11 +2,11 @@
     inline-size: 100%;
     block-size: 100%;
     position: relative;
-    background-color: var(--c-success);
+    background-color: var(--c-green);
     background: linear-gradient(115deg, transparent 75%, var(--c-teal) 75%) 0 0,
         linear-gradient(245deg, transparent 75%, var(--c-teal) 75%) 0 0,
         linear-gradient(115deg, transparent 75%, var(--c-teal) 75%) 4px -8px,
-        linear-gradient(245deg, transparent 75%, var(--c-teal) 75%) 4px -8px, var(--c-success);
+        linear-gradient(245deg, transparent 75%, var(--c-teal) 75%) 4px -8px, var(--c-green);
     background-size: 8px 16px;
 }
 
@@ -33,11 +33,7 @@
             block-size: 64px;
             inline-size: 24px;
             z-index: 1;
-            background: radial-gradient(
-                ellipse 100% 44px at left,
-                var(--c-foreground),
-                transparent
-            );
+            background: radial-gradient(ellipse 100% 44px at left, var(--c-black), transparent);
         }
 
         &.gradientEnd:after {
@@ -49,11 +45,7 @@
             block-size: 64px;
             inline-size: 24px;
             z-index: 1;
-            background: radial-gradient(
-                ellipse 100% 44px at right,
-                var(--c-foreground),
-                transparent
-            );
+            background: radial-gradient(ellipse 100% 44px at right, var(--c-black), transparent);
         }
     }
 }

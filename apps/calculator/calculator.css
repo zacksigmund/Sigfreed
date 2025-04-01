@@ -4,9 +4,9 @@
     gap: 8px;
 
     .screen {
-        border: 4px solid var(--c-background);
-        color: var(--c-background);
-        background: var(--c-foreground);
+        border: 4px solid var(--c-white);
+        color: var(--c-white);
+        background: var(--c-black);
         padding: 8px;
         margin: 8px;
         text-align: right;

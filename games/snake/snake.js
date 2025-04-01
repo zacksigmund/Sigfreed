@@ -37,7 +37,7 @@ export class Snake {
     };
 
     newGame = () => {
-        this.ctx.strokeStyle = getComputedStyle(this.canvas).getPropertyValue("--c-foreground");
+        this.ctx.strokeStyle = getComputedStyle(this.canvas).getPropertyValue("--c-primary-fg");
         this.ctx.fillStyle = "none";
         this.ctx.lineWidth = 4;
         this.snake = [
