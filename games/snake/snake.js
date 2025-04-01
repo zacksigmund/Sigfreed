@@ -6,11 +6,16 @@ export class Snake {
     static about = "Snake! Arrow keys or WASD to move. Alt+N for new game.";
     static GRID_WIDTH = 38;
     static GRID_HEIGHT = 28;
+    static EMPTY_SCORES = Array.from(Array(10)).map((_) => ({ initials: "NO1", points: 0 }));
 
     constructor() {
         this.windowEl = Window(
             Snake.name,
-            { "New Game": this.newGame, About: () => alert(Snake.about) },
+            {
+                "New Game": this.newGame,
+                "High Scores": this.showHighScores,
+                About: () => alert(Snake.about),
+            },
             Element("canvas", { id: "snake", width: 320, height: 240 })
         );
         window.bus.on("appStateChanged", this.onClose);
@@ -25,7 +30,36 @@ export class Snake {
     };
 
     stop = () => {
+        if (this.running) {
+            const scores = this.loadScores();
+            if (scores.some((score) => this.snake.length - 2 > score.points)) {
+                const text = prompt("Enter initials") ?? "YOU";
+                const initials = text.substring(0, 3).toUpperCase();
+                scores.push({ initials, points: this.snake.length - 2 });
+                scores.sort((a, b) => b.points - a.points);
+                if (scores.length > 10) {
+                    scores.pop();
+                }
+                this.saveScores(scores);
+            }
+        }
         this.running = false;
+    };
+
+    showHighScores = () => {
+        alert(
+            this.loadScores()
+                .map(({ initials, points }) => `${initials}:        ${points}pts`)
+                .join("\n")
+        );
+    };
+
+    loadScores = () => {
+        return JSON.parse(localStorage.getItem("Snake.highScores")) ?? Snake.EMPTY_SCORES;
+    };
+
+    saveScores = (scores) => {
+        localStorage.setItem("Snake.highScores", JSON.stringify(scores));
     };
 
     init = () => {
