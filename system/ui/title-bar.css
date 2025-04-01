@@ -64,55 +64,62 @@
         display: flex;
         gap: 6px;
 
-        .minimize-button {
-            background-image: url(images/minimize-window.png);
+        button {
+            background-image: url(images/title-bar.png);
             block-size: 30px;
             inline-size: 30px;
             margin-inline: -3px;
 
+            &:focus-visible {
+                outline: none;
+            }
+        }
+
+        .minimize-button {
+            background-position: top -60px left;
+
             &:active {
-                background-image: url(images/minimize-window-pressed.png);
+                background-position: top -60px left -30px;
             }
 
             &:focus-visible {
-                outline: none;
-                background-image: url(images/minimize-window-outline.png);
+                background-position: top -60px left -60px;
 
                 &:active {
-                    background-image: url(images/minimize-window-outline-pressed.png);
+                    background-position: top -60px left -90px;
                 }
             }
         }
 
         .expand-button {
-            background-image: url(images/expand-window.png);
-            block-size: 30px;
-            inline-size: 30px;
-            margin-inline: -3px;
+            background-position: top -30px left;
 
             &:active {
-                transform: rotate(180deg);
+                background-position: top -30px left -30px;
             }
 
             &:focus-visible {
-                outline: none;
-                background-image: url(images/expand-window-outline.png);
+                background-position: top -30px left -60px;
+
+                &:active {
+                    background-position: top -30px left -90px;
+                }
             }
         }
 
         .close-button {
-            background-image: url(images/close-window.png);
-            block-size: 30px;
-            inline-size: 30px;
-            margin-inline: -3px;
+            background-position: top left;
 
             &:active {
-                transform: rotate(180deg);
+                background-position: top left -30px;
             }
 
             &:focus-visible {
-                outline: none;
-                background-image: url(images/close-window-outline.png);
+                background-position: top left -60px;
+
+                &:active {
+                    background-position: top left -90px;
+                }
             }
         }
     }
