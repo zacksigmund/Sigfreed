@@ -35,12 +35,16 @@ export const TitleBar = (menuItems, title, maximized) => {
         menu,
         title,
         dragger,
-        UnstyledButton({ class: "minimize-button", "aria-label": "Minimize window" }, () =>
-            window.windowManager.minimize(title)
-        ),
-        expandButton,
-        UnstyledButton({ class: "close-button", "aria-label": "Close window" }, () =>
-            window.windowManager.close(title)
+        Element(
+            "div",
+            { class: "buttons" },
+            UnstyledButton({ class: "minimize-button", "aria-label": "Minimize window" }, () =>
+                window.windowManager.minimize(title)
+            ),
+            expandButton,
+            UnstyledButton({ class: "close-button", "aria-label": "Close window" }, () =>
+                window.windowManager.close(title)
+            )
         )
     );
 

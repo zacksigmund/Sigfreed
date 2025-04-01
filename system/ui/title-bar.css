@@ -3,7 +3,7 @@
     border-block-end: 4px solid var(--c-foreground);
     color: var(--c-foreground);
     padding-inline: 8px;
-    block-size: 44px;
+    block-size: 40px;
     user-select: none;
     display: flex;
     gap: 8px;
@@ -12,7 +12,7 @@
     .menu-button {
         block-size: 100%;
         inline-size: 16px;
-        padding-block: 12px;
+        padding-block: 10px;
 
         > div {
             block-size: 100%;
@@ -39,7 +39,7 @@
         block-size: 100%;
         min-inline-size: 32px;
         cursor: grab;
-        padding-block: 10px;
+        padding-block: 8px;
 
         .maximized & {
             cursor: unset;
@@ -60,55 +60,60 @@
         }
     }
 
-    .minimize-button {
-        background-image: url(images/minimize-window.png);
-        block-size: 40px;
-        inline-size: 40px;
-        margin-inline: -4px;
+    .buttons {
+        display: flex;
+        gap: 6px;
 
-        &:active {
-            background-image: url(images/minimize-window-pressed.png);
-        }
-
-        &:focus-visible {
-            outline: none;
-            background-image: url(images/minimize-window-outline.png);
+        .minimize-button {
+            background-image: url(images/minimize-window.png);
+            block-size: 30px;
+            inline-size: 30px;
+            margin-inline: -3px;
 
             &:active {
-                background-image: url(images/minimize-window-outline-pressed.png);
+                background-image: url(images/minimize-window-pressed.png);
+            }
+
+            &:focus-visible {
+                outline: none;
+                background-image: url(images/minimize-window-outline.png);
+
+                &:active {
+                    background-image: url(images/minimize-window-outline-pressed.png);
+                }
             }
         }
-    }
 
-    .expand-button {
-        background-image: url(images/expand-window.png);
-        block-size: 40px;
-        inline-size: 40px;
-        margin-inline: -4px;
+        .expand-button {
+            background-image: url(images/expand-window.png);
+            block-size: 30px;
+            inline-size: 30px;
+            margin-inline: -3px;
 
-        &:active {
-            transform: rotate(180deg);
+            &:active {
+                transform: rotate(180deg);
+            }
+
+            &:focus-visible {
+                outline: none;
+                background-image: url(images/expand-window-outline.png);
+            }
         }
 
-        &:focus-visible {
-            outline: none;
-            background-image: url(images/expand-window-outline.png);
-        }
-    }
+        .close-button {
+            background-image: url(images/close-window.png);
+            block-size: 30px;
+            inline-size: 30px;
+            margin-inline: -3px;
 
-    .close-button {
-        background-image: url(images/close-window.png);
-        block-size: 40px;
-        inline-size: 40px;
-        margin-inline: -4px;
+            &:active {
+                transform: rotate(180deg);
+            }
 
-        &:active {
-            transform: rotate(180deg);
-        }
-
-        &:focus-visible {
-            outline: none;
-            background-image: url(images/close-window-outline.png);
+            &:focus-visible {
+                outline: none;
+                background-image: url(images/close-window-outline.png);
+            }
         }
     }
 }
