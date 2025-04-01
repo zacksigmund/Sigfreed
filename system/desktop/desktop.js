@@ -1,5 +1,6 @@
 import { Calculator } from "../../apps/calculator/calculator.js";
 import { Calendar } from "../../apps/calendar/calendar.js";
+import { Sticky } from "../../apps/sticky/sticky.js";
 import { Todo } from "../../apps/todo/todo.js";
 import { Weather } from "../../apps/weather/weather.js";
 import { FreeCell } from "../../games/freecell/freecell.js";
@@ -18,6 +19,7 @@ export const Desktop = () => {
         DockIcon(Calendar),
         DockIcon(Weather),
         DockIcon(Calculator),
+        DockIcon(Sticky),
         DockIcon(Solitaire),
         DockIcon(FreeCell),
         DockIcon(Spider),
