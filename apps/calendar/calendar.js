@@ -1,4 +1,5 @@
-import { Button, Element, Window } from "../../system/ui/index.js";
+import { Button, Element, UnstyledButton, Window } from "../../system/ui/index.js";
+import { Note } from "../sticky/note.js";
 
 export class Calendar {
     static name = "Calendar";
@@ -85,11 +86,34 @@ export class Calendar {
                     "td",
                     {},
                     dateCounter.getMonth() === this.currentMonth.getMonth()
-                        ? dateCounter.getDate().toString()
+                        ? this.getDateButton(dateCounter)
                         : " "
                 )
             );
             dateCounter.setDate(dateCounter.getDate() + 1);
         }
+    };
+
+    getDateButton = (date) => {
+        // en-CA happens to use yyyy-mm-dd
+        const currentDate = new Date(date).toLocaleDateString("en-CA");
+        const hasEvent = localStorage.getItem(`Sticky.${currentDate}`);
+        return UnstyledButton(
+            { class: "day-button" },
+            () => this.addNote(currentDate),
+            Element(
+                "div",
+                hasEvent
+                    ? { class: "has-event", "aria-label": "Update event for " }
+                    : { "aria-label": "Add event for " }
+            ),
+            date.getDate().toString()
+        );
+    };
+
+    addNote = (date) => {
+        const note = new Note(date).windowEl;
+        this.windowEl.appendChild(note);
+        note.show();
     };
 }

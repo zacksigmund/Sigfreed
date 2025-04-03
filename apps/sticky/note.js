@@ -23,18 +23,22 @@ export class Note {
 
         const deleteButton = UnstyledButton({ "aria-label": "Delete sticky note" }, null, "×");
 
+        const firstButton = newSticky
+            ? UnstyledButton({ "aria-label": "New sticky note" }, newSticky, "+")
+            : UnstyledButton({ "aria-label": "Hide sticky note" }, null, "-");
+
         const windowEl = Element(
             "dialog",
             { class: "sf-sticky" },
-            Element(
-                "div",
-                { class: "menubar" },
-                UnstyledButton({ "aria-label": "New sticky note" }, newSticky, "+"),
-                dragger,
-                deleteButton
-            ),
+            Element("div", { class: "menubar" }, firstButton, dragger, deleteButton),
             note
         );
+
+        if (!newSticky) {
+            firstButton.addEventListener("click", () => {
+                windowEl.parentElement.removeChild(windowEl);
+            });
+        }
 
         deleteButton.addEventListener("click", () => {
             localStorage.removeItem(`Sticky.${id}`);
