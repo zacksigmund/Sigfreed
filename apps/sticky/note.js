@@ -39,7 +39,11 @@ export class Note {
         deleteButton.addEventListener("click", () => {
             localStorage.removeItem(`Sticky.${id}`);
             localStorage.removeItem(`window.Sticky.${this.id}`);
-            windowEl.parentElement.removeChild(windowEl);
+            const parent = windowEl.parentElement;
+            parent.removeChild(windowEl);
+            if (parent.childElementCount === 0) {
+                window.windowManager.close("Sticky");
+            }
         });
 
         // window movement
