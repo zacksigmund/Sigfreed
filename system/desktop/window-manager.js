@@ -14,6 +14,8 @@ export class WindowManager {
             } else if (event.key === "ArrowRight" && event.altKey) {
                 this.switch(1);
                 event.preventDefault();
+            } else if (event.key === "w" && event.altKey) {
+                this.close(this.focusedApp);
             }
         });
     }
