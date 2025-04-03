@@ -23,7 +23,7 @@ export class Todo {
                 ["Clear checked", null, this.clearChecked],
                 ["Uncheck all", null, this.uncheckAll],
                 ["Delete List", null, this.deleteList],
-                ["About", null, () => alert(Todo.about)],
+                ["About", "/", () => alert(Todo.about)],
             ],
             this.container
         );

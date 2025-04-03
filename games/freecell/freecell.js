@@ -15,7 +15,7 @@ export class FreeCell {
             FreeCell.name,
             [
                 ["New Game", null, this.newGame],
-                ["About", null, () => alert(FreeCell.about)],
+                ["About", "/", () => alert(FreeCell.about)],
             ],
             Element("canvas", { id: "freecell", width: 408, height: 320 })
         );

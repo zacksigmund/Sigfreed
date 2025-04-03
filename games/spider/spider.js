@@ -22,7 +22,7 @@ export class Spider {
                 ["New 1-suit game", null, () => this.newGame(1)],
                 ["New 2-suit game", null, () => this.newGame(2)],
                 ["New 4-suit game", null, () => this.newGame(4)],
-                ["About", null, () => alert(Spider.about)],
+                ["About", "/", () => alert(Spider.about)],
             ],
             Element("canvas", { id: "spider", width: 452, height: 320 })
         );

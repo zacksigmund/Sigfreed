@@ -11,7 +11,7 @@ export class Weather {
             Weather.name,
             [
                 ["Toggle C/F", null, this.toggleUnits],
-                ["About", null, () => alert(Weather.about)],
+                ["About", "/", () => alert(Weather.about)],
             ],
             this.weatherbox
         );

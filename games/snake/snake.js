@@ -14,7 +14,7 @@ export class Snake {
             [
                 ["New Game", null, this.newGame],
                 ["High Scores", null, this.showHighScores],
-                ["About", null, () => alert(Snake.about)],
+                ["About", "/", () => alert(Snake.about)],
             ],
             Element("canvas", { id: "snake", width: 320, height: 240 })
         );

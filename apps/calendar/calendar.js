@@ -23,7 +23,7 @@ export class Calendar {
         const smallScreen = window.matchMedia("(max-width: 480px)").matches;
         this.windowEl = Window(
             Calendar.name,
-            [["About", null, () => alert(Calendar.about)]],
+            [["About", "/", () => alert(Calendar.about)]],
             Element(
                 "div",
                 { class: "sf-calendar" },

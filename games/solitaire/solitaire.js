@@ -15,7 +15,7 @@ export class Solitaire {
             Solitaire.name,
             [
                 ["New Game", null, this.newGame],
-                ["About", null, () => alert(Solitaire.about)],
+                ["About", "/", () => alert(Solitaire.about)],
             ],
             Element("canvas", { id: "solitaire", width: 320, height: 240 })
         );
