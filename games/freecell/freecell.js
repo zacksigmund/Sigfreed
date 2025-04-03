@@ -13,7 +13,10 @@ export class FreeCell {
     constructor() {
         this.windowEl = Window(
             FreeCell.name,
-            { "New Game": this.newGame, About: () => alert(FreeCell.about) },
+            [
+                ["New Game", null, this.newGame],
+                ["About", null, () => alert(FreeCell.about)],
+            ],
             Element("canvas", { id: "freecell", width: 408, height: 320 })
         );
     }

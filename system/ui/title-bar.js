@@ -7,9 +7,10 @@ export const TitleBar = (menuItems, title, maximized) => {
     let menuButton;
     const dragger = Element("div", { class: "dragger" }, Element("div"));
 
-    for (const [key, value] of Object.entries(menuItems)) {
-        menuItems[key] = () => {
-            value();
+    for (let i = 0; i < menuItems.length; i++) {
+        const [_text, _hotkey, callback] = menuItems[i];
+        menuItems[i][2] = () => {
+            callback();
             menuButton.focus();
         };
     }

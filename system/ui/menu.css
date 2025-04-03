@@ -17,13 +17,21 @@
         button {
             padding: 4px 12px;
             inline-size: 100%;
-            text-align: start;
-            color: var(--c-surface-fg);
+            display: flex;
+            justify-content: space-between;
+            gap: 32px;
+
+            > span {
+                color: var(--c-surface-fg);
+            }
 
             &:hover,
             &:focus {
                 background: var(--c-alt-bg);
-                color: var(--c-alt-fg);
+
+                > span {
+                    color: var(--c-alt-fg);
+                }
             }
 
             &:focus-visible {

@@ -9,7 +9,10 @@ export class Weather {
         this.weatherbox = Element("div", { class: "sf-weather" });
         this.windowEl = Window(
             Weather.name,
-            { "Toggle C/F": this.toggleUnits, About: () => alert(Weather.about) },
+            [
+                ["Toggle C/F", null, this.toggleUnits],
+                ["About", null, () => alert(Weather.about)],
+            ],
             this.weatherbox
         );
         this.initWeather();

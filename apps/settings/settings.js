@@ -8,9 +8,7 @@ export class Settings {
         const theme = localStorage.getItem("system.theme") ?? "system";
         this.windowEl = Window(
             "Settings",
-            {
-                About: () => alert(Settings.about),
-            },
+            [["About", "/", () => alert(Settings.about)]],
             Element("div", {}, Checkbox({ checked: is24h }, this.toggle24h, "24h time")),
             RadioGroup(
                 "Theme",

@@ -111,7 +111,7 @@ export class Calculator {
         );
         this.windowEl = Window(
             Calculator.name,
-            { About: () => alert(Calculator.about) },
+            [["About", null, () => alert(Calculator.about)]],
             Element(
                 "div",
                 { class: "sf-calculator" },

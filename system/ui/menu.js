@@ -4,8 +4,17 @@ import { UnstyledButton } from "./unstyled-button.js";
 export const Menu = (menuItems) => {
     let menuOpen = false;
 
-    const items = Object.entries(menuItems).map(([name, callback]) =>
-        Element("li", { role: "menuitem" }, UnstyledButton({}, callback, name))
+    const items = menuItems.map(([name, hotkey, callback]) =>
+        Element(
+            "li",
+            { role: "menuitem" },
+            UnstyledButton(
+                {},
+                callback,
+                Element("span", {}, name),
+                Element("span", {}, hotkey ? `Alt+${hotkey.toUpperCase()}` : "")
+            )
+        )
     );
 
     const menu = Element("ul", { class: "sf-menu", role: "menu" }, ...items);

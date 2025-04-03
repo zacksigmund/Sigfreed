@@ -18,12 +18,12 @@ export class Spider {
     constructor() {
         this.windowEl = Window(
             Spider.name,
-            {
-                "New 1-suit game": () => this.newGame(1),
-                "New 2-suit game": () => this.newGame(2),
-                "New 4-suit game": () => this.newGame(4),
-                About: () => alert(Spider.about),
-            },
+            [
+                ["New 1-suit game", null, () => this.newGame(1)],
+                ["New 2-suit game", null, () => this.newGame(2)],
+                ["New 4-suit game", null, () => this.newGame(4)],
+                ["About", null, () => alert(Spider.about)],
+            ],
             Element("canvas", { id: "spider", width: 452, height: 320 })
         );
     }

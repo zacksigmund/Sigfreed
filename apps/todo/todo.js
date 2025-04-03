@@ -19,12 +19,12 @@ export class Todo {
         this.container = Element("div", { class: "sf-todo" }, ...this.render());
         this.windowEl = Window(
             Todo.name,
-            {
-                "Clear checked": this.clearChecked,
-                "Uncheck all": this.uncheckAll,
-                "Delete List": this.deleteList,
-                About: () => alert(Todo.about),
-            },
+            [
+                ["Clear checked", null, this.clearChecked],
+                ["Uncheck all", null, this.uncheckAll],
+                ["Delete List", null, this.deleteList],
+                ["About", null, () => alert(Todo.about)],
+            ],
             this.container
         );
         todos?.[this.listName]?.forEach((todo) => {

@@ -11,11 +11,11 @@ export class Snake {
     constructor() {
         this.windowEl = Window(
             Snake.name,
-            {
-                "New Game": this.newGame,
-                "High Scores": this.showHighScores,
-                About: () => alert(Snake.about),
-            },
+            [
+                ["New Game", null, this.newGame],
+                ["High Scores", null, this.showHighScores],
+                ["About", null, () => alert(Snake.about)],
+            ],
             Element("canvas", { id: "snake", width: 320, height: 240 })
         );
         window.bus.on("appStateChanged", this.onClose);

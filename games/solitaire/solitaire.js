@@ -13,7 +13,10 @@ export class Solitaire {
     constructor() {
         this.windowEl = Window(
             Solitaire.name,
-            { "New Game": this.newGame, About: () => alert(Solitaire.about) },
+            [
+                ["New Game", null, this.newGame],
+                ["About", null, () => alert(Solitaire.about)],
+            ],
             Element("canvas", { id: "solitaire", width: 320, height: 240 })
         );
     }
