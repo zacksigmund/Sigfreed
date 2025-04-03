@@ -11,11 +11,6 @@ export const StatusBar = () => {
     const [systemMenu, toggleSystemMenu] = Menu([
         ["Settings", ",", () => window.windowManager.open(Settings)],
     ]);
-    document.addEventListener("keydown", (event) => {
-        if (event.key === "," && event.altKey) {
-            window.windowManager.open(Settings);
-        }
-    });
     weatherbox = UnstyledButton({ class: "weather" }, () => window.windowManager.open(Weather));
     window.bus.on("locationUpdated", initWeather);
     initWeather();

@@ -4,8 +4,13 @@ import { UnstyledButton } from "./unstyled-button.js";
 export const Menu = (menuItems) => {
     let menuOpen = false;
 
-    const items = menuItems.map(([name, hotkey, callback]) =>
-        Element(
+    const items = menuItems.map(([name, hotkey, callback]) => {
+        document.addEventListener("keydown", (event) => {
+            if (event.key === hotkey && event.altKey) {
+                callback();
+            }
+        });
+        return Element(
             "li",
             { role: "menuitem" },
             UnstyledButton(
@@ -14,8 +19,8 @@ export const Menu = (menuItems) => {
                 Element("span", {}, name),
                 Element("span", {}, hotkey ? `Alt+${hotkey.toUpperCase()}` : "")
             )
-        )
-    );
+        );
+    });
 
     const menu = Element("ul", { class: "sf-menu", role: "menu" }, ...items);
 
