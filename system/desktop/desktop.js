@@ -15,15 +15,15 @@ export const Desktop = () => {
     const dockScroll = Element(
         "div",
         {},
-        DockIcon(Todo),
-        DockIcon(Calendar),
-        DockIcon(Weather),
-        DockIcon(Calculator),
-        DockIcon(Sticky),
-        DockIcon(Solitaire),
-        DockIcon(FreeCell),
-        DockIcon(Spider),
-        DockIcon(Snake)
+        DockIcon(Todo, 1),
+        DockIcon(Calendar, 2),
+        DockIcon(Weather, 3),
+        DockIcon(Calculator, 4),
+        DockIcon(Sticky, 5),
+        DockIcon(Solitaire, 6),
+        DockIcon(FreeCell, 7),
+        DockIcon(Spider, 8),
+        DockIcon(Snake, 9)
     );
     const updateGradient = () => {
         if (dockScroll.scrollLeft <= 8) {
