@@ -7,6 +7,44 @@
     top: 32px;
     left: 0;
     color: var(--c-black);
-    font-size: 20px;
     margin: 0;
+    padding: 8px;
+    padding-inline-end: 16px;
+    display: flex;
+    flex-direction: column;
+
+    .menubar {
+        display: flex;
+        block-size: 28px;
+
+        button {
+            padding-inline: 8px;
+            color: var(--c-black);
+        }
+
+        .dragger {
+            flex: 1 1 auto;
+            block-size: 100%;
+            cursor: grab;
+
+            &.dragging {
+                cursor: grabbing;
+            }
+        }
+    }
+
+    .note {
+        flex: 1 1 auto;
+        background: none;
+        border: none;
+        padding: 8px;
+        color: var(--c-black);
+        resize: none;
+        overflow: auto;
+        font-size: 20px;
+
+        &:focus-visible {
+            outline: none;
+        }
+    }
 }
