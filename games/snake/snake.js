@@ -12,8 +12,8 @@ export class Snake {
         this.windowEl = Window(
             Snake.name,
             [
-                ["New Game", null, this.newGame],
-                ["High Scores", null, this.showHighScores],
+                ["New Game", "n", this.newGame],
+                ["High Scores", "h", this.showHighScores],
                 ["About", "/", () => alert(Snake.about)],
             ],
             Element("canvas", { id: "snake", width: 320, height: 240 })
@@ -71,6 +71,7 @@ export class Snake {
     };
 
     newGame = () => {
+        this.stop();
         this.ctx.strokeStyle = getComputedStyle(this.canvas).getPropertyValue("--c-primary-fg");
         this.ctx.fillStyle = "none";
         this.ctx.lineWidth = 4;
@@ -86,10 +87,6 @@ export class Snake {
 
     keydown = (event) => {
         event.preventDefault();
-        if (event.key === "n" && event.altKey) {
-            this.stop();
-            this.newGame();
-        }
         if ((event.key === "ArrowUp" || event.key === "w") && this.dir !== "down") {
             this.dir = "up";
         } else if ((event.key === "ArrowDown" || event.key === "s") && this.dir !== "up") {

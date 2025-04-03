@@ -14,7 +14,7 @@ export class FreeCell {
         this.windowEl = Window(
             FreeCell.name,
             [
-                ["New Game", null, this.newGame],
+                ["New Game", "n", this.newGame],
                 ["About", "/", () => alert(FreeCell.about)],
             ],
             Element("canvas", { id: "freecell", width: 408, height: 320 })

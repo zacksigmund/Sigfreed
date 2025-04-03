@@ -19,7 +19,7 @@ export class Spider {
         this.windowEl = Window(
             Spider.name,
             [
-                ["New 1-suit game", null, () => this.newGame(1)],
+                ["New 1-suit game", "n", () => this.newGame(1)],
                 ["New 2-suit game", null, () => this.newGame(2)],
                 ["New 4-suit game", null, () => this.newGame(4)],
                 ["About", "/", () => alert(Spider.about)],

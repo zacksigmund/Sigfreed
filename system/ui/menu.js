@@ -8,6 +8,7 @@ export const Menu = (menuItems) => {
         document.addEventListener("keydown", (event) => {
             if (event.key === hotkey && event.altKey) {
                 callback();
+                event.preventDefault();
             }
         });
         return Element(

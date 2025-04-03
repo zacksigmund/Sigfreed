@@ -14,7 +14,7 @@ export class Solitaire {
         this.windowEl = Window(
             Solitaire.name,
             [
-                ["New Game", null, this.newGame],
+                ["New Game", "n", this.newGame],
                 ["About", "/", () => alert(Solitaire.about)],
             ],
             Element("canvas", { id: "solitaire", width: 320, height: 240 })

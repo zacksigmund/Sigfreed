@@ -10,7 +10,7 @@ export class Weather {
         this.windowEl = Window(
             Weather.name,
             [
-                ["Toggle C/F", null, this.toggleUnits],
+                ["Toggle C/F", "d", this.toggleUnits],
                 ["About", "/", () => alert(Weather.about)],
             ],
             this.weatherbox
