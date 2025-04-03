@@ -6,6 +6,16 @@ export class WindowManager {
         this.topZ = 2;
         this.focusedApp = null;
         document.body.appendChild(Desktop());
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "ArrowLeft" && event.altKey) {
+                this.switch(-1);
+                event.preventDefault();
+            } else if (event.key === "ArrowRight" && event.altKey) {
+                this.switch(1);
+                event.preventDefault();
+            }
+        });
     }
 
     open = (App) => {
@@ -39,8 +49,16 @@ export class WindowManager {
 
     focus = (appName) => {
         if (this.focusedApp !== appName && this.isOpen(appName)) {
-            this.openApps[appName].windowEl.style["z-index"] = this.topZ++;
+            const app = this.openApps[appName].windowEl;
+            app.style["z-index"] = this.topZ++;
+            app.querySelector("button").focus();
             this.focusedApp = appName;
         }
+    };
+
+    switch = (by) => {
+        const appArr = Object.keys(this.openApps);
+        const currIdx = appArr.indexOf(this.focusedApp);
+        this.focus(appArr[currIdx + by]);
     };
 }
