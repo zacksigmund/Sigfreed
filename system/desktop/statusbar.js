@@ -6,9 +6,10 @@ import { Element } from "../ui/element.js";
 import { Menu } from "../ui/menu.js";
 import { UnstyledButton } from "../ui/unstyled-button.js";
 
-let coords, weatherbox, datebox, timebox;
+let coords, weatherbox, datebox, timebox, smallScreen;
 
 export const StatusBar = () => {
+    smallScreen = window.matchMedia("(max-width: 480px)").matches;
     const [systemMenu, toggleSystemMenu] = Menu([
         ["Settings", ",", () => window.windowManager.open(Settings)],
         ["Task Manager", "Delete", () => window.windowManager.open(TaskManager)],
@@ -41,8 +42,9 @@ export const StatusBar = () => {
 const initWeather = () => {
     coords = JSON.parse(localStorage.getItem("coords"));
     if (coords === null) {
-        weatherbox.innerHTML =
-            "<span aria-label='Weather unknown; location unavailable'>--°F ❓</span>";
+        weatherbox.innerHTML = `<span aria-label='Weather unknown; location unavailable'>--°F${
+            !smallScreen ? " ❓" : ""
+        }</span>`;
         return;
     }
     getWeather();
@@ -64,25 +66,41 @@ https://api.open-meteo.com/v1/forecast\
     const [condIcon, condText] = Weather.getCondition(cond, isDay);
     weatherbox.innerHTML = `<span aria-label="Current temperature: "></span>${Math.round(temp)}${
         weather.current_units.temperature_2m
-    } <span aria-label="Current conditions: ${condText}">${condIcon}</span>`;
+    }${
+        !smallScreen ? `<span aria-label="Current conditions: ${condText}">${condIcon}</span>` : ""
+    }`;
 };
 
 const getDateTime = () => {
     const is24h = JSON.parse(localStorage.getItem("settings.24h")) ?? false;
     const date = new Date();
-    datebox.innerHTML =
-        date.toLocaleDateString("en-US", {
-            weekday: "short",
-        }) +
-        " " +
-        date.toLocaleDateString("en-US", {
-            month: "short",
+    if (smallScreen) {
+        datebox.innerHTML = date.toLocaleDateString("en-US", {
+            month: "numeric",
             day: "numeric",
         });
-    timebox.innerHTML = date.toLocaleTimeString("en-US", {
-        hour12: !is24h,
-        hour: "numeric",
-        minute: "numeric",
-    });
+        timebox.innerHTML = date
+            .toLocaleTimeString("en-US", {
+                hour12: !is24h,
+                hour: "numeric",
+                minute: "numeric",
+            })
+            .split(" ")[0];
+    } else {
+        datebox.innerHTML =
+            date.toLocaleDateString("en-US", {
+                weekday: "short",
+            }) +
+            " " +
+            date.toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+            });
+        timebox.innerHTML = date.toLocaleTimeString("en-US", {
+            hour12: !is24h,
+            hour: "numeric",
+            minute: "numeric",
+        });
+    }
     setTimeout(getDateTime, (60 - date.getSeconds()) * 1000);
 };
