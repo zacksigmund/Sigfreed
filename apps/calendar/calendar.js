@@ -4,8 +4,7 @@ import { Note } from "../sticky/note.js";
 export class Calendar {
     static name = "Calendar";
     static icon = "apps/calendar/calendar.app.png";
-    static about =
-        "Events coming... event-ually! For now, enjoy knowing which date is on which day!";
+    static about = "Events are here! Click on a day to add a note. Nothing fancy.";
     get currentMonthString() {
         const options = { month: "long" };
         if (this.currentMonth.getFullYear() !== this.thisYear) {
