@@ -1,5 +1,6 @@
 import { Calendar } from "../../apps/calendar/calendar.js";
 import { Settings } from "../../apps/settings/settings.js";
+import { TaskManager } from "../../apps/taskman/taskman.js";
 import { Weather } from "../../apps/weather/weather.js";
 import { Element } from "../ui/element.js";
 import { Menu } from "../ui/menu.js";
@@ -10,6 +11,7 @@ let coords, weatherbox, datebox, timebox;
 export const StatusBar = () => {
     const [systemMenu, toggleSystemMenu] = Menu([
         ["Settings", ",", () => window.windowManager.open(Settings)],
+        ["Task Manager", "Delete", () => window.windowManager.open(TaskManager)],
     ]);
     weatherbox = UnstyledButton({ class: "weather" }, () => window.windowManager.open(Weather));
     window.bus.on("locationUpdated", initWeather);

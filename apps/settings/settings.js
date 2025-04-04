@@ -7,7 +7,7 @@ export class Settings {
         const is24h = JSON.parse(localStorage.getItem("settings.24h")) ?? false;
         const theme = localStorage.getItem("system.theme") ?? "system";
         this.windowEl = Window(
-            "Settings",
+            Settings.name,
             [["About", "/", () => alert(Settings.about)]],
             Element("div", {}, Checkbox({ checked: is24h }, this.toggle24h, "24h time")),
             RadioGroup(

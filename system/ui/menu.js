@@ -18,7 +18,7 @@ export const Menu = (menuItems) => {
                 {},
                 callback,
                 Element("span", {}, name),
-                Element("span", {}, hotkey ? `Alt+${hotkey.toUpperCase()}` : "")
+                Element("span", {}, hotkey ? `Alt+${hotkey}` : "")
             )
         );
     });

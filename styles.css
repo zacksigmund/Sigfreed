@@ -16,6 +16,7 @@
 @import "./apps/calendar/calendar.css";
 @import "./apps/settings/settings.css";
 @import "./apps/sticky/sticky.css";
+@import "./apps/taskman/taskman.css";
 @import "./apps/todo/todo.css";
 @import "./apps/weather/weather.css";
 @import "./games/freecell/freecell.css";

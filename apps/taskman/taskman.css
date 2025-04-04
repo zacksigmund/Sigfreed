@@ -1,0 +1,17 @@
+.sf-taskman {
+    table {
+        border-collapse: collapse;
+        min-inline-size: 320px;
+
+        th,
+        td {
+            border: 4px solid var(--c-primary-fg);
+            padding-block: 4px;
+            padding-inline: 8px;
+        }
+        th,
+        td:last-child {
+            text-align: center;
+        }
+    }
+}
