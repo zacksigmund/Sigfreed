@@ -19,6 +19,7 @@ export class Note {
 
         note.addEventListener("blur", () => {
             localStorage.setItem(`Sticky.${id}`, note.value);
+            window.bus.push("updateSticky");
         });
 
         const deleteButton = UnstyledButton({ "aria-label": "Delete sticky note" }, null, "×");
@@ -42,6 +43,7 @@ export class Note {
 
         deleteButton.addEventListener("click", () => {
             localStorage.removeItem(`Sticky.${id}`);
+            window.bus.push("updateSticky");
             localStorage.removeItem(`window.Sticky.${this.id}`);
             const parent = windowEl.parentElement;
             parent.removeChild(windowEl);

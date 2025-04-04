@@ -68,6 +68,7 @@ export class Calendar {
                 )
             )
         );
+        window.bus.on("updateSticky", this.fillMonth);
         this.fillMonth();
     }
 
