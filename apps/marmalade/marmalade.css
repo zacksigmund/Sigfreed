@@ -1,0 +1,17 @@
+.sf-marmalade {
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+
+        th,
+        td {
+            border: 4px solid var(--c-black);
+
+            button {
+                height: 24px;
+                width: 100%;
+                background-color: var(--c-white);
+            }
+        }
+    }
+}

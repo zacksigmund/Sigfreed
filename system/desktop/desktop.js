@@ -1,5 +1,6 @@
 import { Calculator } from "../../apps/calculator/calculator.js";
 import { Calendar } from "../../apps/calendar/calendar.js";
+import { Marmalade } from "../../apps/marmalade/marmalade.js";
 import { Sticky } from "../../apps/sticky/sticky.js";
 import { Todo } from "../../apps/todo/todo.js";
 import { Weather } from "../../apps/weather/weather.js";
@@ -20,10 +21,11 @@ export const Desktop = () => {
         DockIcon(Weather, 3),
         DockIcon(Calculator, 4),
         DockIcon(Sticky, 5),
-        DockIcon(Solitaire, 6),
-        DockIcon(FreeCell, 7),
-        DockIcon(Spider, 8),
-        DockIcon(Snake, 9)
+        DockIcon(Marmalade, 6),
+        DockIcon(Solitaire, 7),
+        DockIcon(FreeCell, 8),
+        DockIcon(Spider, 9),
+        DockIcon(Snake, 0)
     );
     const updateGradient = () => {
         if (dockScroll.scrollLeft <= 8) {

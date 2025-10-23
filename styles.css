@@ -14,6 +14,7 @@
 @import "./system/desktop/statusbar.css";
 @import "./apps/calculator/calculator.css";
 @import "./apps/calendar/calendar.css";
+@import "./apps/marmalade/marmalade.css";
 @import "./apps/settings/settings.css";
 @import "./apps/sticky/sticky.css";
 @import "./apps/taskman/taskman.css";
