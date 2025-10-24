@@ -1,4 +1,19 @@
 .sf-marmalade {
+    .formula-bar {
+        margin-block: 4px;
+        display: flex;
+        align-items: center;
+
+        .fx {
+            padding-inline-start: 10px;
+            padding-inline-end: 4px;
+        }
+
+        .formula-input {
+            width: 100%;
+        }
+    }
+
     .table {
         width: 100%;
         border-collapse: collapse;
@@ -6,11 +21,29 @@
         th,
         td {
             border: 4px solid var(--c-black);
+        }
 
+        tbody th {
+            width: 56px;
+        }
+
+        th {
+            background-color: var(--c-lightgray);
+            color: var(--c-black);
+        }
+
+        td {
+            width: 128px;
             button {
-                height: 24px;
+                height: 32px;
                 width: 100%;
                 background-color: var(--c-white);
+                color: var(--c-black);
+
+                &.selected {
+                    outline: 4px solid var(--c-outline);
+                    outline-offset: 1px;
+                }
             }
         }
     }
