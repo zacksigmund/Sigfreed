@@ -68,8 +68,14 @@ export class Marmalade {
             this.selectedCell.textContent = this.formulaInput.value;
             this.formulaInput.value = "";
             if (event.type === "keydown") {
-                this.selectedCell.parentElement.nextElementSibling?.querySelector("button").click();
+                // tab
+                let cell = this.selectedCell.parentElement.nextElementSibling;
+                if (!cell) {
+                    cell = this.selectedCell.closest("tr").nextElementSibling?.cells[1];
+                }
+                cell?.querySelector("button").click();
             } else {
+                // enter
                 const row = this.selectedCell.closest("tr");
                 const cellIndex = Array.from(row.cells).indexOf(this.selectedCell.parentElement);
                 row.nextElementSibling?.cells[cellIndex]?.querySelector("button").click();
