@@ -3,7 +3,7 @@ import { range } from "../../system/utils.js";
 
 export class Marmalade {
     static name = "Marmalade";
-    static icon = "apps/calculator/calculator.app.png";
+    static icon = "apps/marmalade/marmalade.app.png";
     static about = "What a delicious spread!";
 
     static numCols = 5;
